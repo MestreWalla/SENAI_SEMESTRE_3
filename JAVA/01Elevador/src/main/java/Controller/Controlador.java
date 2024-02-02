@@ -29,7 +29,7 @@ public class Controlador {
     }
 
     // Método para mover um elevador para um determinado andar
-    private void moverElevador(Elevador01 elevador, int andarDestino) {
+    public void moverElevador(Elevador01 elevador, int andarDestino) {
         int andarAtual = elevador.getAndarAtual();
         int velocidade = elevador.getVelocidade();
 
