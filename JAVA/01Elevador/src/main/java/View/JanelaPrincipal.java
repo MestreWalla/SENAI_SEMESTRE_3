@@ -173,11 +173,9 @@ public class JanelaPrincipal extends JFrame {
             String numeroAndar = textoBotao.replaceAll("\\D+", "");
             int andarDestino = Integer.parseInt(numeroAndar);
 
-            if (controlador != null && elevador != null) {
+
                 controlador.moverElevador(elevador, andarDestino);
-            } else {
-                System.err.println("Controlador do elevador 1 não inicializado.");
-            }
+         
         }
 
         private void limparCoresBotoes() {
