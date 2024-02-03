@@ -54,41 +54,40 @@ public class JanelaPrincipal extends JFrame {
         jPanelBotoes02 = new JPanel(new GridLayout(NumLinhas, NumColunas));
         jPanelTexto01 = new JPanel(); // Inicializa o painel de texto 01
         jPanelTexto02 = new JPanel(); // Inicializa o painel de texto 02
-    
+
         // Adiciona o JLabel para exibir o status do Elevador01
         JLabel labelElevador1 = new JLabel("Andar atual: 0 | Status: Parado");
         jPanelTexto01.add(labelElevador1);
-    
+
         // Adiciona o JLabel para exibir o status do Elevador02
         JLabel labelElevador2 = new JLabel("Andar atual: 0 | Status: Parado");
         jPanelTexto02.add(labelElevador2);
-    
+
         // Define a cor de fundo dos painéis de texto
         jPanelTexto01.setBackground(Color.LIGHT_GRAY);
         jPanelTexto02.setBackground(Color.LIGHT_GRAY);
-    
+
         jPanelNada = new JPanel(); // Inicializa o painel espaço vazio
-    
+
         botoesElevador1 = new JButton[nomesBotoes.length];
         botoesElevador2 = new JButton[nomesBotoes.length];
-    
+
         for (int i = 0; i < nomesBotoes.length; i++) {
             botoesElevador1[i] = new JButton(nomesBotoes[i]);
             botoesElevador1[i].addActionListener(new BotaoElevador1Listener());
             jPanelBotoes01.add(botoesElevador1[i]);
-    
+
             botoesElevador2[i] = new JButton(nomesBotoes[i]);
             botoesElevador2[i].addActionListener(new BotaoElevador2Listener());
             jPanelBotoes02.add(botoesElevador2[i]);
         }
-    
+
         for (String nomeBotao : nomesBotoesChamar) {
             JButton botaoChamar = new JButton(nomeBotao);
             botaoChamar.addActionListener(new BotaoChamarListener(nomeBotao));
             jPanelBotoesChamar.add(botaoChamar);
         }
     }
-    
 
     private void configurarLayout() {
         // Define o layout como GridLayout com 2 linha e 3 colunas
