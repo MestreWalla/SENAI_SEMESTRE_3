@@ -3,11 +3,11 @@ package main.java.Model;
 public class Elevador01 {
     private int andarAtual;
     private int velocidade;
-    private boolean subindo; // Adiciona um atributo para controlar a direção do elevador
+    private boolean subindo; // Controlar a direção do elevador
 
-    public Elevador01(int andarAtual, int velocidade, int capacidade) {
+    public Elevador01() {
         // Inicializa o elevador com os valores padrão
-        this.andarAtual = andarAtual; // Inicia no térreo (andar 0)
+        this.andarAtual = 0; // Inicia no térreo (andar 0)
         this.velocidade = 1000; // Define uma velocidade padrão (em milissegundos)
         this.subindo = false; // Inicia assumindo que o elevador está parado
     }
@@ -40,5 +40,10 @@ public class Elevador01 {
     // Método para definir se o elevador está subindo
     public void setSubindo(boolean subindo) {
         this.subindo = subindo;
+    }
+
+    public int Subindo() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'Subindo'");
     }
 }
