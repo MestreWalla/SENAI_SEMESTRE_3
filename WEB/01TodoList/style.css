@@ -2,11 +2,14 @@
     --primary-color: rgb(199, 223, 231);
     --primary-color-hovered: rgb(219, 243, 250);
     --secondary-color: white;
+    --text-color: black;
 }
+
 body {
     margin: 0;
     height: 96vh;
 }
+
 header {
     position: fixed;
     left: 0;
@@ -33,7 +36,7 @@ header a {
     text-align: center;
     gap: 10px;
     text-decoration: none;
-    color: black;
+    color: var(--text-color);
     height: 40px;
     width: 100%;
     border-radius: 3px;
@@ -69,6 +72,10 @@ header:hover>a p {
     align-items: center;
     justify-content: center;
     padding: 3px;
+}
+
+.logout:hover {
+    background-color: rgba(246, 206, 206, 0.516);
 }
 
 .userContent span {
@@ -118,8 +125,9 @@ hr {
 
 .user a {
     text-decoration: none;
-    color: black;
+    color: var(--text-color);
 }
+
 main {
     display: flex;
     background-color: rgb(241, 241, 241);
@@ -129,21 +137,68 @@ main {
     margin-left: 46px;
     height: 100%;
 }
+
 .myDayContent {
     padding: 10px;
     margin: 20px 0px 20px 0;
     border-radius: 8px;
     background-color: var(--secondary-color);
 }
-button, .task{
+
+button,
+.task {
     display: flex;
     align-items: center;
     gap: 5px;
 }
+
 .task p {
     width: 50%;
 }
+
 input {
     width: 18px;
     height: 18px;
-  }
+}
+
+.opcoesTarefa {
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.opcoesTarefaButtons {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    gap: 5px;
+    padding: 5px;
+    transform: translateX(40%) translateY(60%);
+    animation: opcoes 0.3s;
+}
+
+.opcoesTarefa:hover .opcoesTarefaButtons {
+    display: flex;
+}
+
+@keyframes opcoes {
+    0% {
+        opacity: 0;
+        transform: translateX(30%) translateY(60%) scale(90%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(40%) translateY(60%) scale(100%);
+    }
+}
+
+
+.opcoesTarefaButtons div {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+}

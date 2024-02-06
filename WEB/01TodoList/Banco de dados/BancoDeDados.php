@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,14 +56,15 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <?php
         // Configurações do banco de dados
         $servername = "localhost";
-        $username = "seu_usuario";
-        $password = "sua_senha";
-        $dbname = "nome_do_banco_de_dados";
+        $username = "root";
+        $password = "";
+        $dbname = "toDoList";
 
         // Criar conexão com o banco de dados
         $conn = new mysqli($servername, $username, $password);
@@ -85,14 +87,14 @@
 
         // Criar tabela de tarefas
         $sql = "CREATE TABLE IF NOT EXISTS tarefas (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            nome VARCHAR(255) NOT NULL,
-            descricao TEXT,
-            data_conclusao DATE,
-            status ENUM('pendente', 'concluida', 'cancelado') DEFAULT 'pendente',
-            favorito BOOLEAN DEFAULT FALSE,
-            tags VARCHAR(255)
-        )";
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                nome VARCHAR(255) NOT NULL,
+                descricao TEXT,
+                data_conclusao DATE,
+                status ENUM('pendente', 'concluida', 'cancelado') DEFAULT 'pendente',
+                favorito BOOLEAN DEFAULT FALSE,
+                tags VARCHAR(255)
+            )";
 
         if ($conn->query($sql) === TRUE) {
             echo "<p class='success'>Tabela de tarefas criada com sucesso!</p>";
@@ -107,4 +109,5 @@
         <button onclick="window.history.back()">Voltar</button>
     </div>
 </body>
+
 </html>

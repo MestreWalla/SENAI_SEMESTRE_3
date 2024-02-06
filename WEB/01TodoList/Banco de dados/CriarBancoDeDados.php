@@ -1,9 +1,9 @@
 <?php
 // Configurações do banco de dados
 $servername = "localhost";
-$username = "seu_usuario";
-$password = "sua_senha";
-$dbname = "nome_do_banco_de_dados";
+$username = "root";
+$password = "";
+$dbname = "toDoList";
 
 // Criar conexão com o banco de dados
 $conn = new mysqli($servername, $username, $password);
