@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>To-do-list</title>
+</head>
+
+<body>
+    <header>
+        <div class="user">
+            <a href="#">
+                <span class="material-symbols-outlined">account_circle</span>
+                <p class="userContent">Maycon</p>
+            </a>
+            <a href="" class="userContent"><span class="material-symbols-outlined">logout</span></a>
+        </div>
+        <a href="">
+            <span class="material-symbols-outlined">
+                today
+            </span>
+            <p>Meu dia</p>
+        </a>
+        <a href="">
+            <span class="material-symbols-outlined">
+                priority_high
+            </span>
+            <p>Importante</p>
+        </a>
+        <a href="">
+            <span class="material-symbols-outlined">
+                event_note
+            </span>
+            <p>Planejado</p>
+        </a>
+        <a href="">
+            <span class="material-symbols-outlined">
+                done
+            </span>
+            <p>Finalizado</p>
+        </a>
+        <a href="">
+            <span class="material-symbols-outlined">
+                contract_delete
+            </span>
+            <p>Cancelado</p>
+        </a>
+        <a href="">
+            <span class="material-symbols-outlined">
+                favorite
+            </span>
+            <p>Favoritos</p>
+        </a>
+        <hr>
+        <a href="#" id="labels" class="labels">
+            <span class="material-symbols-outlined">
+                label
+            </span>
+            <p>Label 01</p>
+        </a>
+        <a href="#" id="labels" class="labels">
+            <span class="material-symbols-outlined">
+                label
+            </span>
+            <p>Label 02</p>
+        </a>
+        <a href="#" id="labels" class="labels">
+            <span class="material-symbols-outlined">
+                label
+            </span>
+            <p>Label 03</p>
+        </a>
+    </header>
+    <main>
+        <div class="mayDay">
+            <div class="title">
+                <h1>Meu Dia</h1>
+                <div id="current_date">
+                    <script>
+                        var currentDate = new Date();
+                        var daysOfWeek = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+                        var months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+                        var dayOfWeek = daysOfWeek[currentDate.getDay()];
+                        var dayOfMonth = currentDate.getDate();
+                        var month = months[currentDate.getMonth()];
+                        var year = currentDate.getFullYear();
+
+                        var formattedDate = dayOfWeek + ', ' + dayOfMonth + ' de ' + month + ' de ' + year;
+
+                        document.getElementById("current_date").innerHTML = formattedDate;
+                    </script>
+                </div>
+            </div>
+            <div class="myDayContent">
+                <button>
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                    <p>Adicionar tarefa</p>
+                </button>
+                <div class="task">
+                    <input class="checkbox" type="checkbox" id="01" name="01" value="Bike">
+                    <label for="01"></label>
+                    <p>nome da tarefa</p>
+                    <span class="material-symbols-outlined">
+                        more_horiz
+                    </span>
+                    <span class="material-symbols-outlined">
+                        task_alt
+                    </span>
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                </div>
+            </div>
+
+
+
+
+    </main>
+
+</body>
+
+</html>

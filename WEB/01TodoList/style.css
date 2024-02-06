@@ -1,0 +1,149 @@
+:root {
+    --primary-color: rgb(199, 223, 231);
+    --primary-color-hovered: rgb(219, 243, 250);
+    --secondary-color: white;
+}
+body {
+    margin: 0;
+    height: 96vh;
+}
+header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    align-items: baseline;
+    width: 25px;
+    transition: width 0.1s linear;
+    box-shadow: 1px 1px 8px 2px rgba(0, 0, 0, 0.38);
+}
+
+header:hover {
+    width: 140px;
+}
+
+header a {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    text-decoration: none;
+    color: black;
+    height: 40px;
+    width: 100%;
+    border-radius: 3px;
+}
+
+header a:hover {
+    background-color: var(--primary-color-hovered);
+    font-weight: bold;
+}
+
+header a:hover .material-symbols-outlined {
+    font-variation-settings: 'FILL' 1;
+}
+
+header a p {
+    display: none;
+}
+
+header:hover>a p {
+    display: block;
+    animation: fadeIn 0.5s;
+}
+
+.user {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+.userContent {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+}
+
+.userContent span {
+    color: red;
+    width: 40px;
+}
+
+header:hover .userContent {
+    display: flex;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 300,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+hr {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+
+.user {
+    display: flex;
+    gap: 2px;
+}
+
+.user a {
+    text-decoration: none;
+    color: black;
+}
+main {
+    display: flex;
+    background-color: rgb(241, 241, 241);
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    margin-left: 46px;
+    height: 100%;
+}
+.myDayContent {
+    padding: 10px;
+    margin: 20px 0px 20px 0;
+    border-radius: 8px;
+    background-color: var(--secondary-color);
+}
+button, .task{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.task p {
+    width: 50%;
+}
+input {
+    width: 18px;
+    height: 18px;
+  }
