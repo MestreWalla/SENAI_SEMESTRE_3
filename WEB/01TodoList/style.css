@@ -145,6 +145,29 @@ main {
     background-color: var(--secondary-color);
 }
 
+.input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.myDayContent button {
+    width: 200px;
+    height: 30px;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    border-radius: 5px;
+}
+
+.myDayContent input[type="text"] {
+    border: none;
+    border-bottom: 1px solid var(--text-color);
+    outline: none;
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+}
+
 button,
 .task {
     display: flex;
@@ -152,8 +175,14 @@ button,
     gap: 5px;
 }
 
+.task {
+    margin-top: 10px;
+    border-bottom: 1px solid var(--primary-color);
+    border-top: 1px solid var(--primary-color);
+}
+
 .task p {
-    width: 50%;
+    width: 100%;
 }
 
 input {
@@ -175,7 +204,7 @@ input {
     position: fixed;
     gap: 5px;
     padding: 5px;
-    transform: translateX(40%) translateY(60%);
+    transform: translateX(-43%) translateY(65%);
     animation: opcoes 0.3s;
 }
 
@@ -183,15 +212,33 @@ input {
     display: flex;
 }
 
+.opcoesTarefa div div {
+    display: flex;
+    gap: 5px;
+    background-color: var(--primary-color);
+    width: 250px;
+    height: 35px;
+}
+
+.opcoesTarefa div div:hover {
+    background-color: var(--primary-color-hovered);
+    font-weight: bold;
+}
+
+.opcoesTarefa div div:hover .material-symbols-outlined {
+    font-variation-settings: 'FILL' 1;
+
+}
+
 @keyframes opcoes {
     0% {
         opacity: 0;
-        transform: translateX(30%) translateY(60%) scale(90%);
+        transform: translateX(0%) translateY(0%) scale(1%);
     }
 
     100% {
         opacity: 1;
-        transform: translateX(40%) translateY(60%) scale(100%);
+        transform: translateX(-43%) translateY(60%) scale(100%);
     }
 }
 
