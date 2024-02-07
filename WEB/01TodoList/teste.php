@@ -39,11 +39,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <header>
         <div class="user">
-            <a href="#">
+            <a href="login.php" id="loginLink">
                 <span class="material-symbols-outlined">account_circle</span>
-                <p class="userContent">Maycon</p>
+                <?php
+                session_start();
+
+                if (isset($_SESSION['user_id'])) {
+                    // Se o usuário estiver logado, exibir seu nome
+                    echo '<p class="userContent">' . $_SESSION['username'] . '</p>';
+                } else {
+                    // Se o usuário não estiver logado, exibir o texto "Logar"
+                    echo '<p class="userContent">Logar</p>';
+                }
+                ?>
             </a>
-            <a href="" class="userContent logout"><span class="material-symbols-outlined">logout</span></a>
+
+            <a href="logout.php" class="userContent logout"><span class="material-symbols-outlined">logout</span></a>
         </div>
         <!-- Links do menu -->
         <a href="#">
@@ -73,25 +84,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <hr>
         <!-- Exibir as tags existentes no banco de dados -->
         <?php
-    // Consulta SQL para selecionar todas as tags distintas da tabela de tarefas que não são vazias
-$sql_tags = "SELECT DISTINCT tags FROM tarefas WHERE tags <> ''";
+        // Consulta SQL para selecionar todas as tags distintas da tabela de tarefas que não são vazias
+        $sql_tags = "SELECT DISTINCT tags FROM tarefas WHERE tags <> ''";
 
-    $result_tags = $conn->query($sql_tags);
+        $result_tags = $conn->query($sql_tags);
 
-    // Verificar se há resultados da consulta
-    if ($result_tags->num_rows > 0) {
-        // Exibir as tags em uma lista no menu lateral
-        while ($row_tags = $result_tags->fetch_assoc()) {
-            echo '<a href="#" class="labels">';
-            echo '<span class="material-symbols-outlined">label</span>';
-            echo '<p>' . $row_tags['tags'] . '</p>';
-            echo '</a>';
+        // Verificar se há resultados da consulta
+        if ($result_tags->num_rows > 0) {
+            // Exibir as tags em uma lista no menu lateral
+            while ($row_tags = $result_tags->fetch_assoc()) {
+                echo '<a href="#" class="labels">';
+                echo '<span class="material-symbols-outlined">label</span>';
+                echo '<p>' . $row_tags['tags'] . '</p>';
+                echo '</a>';
+            }
+        } else {
+            echo '<p>Nenhuma tag encontrada.</p>';
         }
-    } else {
-        echo '<p>Nenhuma tag encontrada.</p>';
-    }
-    ?>
-</header>
+        ?>
+    </header>
     <main>
         <div class="mayDay">
             <div class="title">
