@@ -1,3 +1,27 @@
+<?php
+// Incluir o arquivo de conexão com o banco de dados
+include 'db_connection.php';
+
+// Verificar se o formulário foi submetido
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Receber os dados do formulário
+    $nome = $_POST['nome'];
+    $descricao = $_POST['descricao'];
+    $data_conclusao = $_POST['data_conclusao'];
+
+    // Preparar e executar a consulta SQL para inserir os dados na tabela de tarefas
+    $sql = "INSERT INTO tarefas (nome, descricao, data_conclusao) VALUES ('$nome', '$descricao', '$data_conclusao')";
+    if ($conn->query($sql) === TRUE) {
+        echo "Nova tarefa criada com sucesso!";
+    } else {
+        echo "Erro ao criar nova tarefa: " . $conn->error;
+    }
+}
+
+// Fechar a conexão com o banco de dados (opcional, pois a conexão será fechada automaticamente no final do script)
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -97,46 +121,53 @@
                 </div>
             </div>
             <div class="myDayContent">
-                <div class="input">
-                    <input type="text" name="" id="">
-                    <button>
-                        <span class="material-symbols-outlined">
-                            add
-                        </span>
-                        <p>Adicionar tarefa</p>
-                    </button>
-                </div>
-                <div class="task">
-                    <input class="checkbox" type="checkbox" id="01" name="01" value="Bike">
-                    <label for="01"></label>
-                    <p>nome da tarefa</p>
-                    <div class="opcoesTarefa">
-                        <span class="material-symbols-outlined">
-                            more_horiz
-                        </span>
-                        <div class="opcoesTarefaButtons">
-                            <div>
-                                <span class="material-symbols-outlined">
-                                    task_alt
-                                </span>
-                                <p>Completar Tarefa</p>
-                            </div>
-                            <div>
-                                <span class="material-symbols-outlined">
-                                    delete
-                                </span>
-                                <p>Apagar Tarefa</p>
-                            </div>
-                        </div>
+                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <div class="input">
+                        <input type="text" name="nome" placeholder="nome" id="nome">
+                        <button type="submit">
+                            <span class="material-symbols-outlined">
+                                add
+                            </span>
+                            <p>Adicionar tarefa</p>
+                        </button>
                     </div>
-                </div>
+                    <div class="input">
+                        <input type="text" name="descricao" placeholder="descrição" id="descricao">
+                        <input type="date" name="data_conclusao" placeholder="data para conclusão" id="data">
+                    </div>
+                </form>
+                <?php
+// Incluir o arquivo de conexão com o banco de dados
+include 'db_connection.php';
+
+// Consulta SQL para selecionar todas as tarefas da tabela
+$sql = "SELECT * FROM tarefas";
+$result = $conn->query($sql);
+
+// Verificar se há resultados da consulta
+if ($result->num_rows > 0) {
+    // Exibir as tarefas em uma lista não ordenada
+    echo '<ul>';
+    while ($row = $result->fetch_assoc()) {
+        echo '<li>';
+        echo '<input class="checkbox" type="checkbox" id="' . $row['id'] . '" name="' . $row['id'] . '" value="' . $row['nome'] . '">';
+        echo '<label for="' . $row['id'] . '"></label>';
+        echo '<p>' . $row['nome'] . '</p>';
+        echo '</li>';
+    }
+    echo '</ul>';
+} else {
+    echo 'Nenhuma tarefa encontrada.';
+}
+
+// Fechar a conexão com o banco de dados
+$conn->close();
+?>
+
             </div>
             <input type="color" name="" id="">
-
-
-
+        </div>
     </main>
-
 </body>
 
 </html>
