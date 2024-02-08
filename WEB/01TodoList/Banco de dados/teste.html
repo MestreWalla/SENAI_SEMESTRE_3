@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Banco de Dados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciamento de Banco de Dados</h1>
+        <button onclick="redirectUsuarios()">Gerir Banco de Dados de Usuários</button>
+        <button onclick="redirectTarefas()">Gerir Banco de Dados de Tarefas</button>
+        <button onclick="redirectTodos()">Exibir Todos os Bancos de Dados Criados</button>
+    </div>
+
+    <script>
+        function redirectUsuarios() {
+            window.location.href = 'CadastrodePessoas.php';
+        }
+
+        function redirectTarefas() {
+            window.location.href = 'BancoDeDados.php';
+        }
+
+        function redirectTodos() {
+            window.location.href = 'MariaDB.php';
+        }
+    </script>
+</body>
+</html>
