@@ -1,30 +1,41 @@
 <?php
 // Incluir o arquivo de conexão com o banco de dados
 include 'user_connection.php';
+// Incluir o arquivo de conexão com o banco de dados
+include 'user_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Receber os dados do formulário
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = $_POST['password'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['pass'];
 
-    // Hash da senha
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    // Verificar se o nome de usuário ou o email já estão em uso
+    $stmt = $conn->prepare("SELECT id FROM usuarios WHERE username = ? OR email = ?");
+    $stmt->bind_param("ss", $username, $email);
+    $stmt->execute();
+    $stmt->store_result();
 
-    // Consulta SQL para verificar se o nome de usuário ou o email já estão em uso
-    $sql = "SELECT * FROM usuarios WHERE username = '$username' OR email = '$email'";
-    $result = $conn->query($sql);
+    if ($stmt->num_rows > 0) {
+        // Nome de usuário ou email já em uso
+        echo "Nome de usuário ou email já está em uso.";
+    } else {
+        // Hash da senha
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    if ($result->num_rows == 0) {
-        // Se o nome de usuário e o email não estiverem em uso, criar o novo usuário
-        $sql = "INSERT INTO usuarios (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
-        if ($conn->query($sql) === TRUE) {
-            echo "Usuário cadastrado com sucesso.";
+        // Inserir o novo usuário no banco de dados
+        $stmt = $conn->prepare("INSERT INTO usuarios (username, email, pass) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $username, $email, $hashed_password);
+
+        if ($stmt->execute()) {
+            header("Location: login.php"); // Redirecionar para a página principal após o login
+            // echo "Usuário cadastrado com sucesso.";
         } else {
             echo "Erro ao cadastrar usuário: " . $conn->error;
         }
-    } else {
-        // Nome de usuário ou email já em uso
-        echo "Nome de usuário ou email já está em uso.";
     }
+
+    // Fechar as instruções preparadas
+    $stmt->close();
 }
+?>

@@ -1,7 +1,7 @@
 <?php
 // Incluir o arquivo de conexão com o banco de dados
 include 'db_connection.php';
-include 'user_connection.php';
+// include 'user_connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -90,7 +90,7 @@ include 'user_connection.php';
             <h3>Login</h3>
             <form action="process_login.php" method="POST">
                 <input type="text" name="username" placeholder="Nome de usuário" required>
-                <input type="password" name="password" placeholder="Senha" required>
+                <input type="password" name="pass" placeholder="Senha" required>
                 <button type="submit">Entrar</button>
             </form>
             <p>Ainda não tem uma conta? <a href="javascript:void(0);" onclick="toggleForm()">Cadastre-se</a></p>
@@ -100,7 +100,7 @@ include 'user_connection.php';
             <form action="process_cadastro.php" method="POST">
                 <input type="text" name="username" placeholder="Nome de usuário" required>
                 <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Senha" required>
+                <input type="password" name="pass" placeholder="Senha" required>
                 <button type="submit">Cadastrar</button>
             </form>
             <p>Já possui uma conta? <a href="javascript:void(0);" onclick="toggleForm()">Faça login</a></p>
