@@ -36,7 +36,7 @@ class _CalculadoraState extends State<Calculadora> {
       } else if (operacao == "Subtracao") {
         resultado = numero1 - numero2;
       } else if (operacao == "Divisao") {
-        resultado = numero1 / numero2;
+        resultado = numero2 != 0 ? numero1 / numero2;
       } else {
         resultado = numero1 * numero2;
       }
