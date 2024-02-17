@@ -24,6 +24,9 @@ try {
         echo "Banco de dados já existe!";
     }
 
+    // Seleciona o banco de dados
+    $pdo->query("USE $banco");
+
     // Cria a tabela 'usuario' se não existir
     $stmt = $pdo->query("SELECT 1 FROM information_schema.tables WHERE table_name = 'usuario'");
     if (!$stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -48,3 +51,4 @@ try {
     // Exibe a mensagem de erro específica
     die($e->getMessage());
 }
+?>

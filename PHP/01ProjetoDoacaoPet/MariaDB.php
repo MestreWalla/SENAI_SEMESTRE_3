@@ -1,78 +1,59 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
+// Configurações de conexão com o banco de dados
+$endereco = 'localhost'; // Endereço do banco de dados
+$banco = 'postgres'; // Nome do banco de dados
+$usuario = 'postgres'; // Nome de usuário do banco de dados
+$senha = 'postgres'; // Senha do banco de dados
 
-// Conexão com o servidor MySQL
-$conn = new mysqli($servername, $username, $password);
+try {
+    // Estabelece a conexão com o banco de dados usando PDO
+    $pdo = new PDO(
+        "pgsql:host=$endereco;port=5432;dbname=$banco",
+        $usuario,
+        $senha,
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
 
-// Verificar a conexão
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
+    // Consulta todas as tabelas no banco de dados
+    $stmt = $pdo->query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
+    $tabelas = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-// Consulta SQL para obter todos os bancos de dados, excluindo 'mysql', 'information_schema', 'phpmyadmin' e 'performance_schema'
-$sql_databases = "SHOW DATABASES WHERE `Database` NOT IN ('mysql', 'information_schema', 'phpmyadmin', 'performance_schema')";
-$result_databases = $conn->query($sql_databases);
-
-if ($result_databases->num_rows > 0) {
-    // Iterar sobre cada banco de dados
-    while ($row_database = $result_databases->fetch_assoc()) {
-        $database_name = $row_database["Database"];
-        echo "<h2>Banco de Dados: $database_name</h2>";
-
-        // Conectar ao banco de dados atual
-        $conn->select_db($database_name);
-
-        // Consulta SQL para obter todas as tabelas do banco de dados atual
-        $sql_tables = "SHOW TABLES";
-        $result_tables = $conn->query($sql_tables);
-
-        if ($result_tables->num_rows > 0) {
-            // Exibir todas as tabelas do banco de dados atual
-            while ($row_table = $result_tables->fetch_row()) {
-                $table_name = $row_table[0];
-                echo "<h3>Tabela: $table_name</h3>";
-
-                // Consulta SQL para obter todos os registros da tabela atual
-                $sql_records = "SELECT * FROM $table_name";
-                $result_records = $conn->query($sql_records);
-
-                if ($result_records->num_rows > 0) {
-                    // Exibir os itens cadastrados na tabela em uma tabela HTML com estilo
-                    echo "<div style='overflow-x:auto;'>";
-                    echo "<table border='1' style='border-collapse: collapse; width: 100%;'>";
-                    echo "<tr style='background-color: #f2f2f2;'>";
-                    // Cabeçalhos da tabela
-                    while ($row_record = $result_records->fetch_assoc()) {
-                        foreach ($row_record as $key => $value) {
-                            echo "<th style='padding: 8px; text-align: left;'>$key</th>";
-                        }
-                        break; // Somente pegue o cabeçalho da primeira linha
+    // Verifica se há tabelas para exibir
+    if (!empty($tabelas)) {
+        echo "<h2 style='font-family: Arial, sans-serif;'>Tabelas no banco de dados:</h2>";
+        foreach ($tabelas as $tabela) {
+            echo "<h3 style='font-family: Arial, sans-serif;'>$tabela</h3>";
+            
+            // Consulta o conteúdo da tabela
+            $stmt = $pdo->query("SELECT * FROM $tabela");
+            $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Exibe os registros da tabela em formato de tabela HTML
+            echo "<table style='font-family: Arial, sans-serif; border-collapse: collapse; width: 100%;' border='1'>";
+            if (!empty($registros)) {
+                echo "<tr style='background-color: #f2f2f2;'>";
+                foreach ($registros[0] as $campo => $valor) {
+                    echo "<th style='padding: 8px; text-align: left;'>$campo</th>";
+                }
+                echo "</tr>";
+                foreach ($registros as $registro) {
+                    echo "<tr>";
+                    foreach ($registro as $valor) {
+                        echo "<td style='padding: 8px; border-bottom: 1px solid #ddd;'>$valor</td>";
                     }
                     echo "</tr>";
-                    // Linhas de dados da tabela
-                    $result_records->data_seek(0); // Voltar ao início do conjunto de resultados
-                    while ($row_record = $result_records->fetch_assoc()) {
-                        echo "<tr>";
-                        foreach ($row_record as $key => $value) {
-                            echo "<td style='padding: 8px; border: 1px solid #dddddd;'>$value</td>";
-                        }
-                        echo "</tr>";
-                    }
-                    echo "</table>";
-                    echo "</div>";
-                } else {
-                    echo "<p>Nenhum registro encontrado nesta tabela.</p>";
                 }
             }
-        } else {
-            echo "<p>Nenhuma tabela encontrada neste banco de dados.</p>";
+            echo "</table>";
         }
+    } else {
+        echo "<p style='font-family: Arial, sans-serif;'>Não há tabelas no banco de dados.</p>";
     }
-} else {
-    echo "Nenhum banco de dados encontrado.";
-}
 
-// Fechar conexão com o servidor MySQL
-$conn->close();
+} catch (PDOException $e) {
+    // Captura e trata erros de conexão
+    echo "<p style='font-family: Arial, sans-serif; color: red;'>Falha ao conectar ao banco de dados. <br/>";
+    // Exibe a mensagem de erro específica
+    die($e->getMessage());
+}
+?>
