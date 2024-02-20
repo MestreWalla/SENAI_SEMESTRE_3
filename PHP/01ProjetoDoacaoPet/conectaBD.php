@@ -21,11 +21,9 @@ try {
         $pdo->query("CREATE DATABASE $banco");
         echo "Banco de dados criado com sucesso!";
     } else {
-        echo "Banco de dados já existe!";
-    }
+        error_log("Banco de dados já existe!");    }
 
-    // Seleciona o banco de dados
-    $pdo->query("USE $banco");
+    // Não é necessário selecionar o banco de dados explicitamente no PostgreSQL
 
     // Cria a tabela 'usuario' se não existir
     $stmt = $pdo->query("SELECT 1 FROM information_schema.tables WHERE table_name = 'usuario'");
@@ -42,7 +40,7 @@ try {
         ");
         echo "Tabela 'usuario' criada com sucesso!";
     } else {
-        echo "Tabela 'usuario' já existe!";
+        error_log("Tabela 'usuario' já existe!");
     }
 
 } catch (PDOException $e) {
