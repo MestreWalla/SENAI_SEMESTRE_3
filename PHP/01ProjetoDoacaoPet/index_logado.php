@@ -93,6 +93,8 @@ if (!empty($_GET['meus_anuncios']) && $_GET['meus_anuncios'] == 1) {
                         <th scope="col">Pelagem / Cor</th>
                         <th scope="col">Raça</th>
                         <th scope="col">Sexo</th>
+                        <th scope="col"
+                     >Comentario</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -122,6 +124,8 @@ if (!empty($_GET['meus_anuncios']) && $_GET['meus_anuncios'] == 1) {
                             </td>
                             <td>
                                 <?php echo $a['sexo'] == 'M' ? "Macho" : "Fêmea"; ?>
+                            </td
+                                <?php echo $a['observacao']; ?>
                             </td>
                             <td>
                                 <?php if ($a['email_usuario'] == $_SESSION['email']) { ?>
