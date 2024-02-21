@@ -28,12 +28,12 @@ class _NumeroAleatorio extends State<NumeroAleatorio> {
       TextEditingController(); // Controlador para o campo de texto
   String resultado = ''; // Armazena o resultado da adivinhação
   int maximo = 10; // Intervalo máximo
-  int numeroSorteado = Random().nextInt(10)+1; // Armazena o número sorteado
+  int numeroSorteado = Random().nextInt(10) + 1; // Armazena o número sorteado
   int minimo = 1; // Intervalo mínimo
   int tentativas = 0; // Conta o número de tentativas
   String maiorMenor = '';
 
-  void _verificar(String operacao) {
+  void verificar(String operacao) {
     int palpite = int.tryParse(numeroDigitado.text) ??
         0; // Converte o texto digitado para um número inteiro
 
@@ -52,11 +52,11 @@ class _NumeroAleatorio extends State<NumeroAleatorio> {
     });
   }
 
-  void _sortear(String operacao) {
+  void sortear(String operacao) {
     setState(() {
       numeroSorteado = Random().nextInt(maximo - minimo + 1) +
           minimo; // Gera um número aleatório dentro do intervalo definido
-      resultado = ""; // Limpa o resultado
+      resultado = "Numero sorteado novamente"; // Limpa o resultado
       tentativas = 0; // Reinicia o número de tentativas
       numeroDigitado.text = ""; // Limpar o campo de texto
     });
@@ -66,8 +66,18 @@ class _NumeroAleatorio extends State<NumeroAleatorio> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            'Adivinhação de número Flutter'), // Define o título da barra de aplicativos
+        title: Row(
+          children: [
+            Icon(
+              Icons.arrow_circle_right, // Ícone Check
+              size: 25, // Tamanho do ícone
+              color: Colors.green, // Cor do ícone
+            ),
+            SizedBox(width: 8), // Espaçamento entre o ícone e o texto do título
+            Text('Adivinhação de número Flutter', // Define o título da barra de aplicativos
+            ),
+          ],
+        ),
       ),
       body: Padding(
         // Widget de preenchimento para dar margem ao redor do conteúdo
@@ -97,7 +107,7 @@ class _NumeroAleatorio extends State<NumeroAleatorio> {
               children: [
                 SizedBox(height: 16.0),
                 ElevatedButton(
-                  onPressed: () => _verificar('Verificar'),
+                  onPressed: () => verificar('Verificar'),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
                         Color.fromARGB(255, 184, 255, 232)),
@@ -120,7 +130,7 @@ class _NumeroAleatorio extends State<NumeroAleatorio> {
                     width:
                         16.0), // Espaçamento horizontal entre o campo de texto e os botões
                 ElevatedButton(
-                  onPressed: () => _sortear('Sortear'),
+                  onPressed: () => sortear('Sortear'),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
                         Color.fromARGB(255, 167, 217, 255)),
