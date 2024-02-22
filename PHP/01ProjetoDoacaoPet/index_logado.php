@@ -140,7 +140,7 @@ if (!empty($_GET['meus_anuncios']) && $_GET['meus_anuncios'] == 1) {
                                             echo '<img src="' . $a['imagem'] . '" alt="Foto" class="img-fluid">';
                                         } else {
                                             // Se não houver, mostra a imagem padrão
-                                            echo '<img src="img/fotopadrao.png" alt="Foto Padrão" class="img-fluid">';
+                                            echo '<img src="img/caoveio.png" alt="Foto Padrão" class="img-fluid">';
                                         }
                                         ?>
                                     </div>

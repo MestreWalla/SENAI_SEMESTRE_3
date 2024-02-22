@@ -25,8 +25,8 @@ if (!empty($_POST)) {
                 exit();
             }
         } else {
-            // Caso não tenha sido enviado um arquivo de imagem, define o caminho como vazio
-            $caminhoDestino = 'img/caoveio.png';
+            // Caso não tenha sido enviado um arquivo de imagem
+            $caminhoDestino = '';
         }
 
         try {
