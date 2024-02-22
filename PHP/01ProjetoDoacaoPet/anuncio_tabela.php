@@ -27,7 +27,8 @@ try {
                 raca VARCHAR(100),
                 sexo VARCHAR(1) NOT NULL,
                 observacao TEXT,
-                email_usuario VARCHAR(100) NOT NULL
+                email_usuario VARCHAR(100) NOT NULL,
+                imagem VARCHAR(255) NOT NULL
             )
         ");
         error_log("Tabela 'anuncio' criada com sucesso!");

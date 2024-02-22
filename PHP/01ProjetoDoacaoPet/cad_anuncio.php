@@ -99,6 +99,11 @@ if (empty($_SESSION)) {
                     </div>
                 </div>
                 <div class="col-md-4">
+                    <label for="imagem" class="form-label">Foto o Animal</label>
+                    <input type="file" name="imagem" id="imagem" class="form-control">
+                </div>
+
+                <div class="col-md-4">
                     <label for="observacao" class="form-label">Observações</label>
                     <textarea name="observacao" class="form-control" id="observacao" rows="3"></textarea>
                 </div>

@@ -125,12 +125,6 @@ if (!empty($_GET['id_anuncio'])) {
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input" name="sexo" value="F" id="sexoF" <?php echo $result['sexo'] == 'F' ? "checked" : "disabled" ?>>
 
-                    Elaborado por Diogo Takamori Barbosa
-
-                    Curso Programação de Internet
-                    Disponível em:
-                    https://drive.google.com/drive/folders/15yoeHEwDOyfHb2OEfOwWEh2wBuKx1yad?usp=sharing
-
                     <label for="sexoF" class="form-check-label">Fêmea</label>
                 </div>
             </div>

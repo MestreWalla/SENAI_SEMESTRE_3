@@ -10,6 +10,39 @@ if (empty($_SESSION)) {
     die();
 }
 ?>
+<style>
+    body a,
+    .container a {
+        font-family: "Maven Pro", sans-serif;
+        font-optical-sizing: auto;
+        /* font-weight: <weight>; */
+        font-style: normal;
+    }
+
+    .card {
+        margin-top: 10px;
+    }
+
+    .header {
+        background-color: #f8f9fa;
+        padding: 10px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header .container {
+        display: flex;
+        padding: 5px;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .header h2.title {
+        margin: 0;
+        font-size: 24px;
+        color: #333;
+
+    }
+</style>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -18,7 +51,12 @@ if (empty($_SESSION)) {
     <title>Página Inicial - Ambiente Logado</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-
 +0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap" rel="stylesheet">
 </head>
+
 <?php
 $anuncios = array();
 if (!empty($_GET['meus_anuncios']) && $_GET['meus_anuncios'] == 1) {
@@ -65,76 +103,82 @@ if (!empty($_GET['meus_anuncios']) && $_GET['meus_anuncios'] == 1) {
             </div>
         <?php } ?>
     </div>
-    <div class="container">
-        <div class="col-md-11">
+    <div class="header">
+        <div class="container">
+            <div class="col-md-11">
 
-            <h2 class="title">Olá <i>
-                    <?php echo $_SESSION['nome']; ?>
-                </i>, seja bem-
-                vindo(a)!</h2>
-
+                <h2 class="title">Olá <i>
+                        <?php echo ucfirst($_SESSION['nome']); ?>
+                    </i>, seja bem-vindo(a) ao Cão Velho!</h2>
+            </div>
+        </div>
+        <div class="container">
+            <a href="cad_anuncio.php" class="btn btn-primary">Novo Anúncio</a>
+            <a href="index_logado.php?meus_anuncios=1" class="btn btn-success">Meus Anúncios</a>
+            <a href="index_logado.php?meus_anuncios=0" class="btn btn-info">Todos Anúncios</a>
+            <a href="logout.php" class="btn btn-dark">Sair</a>
         </div>
     </div>
-    <div class="container">
-        <a href="cad_anuncio.php" class="btn btn-primary">Novo Anúncio</a>
-        <a href="index_logado.php?meus_anuncios=1" class="btn btn-success">Meus Anúncios</a>
-        <a href="index_logado.php?meus_anuncios=0" class="btn btn-info">Todos Anúncios</a>
-        <a href="logout.php" class="btn btn-dark">Sair</a>
-    </div>
+
     <?php if (!empty($anuncios)) { ?>
-        <!-- Aqui que será montada a tabela com a relação de anúncios!! -->
+        <!-- Relação de anúncios!! -->
         <div class="container">
             <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Fase</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Pelagem / Cor</th>
-                        <th scope="col">Raça</th>
-                        <th scope="col">Sexo</th>
-                        <th scope="col">Observação</th>
-                        <th scope="col">Ações</th>
-                    </tr>
-                </thead>
                 <tbody>
                     <?php foreach ($anuncios as $a) { ?>
-                        <tr>
-                            <th scope="row">
-                                <?php echo $a['id']; ?>
-                            </th>
-                            <td>
-                                <?php
-                                if ($a['fase'] == 'A') {
-                                    echo "Adulto";
-                                } else {
-                                    echo "Filhote";
-                                }
-                                ?>
-                            </td>
-                            <td>
-                                <?php echo $a['tipo'] == 'G' ? "Gato" : "Cachorro"; ?>
-                            </td>
-                            <td>
-                                <?php echo $a['pelagem_cor']; ?>
-                            </td>
-                            <td>
-                                <?php echo $a['raca']; ?>
-                            </td>
-                            <td>
-                                <?php echo $a['sexo'] == 'M' ? "Macho" : "Fêmea"; ?>
-                            </td>
-                            <td>
-                                <?php echo $a['observacao']; ?>
-                            </td>
-                            <td>
-                                <?php if ($a['email_usuario'] == $_SESSION['email']) { ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Animal</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <?php
+                                        // Verifica se há um caminho de imagem no registro atual
+                                        if (!empty($a['imagem'])) {
+                                            // Se houver, mostra a imagem do banco de dados
+                                            echo '<img src="' . $a['imagem'] . '" alt="Foto" class="img-fluid">';
+                                        } else {
+                                            // Se não houver, mostra a imagem padrão
+                                            echo '<img src="img/fotopadrao.png" alt="Foto Padrão" class="img-fluid">';
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <ul class="list-unstyled">
+                                            <li>ID:
+                                                <?php echo $a['id']; ?>
+                                            </li>
+                                            <li>
+                                                <?php echo $a['tipo'] == 'G' ? "Gato" : "Cachorro"; ?>
+                                            </li>
+                                            <li>Raça:
+                                                <?php echo $a['raca']; ?>
+                                            </li>
+                                            <li>Pelagem/Cor:
+                                                <?php echo $a['pelagem_cor']; ?>
+                                            </li>
+                                            <li>Fase:
+                                                <?php echo $a['fase'] == 'A' ? "Adulto" : "Filhote"; ?>
+                                            </li>
+                                            <li>Sexo:
+                                                <?php echo $a['sexo'] == 'M' ? "Macho" : "Fêmea"; ?>
+                                            </li>
+                                            <li>Observação:
+                                                <?php echo $a['observacao']; ?>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php if ($a['email_usuario'] == $_SESSION['email']) { ?>
+                                <div class="card-footer">
                                     <a href="alt_anuncio.php?id_anuncio=<?php echo $a['id']; ?>" class="btn btn-warning">Alterar</a>
-
                                     <a href="del_anuncio.php?id_anuncio=<?php echo $a['id']; ?>" class="btn btn-danger">Excluir</a>
-                                <?php } ?>
-                            </td>
-                        </tr>
+                                </div>
+                            <?php } ?>
+                        </div>
+
                     <?php } ?>
                 </tbody>
             </table>
