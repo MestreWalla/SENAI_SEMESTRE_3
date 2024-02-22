@@ -1,13 +1,12 @@
-import 'package:app_todolist_02_22/main.dart';
 import 'package:app_todolist_02_22/tarefas_model.dart';
 import 'package:flutter/material.dart';
 
-class TareasController extends ChangeNotifier {
+class TarefasController extends ChangeNotifier {
   List<Tarefas> _tarefas = [];
   List<Tarefas> get tarefas => _tarefas;
 
   //metodo para adiconar  uma nova tarefa
-  void adicionaeTarefa(String descricao) {
+  void adicionarTarefa(String descricao) {
     _tarefas.add(Tarefas(descricao, false));
     notifyListeners();
   }

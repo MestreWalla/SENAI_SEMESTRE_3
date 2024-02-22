@@ -1,9 +1,12 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
 
-class ListaTarefasScreen extends StatelessWidget {
+import 'package:app_todolist_02_22/tarefas_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class TarefasScreen extends StatelessWidget {
   // Controlador para o campo de texto de nova tarefa
   final TextEditingController _controller = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class ListaTarefasScreen extends StatelessWidget {
                 suffixIcon: IconButton(
                   onPressed: () {
                     // Chamando o método adicionarTarefa do Provider para atualizar o estado
-                    Provider.of<ListaTarefasModel>(context, listen: false)
+                    Provider.of<TarefasController>(context, listen: false)
                         .adicionarTarefa(_controller.text);
                     // Limpar o campo de texto após adicionar a tarefa
                     _controller.clear();
@@ -38,7 +41,7 @@ class ListaTarefasScreen extends StatelessWidget {
           ),
           // Lista de tarefas usando um Consumer do Provider para atualização automática
           Expanded(
-            child: Consumer<ListaTarefasModel>(
+            child: Consumer<TarefasController>(
               builder: (context, model, child) {
                 return ListView.builder(
                   itemCount: model.tarefas.length,
