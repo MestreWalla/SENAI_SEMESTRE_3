@@ -7,20 +7,28 @@ class TarefasController extends ChangeNotifier {
 
   //metodo para adiconar  uma nova tarefa
   void adicionarTarefa(String descricao) {
-    _tarefas.add(Tarefas(descricao, false));
-    notifyListeners();
+    if (descricao.trim().isNotEmpty) {
+      _tarefas.add(Tarefas(descricao, false));
+      notifyListeners();
+    } else {
+      
+    }
   }
 
   void marcarComoConcluida(int indice) {
     if (indice >= 0 && indice < _tarefas.length) {
-      _tarefas[indice].concluida = true;
+      if (_tarefas[indice].concluida == true) {
+        _tarefas[indice].concluida = false;
+      } else {
+        _tarefas[indice].concluida = true;
+      }
       notifyListeners();
     }
   }
-  void excluirTarefa (int indice) {
+
+  void excluirTarefa(indice) {
     if (indice >= 0 && indice < _tarefas.length) {
-      _tarefas.remove(indice);
-      // Notifica os ouvintes sobre a mudança no estado
+      _tarefas.removeAt(indice);
       notifyListeners();
     }
   }
