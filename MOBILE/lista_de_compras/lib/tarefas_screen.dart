@@ -1,46 +1,65 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, deprecated_member_use
 
-import 'package:lista_de_compras/tarefas_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:lista_de_compras/tarefas_controller.dart';
 
 class TarefasScreen extends StatelessWidget {
-  // Controlador para o campo de texto de nova tarefa
   final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Barra superior do aplicativo
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 63, 156, 66),
-        title: Text('Lista de Compras'),
+        title: Row(
+          children: [
+            Icon(
+              Icons.clear_all,
+              size: 25,
+              color: const Color.fromARGB(255, 255, 255, 255),
+            ),
+            SizedBox(width: 8),
+            Text(
+              'Lista de Compras',
+              style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              // Adicionar Função
+            },
+          ),
+        ],
       ),
-      // Corpo principal do aplicativo
       body: Column(
         children: [
-          // Campo de texto para adicionar nova tarefa
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _controller,
+              focusNode: _focusNode,
               decoration: InputDecoration(
-                labelText: 'Nova Tarefa',
-                // Ícone para adicionar tarefa ao pressionar o botão
+                labelText: 'Novo item',
                 suffixIcon: IconButton(
                   onPressed: () {
-                    // Chamando o método adicionarTarefa do Provider para atualizar o estado
-                    Provider.of<TarefasController>(context, listen: false)
-                        .adicionarTarefa(_controller.text);
-                    // Limpar o campo de texto após adicionar a tarefa
-                    _controller.clear();
+                    _adicionarTarefa(context);
                   },
                   icon: Icon(Icons.add),
                 ),
               ),
+              onSubmitted: (_) {
+                _adicionarTarefa(context);
+              },
             ),
           ),
-          // Lista de tarefas usando um Consumer do Provider para atualização automática
           Expanded(
             child: Consumer<TarefasController>(
               builder: (context, model, child) {
@@ -48,19 +67,14 @@ class TarefasScreen extends StatelessWidget {
                   itemCount: model.tarefas.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      // Exibição do texto da tarefa
                       title: Text(model.tarefas[index].descricao),
-                      // Checkbox para marcar a tarefa como concluída
                       trailing: Checkbox(
                         value: model.tarefas[index].concluida,
                         onChanged: (value) {
-                          // Chamando o método marcarComoConcluida do Provider para atualizar o estado
                           model.marcarComoConcluida(index);
                         },
                       ),
-                      // Exclui a tarefa ao manter pressionado
                       onLongPress: () {
-                        // Chamando o método excluirTarefa do Provider para atualizar o estado
                         model.excluirTarefa(index);
                       },
                     );
@@ -71,6 +85,57 @@ class TarefasScreen extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromARGB(255, 63, 156, 66),
+        child: ButtonBar(
+          alignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton.icon(
+              onPressed: () {
+                Provider.of<TarefasController>(context, listen: false)
+                    .limparLista();
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
+                onPrimary: Colors.white,
+              ),
+              icon: Icon(Icons.clear),
+              label: Text('Limpar tudo'),
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                Provider.of<TarefasController>(context, listen: false)
+                    .limparTarefasMarcadas();
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
+                onPrimary: Colors.white,
+              ),
+              icon: Icon(Icons.clear),
+              label: Text('Limpar marcados'),
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                Provider.of<TarefasController>(context, listen: false)
+                    .ordenarTarefasPorNome();
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+                onPrimary: Colors.white,
+              ),
+              icon: Icon(Icons.sort_by_alpha),
+              label: Text('Ordenar'),
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  void _adicionarTarefa(BuildContext context) {
+    Provider.of<TarefasController>(context, listen: false)
+        .adicionarTarefa(_controller.text);
+    _controller.clear();
+    _focusNode.requestFocus(); // Retorna o foco para o campo de texto
   }
 }
