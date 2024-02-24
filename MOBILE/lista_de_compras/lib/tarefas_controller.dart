@@ -7,7 +7,7 @@ class TarefasController extends ChangeNotifier {
   bool _ordemCrescente = true; // Mantém o estado da ordenação
 
   void adicionarTarefa(String descricao) {
-    if (descricao.trim().isNotEmpty) {
+    if (descricao.trim().isNotEmpty && !_tarefas.any((tarefa) => tarefa.descricao == descricao)) {
       _tarefas.add(Tarefas(descricao, false));
       notifyListeners();
     }
