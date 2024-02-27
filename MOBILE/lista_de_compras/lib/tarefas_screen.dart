@@ -75,7 +75,7 @@ class TarefasScreen extends StatelessWidget {
                         },
                       ),
                       onLongPress: () {
-                        model.excluirTarefa(index);
+                          model.excluirTarefa(context, index);
                       },
                     );
                   },
@@ -93,26 +93,28 @@ class TarefasScreen extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: () {
                 Provider.of<TarefasController>(context, listen: false)
-                    .limparLista();
+                    .limparLista(context);
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.red,
                 onPrimary: Colors.white,
+                shape: BeveledRectangleBorder(),
               ),
               icon: Icon(Icons.clear),
-              label: Text('Limpar tudo'),
+              label: Text('Excluir tudo'),
             ),
             ElevatedButton.icon(
               onPressed: () {
                 Provider.of<TarefasController>(context, listen: false)
-                    .limparTarefasMarcadas();
+                    .limparTarefasMarcadas(context);
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-                onPrimary: Colors.white,
+                primary: const Color.fromARGB(255, 231, 244, 54),
+                onPrimary: const Color.fromARGB(255, 0, 0, 0),
+                shape: BeveledRectangleBorder(),
               ),
               icon: Icon(Icons.clear),
-              label: Text('Limpar marcados'),
+              label: Text('Excluir conluidos'),
             ),
             ElevatedButton.icon(
               onPressed: () {
@@ -122,6 +124,7 @@ class TarefasScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 primary: Colors.blue,
                 onPrimary: Colors.white,
+                shape: BeveledRectangleBorder(),
               ),
               icon: Icon(Icons.sort_by_alpha),
               label: Text('Ordenar'),
