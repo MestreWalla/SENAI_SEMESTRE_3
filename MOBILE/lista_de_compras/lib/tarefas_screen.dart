@@ -11,8 +11,9 @@ class TarefasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 188, 228, 245),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 63, 156, 66),
+        backgroundColor: Color.fromARGB(255, 63, 130, 156),
         title: Row(
           children: [
             Icon(
@@ -86,7 +87,7 @@ class TarefasScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color.fromARGB(255, 63, 156, 66),
+        color: Color.fromARGB(255, 63, 130, 156),
         child: ButtonBar(
           alignment: MainAxisAlignment.spaceAround,
           children: [
@@ -96,7 +97,7 @@ class TarefasScreen extends StatelessWidget {
                     .limparLista(context);
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.red,
+                primary: Color.fromARGB(255, 229, 91, 91),
                 onPrimary: Colors.white,
                 shape: BeveledRectangleBorder(),
               ),
@@ -109,7 +110,7 @@ class TarefasScreen extends StatelessWidget {
                     .limparTarefasMarcadas(context);
               },
               style: ElevatedButton.styleFrom(
-                primary: const Color.fromARGB(255, 231, 244, 54),
+                primary: Color.fromARGB(255, 185, 193, 62),
                 onPrimary: const Color.fromARGB(255, 0, 0, 0),
                 shape: BeveledRectangleBorder(),
               ),
