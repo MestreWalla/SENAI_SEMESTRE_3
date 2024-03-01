@@ -5,10 +5,10 @@ import 'package:app_carros/model.dart';
 class CarroController {
   //Atributo
   List<Carro> _CarrosLista = [
-    Carro ("Fiat Uno", 1992, "caminhodaimagem"),
-    Carro ("Classic", 2012, "caminhodaimagem"),
+    Carro ("Fiat Uno", 1992, "lib/img/uno.webp"),
+    Carro ("Classic", 2012, "lib/img/classic.jpg"),
     Carro ("Gol", 2001, "lib/img/gol.webp"),
-    Carro("HB20", 2010, "caminhodaimagem"),
+    Carro("HB20", 2015, "lib/img/hb20.jpg"),
   ];
 
   //Métodos

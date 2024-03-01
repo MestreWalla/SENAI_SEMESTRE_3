@@ -66,7 +66,10 @@ class TelaDetalhesCarro extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(carro.imagemUrl),
+            SizedBox(
+              height: 400, // Altura fixa desejada para a imagem
+              child: Image.network(carro.imagemUrl,fit: BoxFit.cover,),
+            ),
             SizedBox(height: 20),
             Text("Modelo: ${carro.modelo}"),
             Text("Ano: ${carro.ano}"),
