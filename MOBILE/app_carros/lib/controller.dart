@@ -22,4 +22,6 @@ class CarroController {
   void excluirCarro(int index) {}
 
   void detalharCarro(int index) {}
+
+  void addCarros() {}
 }

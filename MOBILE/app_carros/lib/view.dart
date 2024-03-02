@@ -46,8 +46,61 @@ class TelaListaCarros extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () {
+          _adicionarCarro(context);
+        },
+        child: Icon(Icons.add),
       ),
+    );
+  }
+
+  void _adicionarCarro(BuildContext context) {
+    TextEditingController modeloController = TextEditingController();
+    TextEditingController anoController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Adicionar Carro'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                controller: modeloController,
+                decoration: InputDecoration(labelText: 'Modelo'),
+              ),
+              TextField(
+                controller: anoController,
+                decoration: InputDecoration(labelText: 'Ano'),
+              ),
+              // Campo para upload de imagem
+              TextButton.icon(
+                onPressed: () {
+                  // Aqui você pode implementar a lógica para o upload de imagem
+                },
+                icon: Icon(Icons.file_upload),
+                label: Text('Upload de Imagem'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancelar'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                controllerCarros.addCarros();
+                Navigator.of(context).pop();
+              },
+              child: Text('Adicionar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -68,7 +121,10 @@ class TelaDetalhesCarro extends StatelessWidget {
           children: [
             SizedBox(
               height: 400, // Altura fixa desejada para a imagem
-              child: Image.network(carro.imagemUrl,fit: BoxFit.cover,),
+              child: Image.network(
+                carro.imagemUrl,
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(height: 20),
             Text("Modelo: ${carro.modelo}"),
