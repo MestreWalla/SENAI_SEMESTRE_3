@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_web_libraries_in_flutter
 
+import 'dart:js';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,29 +13,37 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Exemplo de Árvore de Widgets'),
+          title: Text('Tabela de Informações'),
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Primeiro Filho'),
-            Container(
-              color: Color.fromARGB(255, 182, 182, 182),
-              child: Row(
-                children: [
-                  Column(
-                    children: const [
-                      Text('Filho Aninhado 1'),
-                    ],
-                  ),
-                  Column(
-                    children: const [
-                      Text('Filho Aninhado 2'),
-                    ],
-                  ),
-                ],
-              ),
+            _buildTableRow(Icons.person, 'Nome', 'João'),
+            _buildTableRow(Icons.calendar_today, 'Idade', '30 anos'),
+            _buildTableRow(Icons.location_on, 'Endereço', 'Rua Exemplo, 123'),
+            _buildTableRow(Icons.email, 'Email', 'joao@example.com'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTableRow(IconData icon, String title, String value) {
+    return GestureDetector(
+      onTap: () {
+        final snackBar = SnackBar(content: Text('Mais informações: $title - $value'));
+        ScaffoldMessenger.of(context as BuildContext).showSnackBar(snackBar);
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Icon(icon),
+            SizedBox(width: 10),
+            Text(
+              '$title: $value',
+              style: TextStyle(fontSize: 18),
             ),
-            Text('Segundo Filho'),
           ],
         ),
       ),
