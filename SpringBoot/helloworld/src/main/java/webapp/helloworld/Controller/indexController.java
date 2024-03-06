@@ -11,19 +11,21 @@ public class indexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView abrirIndex() {
-        ModelAndView mv = new ModelAndView("index");
+        ModelAndView mvStarter = new ModelAndView("index");
 
-        String mensagem = "Olá, seja bem-vinda(o)!";
-        mv.addObject("msg", mensagem);
+        String mensagem = "Preencha seus dados no formulário!";
+        mvStarter.addObject("msg", mensagem);
 
-        return mv;
+        return mvStarter;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ModelAndView buscarIndex(@RequestParam("nome") String nome,
+    public ModelAndView buscarIndex(
+            @RequestParam("nome") String nome,
             @RequestParam("email") String email,
             @RequestParam("telefone") String telefone,
             @RequestParam("endereco") String endereco) {
+
         ModelAndView mv = new ModelAndView("index");
 
         // Criar uma breve história usando os elementos do formulário
@@ -36,7 +38,6 @@ public class indexController {
 
         // Adicionar a história ao modelo da view
         mv.addObject("historia", historia);
-
         return mv;
     }
 
