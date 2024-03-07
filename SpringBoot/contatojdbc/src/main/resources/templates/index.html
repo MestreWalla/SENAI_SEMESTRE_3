@@ -121,6 +121,9 @@ footer p {
             <li>Dicas inuteis que nunca vão melhorar sua vida</li>
             <li>Promoções e ofertas especiais falsas</li>
         </ul>
+        <ul>
+            <li th:each="email : ${emails}" th:text="${email}"></li>
+        </ul>
     </section>
     <footer>
         <p>&copy; 2023 - Sincero LTDA</p>
