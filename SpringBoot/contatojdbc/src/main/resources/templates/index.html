@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -105,24 +105,25 @@ footer p {
 <body>
     <header>
         <h1>Inscreva-se na Newsletter</h1>
-        <p>Receba novidades, dicas e promoções em seu e-mail.</p>
+        <p>Receba muita encheção de saco em seu e-mail.</p>
     </header>
+    <span th:text="${msg}"></span>
     <section class="form-container">
-        <form action="enviar.php" method="post" id="newsletter">
-            <input type="email" name="email" placeholder="Digite seu e-mail">
+        <form method="post" id="newsletter">
+            <input type="email" name="email" placeholder="Digite seu e-mail e aguente as consequências">
             <button type="submit">Inscrever-se</button>
         </form>
     </section>
     <section class="benefits">
         <h2>Benefícios da Newsletter</h2>
         <ul>
-            <li>Conteúdo exclusivo e relevante</li>
-            <li>Dicas para melhorar sua vida</li>
-            <li>Promoções e ofertas especiais</li>
+            <li>Conteúdo irrelevante para você</li>
+            <li>Dicas inuteis que nunca vão melhorar sua vida</li>
+            <li>Promoções e ofertas especiais falsas</li>
         </ul>
     </section>
     <footer>
-        <p>&copy; 2023 - Seu Nome/Empresa</p>
+        <p>&copy; 2023 - Sincero LTDA</p>
     </footer>
 </body>
 </html>
