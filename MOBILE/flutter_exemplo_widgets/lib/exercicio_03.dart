@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,10 +34,10 @@ class MyHomePage extends StatelessWidget {
           return Card(
             child: ListTile(
               title: Text(items[index]),
-              subtitle: Text('Informações fictícias'),
+              subtitle: Text('Informações'),
               leading: Icon(Icons.info),
               onTap: () {
-                // Ação ao clicar no card
+                // Possivel ação ao clicar no card
               },
             ),
           );
