@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_final_fields, use_key_in_widget_constructors, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   static List<Widget> _widgetOptions = <Widget>[
     InicioPage(),
     ContactPage(),
+    StorePage(),
     ConfiguracoesPage(),
   ];
 
@@ -40,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // Verifica se a largura da tela é maior que um certo threshold para desktops
-    bool isDesktop = MediaQuery.of(context).size.width > 800;
+    bool isTablet = MediaQuery.of(context).size.width > 800;
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +53,7 @@ class _HomePageState extends State<HomePage> {
       // Corpo do aplicativo varia de acordo com o item selecionado
       body: _widgetOptions.elementAt(_selectedIndex),
       // BottomNavigationBar somente para dispositivos móveis
-      bottomNavigationBar: isDesktop
+      bottomNavigationBar: isTablet
           ? null
           : BottomNavigationBar(
               items: const <BottomNavigationBarItem>[
@@ -62,16 +66,21 @@ class _HomePageState extends State<HomePage> {
                   label: 'Contato',
                 ),
                 BottomNavigationBarItem(
+                  icon: Icon(Icons.store),
+                  label: 'Loja',
+                ),
+                BottomNavigationBarItem(
                   icon: Icon(Icons.settings),
                   label: 'Configurações',
                 ),
               ],
               currentIndex: _selectedIndex,
+              unselectedItemColor: Colors.grey,
               selectedItemColor: Colors.blue,
               onTap: _onItemTapped,
             ),
-      // Drawer condicional para dispositivos desktop
-      drawer: isDesktop
+      // Drawer para desktop
+      drawer: isTablet
           ? Drawer(
               child: ListView(
                 children: [
@@ -92,9 +101,14 @@ class _HomePageState extends State<HomePage> {
                     onTap: () => _onItemTapped(1),
                   ),
                   ListTile(
+                    leading: Icon(Icons.shop),
+                    title: Text("Loja"),
+                    onTap: () => _onItemTapped(2),
+                  ),
+                  ListTile(
                     leading: Icon(Icons.settings),
                     title: Text("Configurações"),
-                    onTap: () => _onItemTapped(2),
+                    onTap: () => _onItemTapped(3),
                   ),
                 ],
               ),
@@ -200,6 +214,112 @@ class ConfiguracoesPage extends StatelessWidget {
       child: Text(
         'Painel de Configurações',
         style: TextStyle(fontSize: 24),
+      ),
+    );
+  }
+}
+
+class StorePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Painel de Configurações'),
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(16.0),
+        children: [
+          _buildProductCard(
+            imageUrl: '../lib/assets/product.webp',
+            title: 'Produto 1',
+            description: 'Descrição do Produto 1',
+          ),
+          SizedBox(height: 16.0),
+          _buildProductCard(
+            imageUrl: '../lib/assets/product.webp',
+            title: 'Produto 2',
+            description: 'Descrição do Produto 2',
+          ),
+          SizedBox(height: 16.0),
+          _buildProductCard(
+            imageUrl: '../lib/assets/product.webp',
+            title: 'Produto 3',
+            description: 'Descrição do Produto 3',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProductCard(
+      {required String imageUrl,
+      required String title,
+      required String description}) {
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: 150.0,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                ButtonBar(
+                  children: <Widget>[
+                    TextButton(
+                      child: Text(
+                        'DETALHES',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                    TextButton(
+                      child: Icon(
+                        Icons.share,
+                        size: 25,
+                        color: Colors.blue,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
