@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_final_fields, use_key_in_widget_constructors, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Exercicio 04 e 05',
+      title: 'Exercicios de Material',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -30,7 +29,7 @@ class _HomePageState extends State<HomePage> {
 
   static List<Widget> _widgetOptions = <Widget>[
     InicioPage(),
-    ContactPage(),
+    // ContactPage(),
     StorePage(),
     ConfiguracoesPage(),
   ];
@@ -48,7 +47,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Exercicio 04 e 05'),
+        title: Text('Exercicios de Material'),
       ),
       // Corpo do aplicativo varia de acordo com o item selecionado
       body: _widgetOptions.elementAt(_selectedIndex),
@@ -61,10 +60,10 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(Icons.home),
                   label: 'Início',
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.contact_page),
-                  label: 'Contato',
-                ),
+                // BottomNavigationBarItem(
+                //   icon: Icon(Icons.contact_page),
+                //   label: 'Contato',
+                // ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.store),
                   label: 'Loja',
@@ -183,7 +182,7 @@ class ContactPage extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Mensagem',
                 ),
-                maxLines: 4,
+                maxLines: 3,
               ),
               SizedBox(height: 20),
               ElevatedButton(
@@ -210,9 +209,40 @@ class ContactPage extends StatelessWidget {
 class ConfiguracoesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 4, // Número total de abas
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Painel de Produtos'),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'Perfil'),
+              Tab(text: 'Pagamento'),
+              Tab(text: 'Aplicativo'),
+              Tab(text: 'Contato'),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            // Configurações da aba Perfil
+            _buildTabContent('Configurações do Perfil'),
+            // Configurações da aba Pagamento
+            _buildTabContent('Configurações do Pagamento'),
+            // Configurações da aba Aplicativo
+            _buildTabContent('Configurações do Aplicativo'),
+            // Configurações da aba Contato
+            ContactPage(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabContent(String text) {
     return Center(
       child: Text(
-        'Painel de Configurações',
+        text,
         style: TextStyle(fontSize: 24),
       ),
     );
