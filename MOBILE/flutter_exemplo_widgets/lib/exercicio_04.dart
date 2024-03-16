@@ -1,5 +1,5 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_final_fields, use_key_in_widget_constructors, library_private_types_in_public_api
-
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_final_fields, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_literals_to_create_immutables
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Exercicios de Material',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue, // Ajuste para o tema primarySwatch
       ),
       home: HomePage(),
     );
@@ -26,6 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  double _progressValue = 0.0; // Variável para controlar o progresso
 
   static List<Widget> _widgetOptions = <Widget>[
     InicioPage(),
@@ -41,6 +42,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Inicia o temporizador para simular o progresso
+    _startTimer();
+  }
+
+  void _startTimer() {
+    const oneSec = Duration(seconds: 1);
+    Timer.periodic(oneSec, (timer) {
+      setState(() {
+        if (_progressValue < 1.0) {
+          _progressValue += 0.1; // Incrementa o valor do progresso
+        } else {
+          timer
+              .cancel(); // Cancela o temporizador quando o progresso atinge 100%
+        }
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     // Verifica se a largura da tela é maior que um certo threshold para desktops
     bool isTablet = MediaQuery.of(context).size.width > 800;
@@ -48,9 +70,21 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Exercicios de Material'),
+        backgroundColor: Colors.blue.withOpacity(0.5),
       ),
-      // Corpo do aplicativo varia de acordo com o item selecionado
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: Stack(
+        children: [
+          _widgetOptions.elementAt(_selectedIndex),
+          // Barra de progresso
+          _progressValue < 1.0
+              ? LinearProgressIndicator(
+                  value: _progressValue,
+                  backgroundColor: Colors.grey,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                )
+              : Container(), // Se o progresso for completo, esconde a barra de progresso
+        ],
+      ),
       // BottomNavigationBar somente para dispositivos móveis
       bottomNavigationBar: isTablet
           ? null
@@ -60,10 +94,6 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(Icons.home),
                   label: 'Início',
                 ),
-                // BottomNavigationBarItem(
-                //   icon: Icon(Icons.contact_page),
-                //   label: 'Contato',
-                // ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.store),
                   label: 'Loja',
@@ -78,7 +108,7 @@ class _HomePageState extends State<HomePage> {
               selectedItemColor: Colors.blue,
               onTap: _onItemTapped,
             ),
-      // Drawer para desktop
+      // Drawer para tablet
       drawer: isTablet
           ? Drawer(
               child: ListView(
@@ -95,19 +125,14 @@ class _HomePageState extends State<HomePage> {
                     onTap: () => _onItemTapped(0),
                   ),
                   ListTile(
-                    leading: Icon(Icons.contact_page),
-                    title: Text("Contato"),
-                    onTap: () => _onItemTapped(1),
-                  ),
-                  ListTile(
                     leading: Icon(Icons.shop),
                     title: Text("Loja"),
-                    onTap: () => _onItemTapped(2),
+                    onTap: () => _onItemTapped(1),
                   ),
                   ListTile(
                     leading: Icon(Icons.settings),
                     title: Text("Configurações"),
-                    onTap: () => _onItemTapped(3),
+                    onTap: () => _onItemTapped(2),
                   ),
                 ],
               ),
@@ -120,24 +145,29 @@ class _HomePageState extends State<HomePage> {
 class InicioPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            Icons.home,
-            size: 100,
-            color: Colors.red,
+    return Stack(
+      children: <Widget>[
+        // Imagem de fundo
+        Image.asset(
+          '../lib/assets/wallpaper.jpg',
+          width: double.infinity,
+          height: double.infinity,
+          fit: BoxFit.cover,
+        ),
+        // Texto sobreposto
+        Positioned(
+          top: 20.0,
+          left: 20.0,
+          child: Container(
+            padding: EdgeInsets.all(10.0),
+            color: Colors.black.withOpacity(0.5),
+            child: Text(
+              'Página Início',
+              style: TextStyle(fontSize: 24, color: Colors.white),
+            ),
           ),
-          SizedBox(height: 5),
-          Image.asset('../lib/assets/senai.png', width: 150),
-          SizedBox(height: 5),
-          Text(
-            'Página Início do exercício 04',
-            style: TextStyle(fontSize: 30, color: Colors.black),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -159,46 +189,47 @@ class ContactPage extends StatelessWidget {
           fontSize: textSize,
         ),
       ),
-      body: Center(
-        child: Container(
-          width: screenWidth * 0.8,
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Nome',
-                ),
-              ),
-              SizedBox(height: 20),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'E-mail',
-                ),
-              ),
-              SizedBox(height: 20),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Mensagem',
-                ),
-                maxLines: 3,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  textStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+      body: SingleChildScrollView(
+        // Wrap the Column with SingleChildScrollView
+        child: Center(
+          child: Container(
+            width: screenWidth * 0.8,
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Nome',
                   ),
                 ),
-                onPressed: () {
-                  // Lógica para enviar o formulário
-                },
-                child: const Text('Enviar'),
-              ),
-            ],
+                SizedBox(height: 20),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'E-mail',
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Mensagem',
+                  ),
+                  maxLines: 3,
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    // Lógica para salvar as configurações do perfil
+                  },
+                  child: Text(
+                    'Enviar',
+                    style: TextStyle(
+                      color: Colors.blue, // Defina a cor do texto como azul
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -210,30 +241,109 @@ class ConfiguracoesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4, // Número total de abas
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Painel de Produtos'),
+          title: SizedBox.shrink(), // Define o título da AppBar como vazio
+          toolbarHeight:0, // Define a altura da AppBar manualmente
           bottom: TabBar(
             tabs: [
               Tab(text: 'Perfil'),
               Tab(text: 'Pagamento'),
               Tab(text: 'Aplicativo'),
-              Tab(text: 'Contato'),
+              Tab(text: 'Suporte'),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            // Configurações da aba Perfil
-            _buildTabContent('Configurações do Perfil'),
-            // Configurações da aba Pagamento
+            _buildPerfilTabContent(),
             _buildTabContent('Configurações do Pagamento'),
-            // Configurações da aba Aplicativo
-            _buildTabContent('Configurações do Aplicativo'),
-            // Configurações da aba Contato
+            SingleChildScrollView(
+              // Adicionando SingleChildScrollView aqui
+              child: _buildConfiguracoesDoAplicativo(context),
+            ),
             ContactPage(),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPerfilTabContent() {
+    return SingleChildScrollView(
+      child: Center(
+        child: ConstrainedBox(
+          constraints:
+              BoxConstraints(maxWidth: 400), // Define o máximo de largura
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Configurações do Perfil',
+                  style: TextStyle(fontSize: 24),
+                ),
+                SizedBox(height: 20),
+                // Centralizar a foto de perfil
+                GestureDetector(
+                  onTap: () {
+                    // Adicione aqui a lógica para selecionar uma imagem da galeria
+                  },
+                  child: Center(
+                    child: CircleAvatar(
+                      radius: 50,
+                      //backgroundImage: AssetImage('caminho/para/imagem_padrao.jpg'),
+                      child: Icon(Icons.person, size: 80, color: Colors.grey),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Nome',
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Sobrenome',
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'E-mail',
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Telefone',
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Endereço',
+                  ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    // Lógica para salvar as configurações do perfil
+                  },
+                  child: Text(
+                    'Salvar',
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -247,6 +357,71 @@ class ConfiguracoesPage extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildConfiguracoesDoAplicativo(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Configurações do Aplicativo',
+            style: TextStyle(fontSize: 24),
+          ),
+          SizedBox(height: 20),
+          ListTile(
+            leading: Icon(Icons.language),
+            title: Text('Idioma'),
+            subtitle: Text('Português'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              // Lógica para alterar o idioma
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.color_lens),
+            title: Text('Tema'),
+            subtitle: Text('Escuro'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              // Lógica para alterar o tema
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.notifications),
+            title: Text('Notificações'),
+            subtitle: Text('Ativado'),
+            trailing: Switch(
+              value: false,
+              onChanged: (value) {
+                // Lógica para ligar/desligar notificações
+              },
+              activeColor: Colors.green.withOpacity(
+                  0.5), // Define a cor de fundo do botão switch quando ativado
+              activeTrackColor:
+                  Colors.blue, // Define a cor de fundo da faixa quando ativado
+              inactiveThumbColor: Colors
+                  .white, // Define a cor da bolinha central quando desativado
+              inactiveTrackColor: Colors.blue.withOpacity(
+                  0.5), // Define a cor de fundo da faixa quando desativado
+            ),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.backup),
+            title: Text('Backup'),
+            subtitle: Text('Agendado para hoje'),
+            trailing: Icon(Icons.arrow_forward),
+            onTap: () {
+              // Lógica para configurar o backup
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class StorePage extends StatelessWidget {
@@ -254,10 +429,11 @@ class StorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Painel de Configurações'),
+        title: SizedBox.shrink(), // Define o título da AppBar como vazio
+          toolbarHeight:0, // Define a altura da AppBar manualmente
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(20.0),
         children: [
           _buildProductCard(
             imageUrl: '../lib/assets/product.webp',
