@@ -524,7 +524,7 @@ class StorePage extends StatelessWidget {
                 ),
               ],
             ),
-          ),
+          ),''
         ],
       ),
     );
