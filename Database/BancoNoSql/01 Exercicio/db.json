@@ -1,0 +1,144 @@
+{
+  "produtos": [
+    {
+      "id": "1",
+      "nome": "Smartphone",
+      "descricao": "Smartphone com tela de 6 polegadas, câmera de alta resolução e processador octa-core.",
+      "preco": 1399.99,
+      "categorias": [
+        "Eletrônicos",
+        "Tecnologia",
+        "Telefonia"
+      ],
+      "avaliacoes": [
+        {
+          "usuario": "João",
+          "comentario": "Ótimo smartphone! Rápido e com uma câmera incrível."
+        },
+        {
+          "usuario": "Maria",
+          "comentario": "Estou muito satisfeita com meu novo smartphone. Recomendo!"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "nome": "Notebook",
+      "descricao": "Notebook ultrafino com processador Intel Core i7, 16GB de RAM e SSD de 512GB.",
+      "preco": 2999.99,
+      "categorias": [
+        "Eletrônicos",
+        "Informática",
+        "Computadores"
+      ],
+      "avaliacoes": [
+        {
+          "usuario": "Pedro",
+          "comentario": "Excelente notebook! Rápido e com uma ótima capacidade de armazenamento."
+        },
+        {
+          "usuario": "Ana",
+          "comentario": "O notebook chegou em perfeitas condições e superou minhas expectativas."
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "nome": "Smart TV",
+      "descricao": "Smart TV 4K de 55 polegadas com sistema operacional Android TV e suporte a streaming.",
+      "preco": 2499.99,
+      "categorias": [
+        "Eletrônicos",
+        "Tecnologia",
+        "Televisores"
+      ],
+      "avaliacoes": [
+        {
+          "usuario": "Carlos",
+          "comentario": "Imagem incrível e ótimas funcionalidades. Recomendo a todos!"
+        },
+        {
+          "usuario": "Ana",
+          "comentario": "A Smart TV foi uma excelente compra. Estou muito satisfeita."
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "nome": "Fones de Ouvido Bluetooth",
+      "descricao": "Fones de ouvido sem fio com cancelamento de ruído e bateria de longa duração.",
+      "preco": 129.99,
+      "categorias": [
+        "Eletrônicos",
+        "Áudio",
+        "Acessórios"
+      ],
+      "avaliacoes": [
+        {
+          "usuario": "Maria",
+          "comentario": "Ótimos fones de ouvido! Cancelamento de ruído eficaz e confortáveis de usar."
+        },
+        {
+          "usuario": "Paulo",
+          "comentario": "Comprei esses fones e estou muito satisfeito. Excelente qualidade de som."
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "nome": "X-box one X",
+      "descricao": "Console de videogame de última geração com suporte a jogos em 4K e HDR.",
+      "preco": 2399.99,
+      "categorias": [
+        "Eletrônicos",
+        "Jogos",
+        "Consoles"
+      ],
+      "avaliacoes": [
+        {
+          "usuario": "Lucas",
+          "comentario": "O X-box one X é simplesmente incrível! Melhor console que já tive."
+        },
+        {
+          "usuario": "Gabriela",
+          "comentario": "Me divirto muito jogando no X-box. Ótima compra!"
+        },
+        {
+          "usuario": "João",
+          "comentario": "Ótimo console, recomendo!",
+          "classificacao": 5
+        },
+        {
+          "usuario": "Maria",
+          "comentario": "Excelente desempenho em jogos.",
+          "classificacao": 4
+        },
+        {
+          "usuario": "Pedro",
+          "comentario": "Design moderno e compacto.",
+          "classificacao": 5
+        },
+        {
+          "usuario": "Ana",
+          "comentario": "Entrega rápida e bem embalado.",
+          "classificacao": 5
+        },
+        {
+          "usuario": "Carlos",
+          "comentario": "Bons gráficos e fluidez nos jogos.",
+          "classificacao": 4
+        },
+        {
+          "usuario": "Juliana",
+          "comentario": "Preço um pouco alto, mas vale a pena.",
+          "classificacao": 4
+        },
+        {
+          "usuario": "Lucas",
+          "comentario": "Fácil de configurar e começar a jogar.",
+          "classificacao": 5
+        }
+      ]
+    }
+  ]
+}
