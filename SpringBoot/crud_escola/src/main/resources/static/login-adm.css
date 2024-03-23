@@ -10,11 +10,17 @@
 } */
 
 .login-container {
-    background-color: #fff;
+    background-color: #740001;
+    background-image: url("img/background.jpg");
+    color: white;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    width: 500px;
+    height: 1400px;
+    margin: 0 auto;
+    margin-top: 40vh;
 }
 
 h2 {
@@ -32,8 +38,10 @@ label {
 }
 
 input[type="text"],
-input[type="password"] {
-    width: 100%;
+input[type="password"],
+input[type="CPF"],
+input[type="e-mail"] {
+    width: 80%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -51,4 +59,8 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+a {
+    text-decoration: none;
 }
