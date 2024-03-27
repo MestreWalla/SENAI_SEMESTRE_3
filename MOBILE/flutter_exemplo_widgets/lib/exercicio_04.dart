@@ -245,7 +245,7 @@ class ConfiguracoesPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: SizedBox.shrink(), // Define o título da AppBar como vazio
-          toolbarHeight:0, // Define a altura da AppBar manualmente
+          toolbarHeight: 0, // Define a altura da AppBar manualmente
           bottom: TabBar(
             tabs: [
               Tab(text: 'Perfil'),
@@ -430,7 +430,7 @@ class StorePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: SizedBox.shrink(), // Define o título da AppBar como vazio
-          toolbarHeight:0, // Define a altura da AppBar manualmente
+        toolbarHeight: 0, // Define a altura da AppBar manualmente
       ),
       body: ListView(
         padding: EdgeInsets.all(20.0),
@@ -524,7 +524,7 @@ class StorePage extends StatelessWidget {
                 ),
               ],
             ),
-          ),''
+          ),
         ],
       ),
     );
