@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.dashboard {
+    width: 80%;
+    margin: 50px auto;
+    margin-top: 40vh;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.dashboard h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.dashboard p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.widget {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.widget h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.widget p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.widget a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.widget a:hover {
+    color: #007bff;
+}

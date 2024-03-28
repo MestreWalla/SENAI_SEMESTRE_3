@@ -11,10 +11,12 @@ public class IndexController {
     public String abrinIndex(Model model) {
         return "index"; // Isso corresponde ao template "index.html" na pasta "templates"
     }
+
     @GetMapping("/login-adm")
     public String adminLogin(Model model) {
         return "login-adm";
     }
+
     @GetMapping("/cadastro-adm")
     public String adminCadastro(Model model) {
         return "cadastro-adm";
