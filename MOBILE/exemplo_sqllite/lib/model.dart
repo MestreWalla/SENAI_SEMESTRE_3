@@ -3,7 +3,7 @@ class ContactModel {
   int id;
   String name;
   String email;
-  String telefone;
+  String phone;
   String endereco;
   // Construtor
   ContactModel
@@ -11,7 +11,7 @@ class ContactModel {
     required this.id,
     required this.name,
     required this.email,
-    required this.telefone,
+    required this.phone,
     required this.endereco,
   });
   //Mapeamento
@@ -22,7 +22,7 @@ class ContactModel {
       id: map['id'],
       name: map['name'],
       email: map['email'],
-      telefone: map['telefone'],
+      phone: map['phone'],
       endereco: map['endereco'],
     );
   }
@@ -31,7 +31,7 @@ class ContactModel {
       'id': id,
       'name': name,
       'email': email,
-      'telefone': telefone,
+      'phone': phone,
       'endereco': endereco,
     };
   }
