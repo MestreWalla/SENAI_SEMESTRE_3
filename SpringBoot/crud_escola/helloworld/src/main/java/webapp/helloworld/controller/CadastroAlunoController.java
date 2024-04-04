@@ -17,19 +17,26 @@ public class CadastroAlunoController {
     @Autowired
     private VerificaCadastroAlunoRepository vcar;
 
-    @PostMapping("/cadastro-adm")
+    // @PostMapping("/cadastro-aluno")
+    // public String postCadastroAluno(Aluno aluno) {
+    // VerificaCadastroAluno verificaCadastroAluno = vcar.findByCpf(aluno.getCpf());
+    // if (verificaCadastroAluno != null &&
+    // verificaCadastroAluno.getCpf().equals(aluno.getCpf())) {
+    // ar.save(aluno);
+    // }
+    // // Após o cadastro ser realizado com sucesso
+    // return "redirect:/login-adm?success=true";
+    // }
+
+    @PostMapping("/cadastro-aluno")
     public String postCadastroAluno(Aluno aluno) {
-        VerificaCadastroAluno verificaCadastroAluno = vcar.findByCpf(aluno.getCpf());
-        if (verificaCadastroAluno != null && verificaCadastroAluno.getCpf().equals(aluno.getCpf())) {
-            ar.save(aluno);
-            
-        }
+        ar.save(aluno);
         // Após o cadastro ser realizado com sucesso
         return "redirect:/login-adm?success=true";
     }
 
     // Método POST para processar o login do aluno
-    @PostMapping("/login-adm")
+    @PostMapping("/login-aluno")
     public String processAdminLogin(@RequestParam("username") String username,
             @RequestParam("password") String password) {
         // Lógica para processar o login do aluno
@@ -48,7 +55,7 @@ public class CadastroAlunoController {
     private boolean validarCredenciais(String username, String password) {
         // Consultar o banco de dados para verificar se existe um aluno com o
         // nome de usuário fornecido
-        Aluno aluno = ar.findByUserName(username);
+        Aluno aluno = ar.findByUsername(username);
 
         // Verificar se o aluno foi encontrado e se a senha fornecida
         // corresponde à senha armazenada

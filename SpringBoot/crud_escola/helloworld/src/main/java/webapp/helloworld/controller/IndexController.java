@@ -24,6 +24,11 @@ public class IndexController {
         return "cadastro-adm";
     }
 
+    @GetMapping("/cadastro-aluno")
+    public String alunoCadastro(Model model) {
+        return "cadastro-aluno";
+    }
+
     @PostMapping("/logout")
     public String postMethodName(@RequestBody String entity) {
         return entity;
