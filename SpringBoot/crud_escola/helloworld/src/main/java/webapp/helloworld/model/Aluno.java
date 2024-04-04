@@ -1,7 +1,6 @@
 package webapp.helloworld.model;
 
 import java.io.Serializable;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -13,9 +12,37 @@ public class Aluno implements Serializable {
     private String username;
     private String email;
     private String senha;
+    private String materia01;
+    private String materia02;
+    private String professor01;
+    private String professor02;
     
     public String getCpf() {
         return cpf;
+    }
+    public String getMateria01() {
+        return materia01;
+    }
+    public void setMateria01(String materia01) {
+        this.materia01 = materia01;
+    }
+    public String getMateria02() {
+        return materia02;
+    }
+    public void setMateria02(String materia02) {
+        this.materia02 = materia02;
+    }
+    public String getProfessor01() {
+        return professor01;
+    }
+    public void setProfessor01(String professor01) {
+        this.professor01 = professor01;
+    }
+    public String getProfessor02() {
+        return professor02;
+    }
+    public void setProfessor02(String professor02) {
+        this.professor02 = professor02;
     }
     public void setCpf(String cpf) {
         this.cpf = cpf;

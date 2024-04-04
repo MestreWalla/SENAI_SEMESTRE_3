@@ -51,3 +51,16 @@ body {
 .widget a:hover {
     color: #007bff;
 }
+.titulo-dash {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.titulo-dash a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}

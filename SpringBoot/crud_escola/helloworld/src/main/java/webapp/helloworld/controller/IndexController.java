@@ -6,13 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @Controller
 public class IndexController {
-    // Método
+
     @GetMapping("/index")
     public String abrinIndex(Model model) {
-        return "index"; // Isso corresponde ao template "index.html" na pasta "templates"
+        return "index";
     }
 
     @GetMapping("/login-adm")
@@ -25,17 +24,14 @@ public class IndexController {
         return "cadastro-adm";
     }
 
-    @GetMapping("/alunos-dash")
-    public String alunosDash(Model model) {
-        return "alunos-dash";
-    }
-
-    //criar metodo httpsession
     @PostMapping("/logout")
     public String postMethodName(@RequestBody String entity) {
-        
-        
         return entity;
     }
-    
+
+    @GetMapping("/dashboard-adm")
+    public String showDashboard(Model model) {
+        return "dashboard-adm";
+    }
+
 }

@@ -13,31 +13,41 @@
     <div th:insert="~{fragmentos/header.html :: header}"></div>
 
     <div class="dashboard">
-        <h1>Administrador de Alunos</h1>
-        
+        <div class="titulo-dash">
+            <a href="/dashboard-adm" class="login">Voltar</a>
+            <h1>Administrador de Alunos</h1>
+        </div>
+
+
         <!-- Verificar se a lista de alunos não é nula e não está vazia -->
-        <div th:if="${alunos != null and not #lists.isEmpty(alunos)}">
+        <div th:if="${#objects.nullSafe(alunos, 'default') != 'default' and not #lists.isEmpty(alunos)}">
             <div th:each="aluno : ${alunos}">
                 <div class="widget">
                     <h2 th:text="${aluno.username}"></h2>
                     <p th:text="${aluno.email}"></p>
                     <p th:text="${aluno.cpf}"></p>
+                    <!-- disciplina 01 e professor responsavel -->
+                    <p th:text="${'Materia: ' + aluno.materia01 + ' - Professor(a): ' + aluno.professor01}"></p>
+                    <p th:text="${'Materia: ' + aluno.materia02 + ' - Professor(a): ' + aluno.professor02}"></p>
                     <hr>
                     <!-- Botões para editar ou excluir o aluno -->
-                    <a th:href="@{/editar-aluno/{id}(id=${aluno.id})}">
+                    <a th:href="@{/editar-aluno/{id}(id=${aluno.cpf})}">
                         <button>Editar</button>
                     </a>
-                    <a th:href="@{/excluir-aluno/{id}(id=${aluno.id})}">
+                    <a th:href="@{/excluir-aluno/{id}(id=${aluno.cpf})}">
                         <button>Excluir</button>
                     </a>
+
                 </div>
             </div>
         </div>
-        
         <!-- Exibir mensagem se a lista de alunos estiver vazia ou nula -->
-        <div th:if="${alunos == null or #lists.isEmpty(alunos)}">
+        <div th:if="${#objects.nullSafe(alunos, 'default') == 'default' or #lists.isEmpty(alunos)}">
             <p>Nenhum aluno cadastrado.</p>
         </div>
+        <hr><br>
+        <a href="/cadastrar-aluno" class="login">Cadastrar novo bruxinho</a>
+
     </div>
 </body>
 

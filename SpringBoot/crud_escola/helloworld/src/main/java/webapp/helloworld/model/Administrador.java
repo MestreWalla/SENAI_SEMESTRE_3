@@ -1,7 +1,6 @@
 package webapp.helloworld.model;
 
 import java.io.Serializable;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
