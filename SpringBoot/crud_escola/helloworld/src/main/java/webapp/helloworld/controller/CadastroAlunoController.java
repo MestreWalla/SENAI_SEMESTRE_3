@@ -6,22 +6,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import webapp.helloworld.model.Aluno;
-import webapp.helloworld.model.VerificaCadastroAdm;
+import webapp.helloworld.model.VerificaCadastroAluno;
 import webapp.helloworld.repository.AlunoRepository;
-import webapp.helloworld.repository.VerificaCadastroAdmRepository;
+import webapp.helloworld.repository.VerificaCadastroAlunoRepository;
 
 @Controller
 public class CadastroAlunoController {
     @Autowired
     private AlunoRepository ar;
     @Autowired
-    private VerificaCadastroAdmRepository vcar;
+    private VerificaCadastroAlunoRepository vcar;
 
     @PostMapping("/cadastro-adm")
-    public String postCadastroADM(Aluno adm) {
-        VerificaCadastroAdm verificaCadastroAdm = vcar.findByCpf(adm.getCpf());
-        if (verificaCadastroAdm != null && verificaCadastroAdm.getCpf().equals(adm.getCpf())) {
-            ar.save(adm);
+    public String postCadastroAluno(Aluno aluno) {
+        VerificaCadastroAluno verificaCadastroAluno = vcar.findByCpf(aluno.getCpf());
+        if (verificaCadastroAluno != null && verificaCadastroAluno.getCpf().equals(aluno.getCpf())) {
+            ar.save(aluno);
             
         }
         // Após o cadastro ser realizado com sucesso
