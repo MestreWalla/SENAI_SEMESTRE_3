@@ -10,10 +10,10 @@ class BottomAppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bottom App Bar'),
+        title: const Text('Bottom Bar'),
       ),
       body: const Center(
-        child: Text('Hello, world!'),
+        child: Text('Botton Bar'),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
