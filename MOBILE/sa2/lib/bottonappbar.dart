@@ -22,7 +22,6 @@ class BottomAppBarWidget extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.home),
               onPressed: () {
-                // Implemente a navegação para a página inicial, se necessário
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const HomePage()),
@@ -31,7 +30,6 @@ class BottomAppBarWidget extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.list),
               onPressed: () {
-                // Navegue para a página de cadastros
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const CadastrosPage()),
@@ -41,7 +39,6 @@ class BottomAppBarWidget extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.settings),
               onPressed: () {
-                // Implemente a navegação para a página de configurações, se necessário
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const SettingsPage()),
