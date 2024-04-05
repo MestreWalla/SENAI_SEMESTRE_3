@@ -10,7 +10,7 @@ class BancoDadosCrud {
   static const String
       CREATE_CONTACTS_TABLE_SCRIPT = // Script SQL para criar a tabela
       "CREATE TABLE IF NOT EXISTS contacts(id INTEGER PRIMARY KEY," +
-          "name TEXT, email TEXT, phone TEXT," +
+          "name TEXT, email TEXT, telefone TEXT," +
           "endereco TEXT)";
 
   Future<Database> _getDatabase() async {
