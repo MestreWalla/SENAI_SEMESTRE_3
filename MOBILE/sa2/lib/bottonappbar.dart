@@ -1,7 +1,7 @@
 //Arquivo bottonappbar.dart
 
 import 'package:flutter/material.dart';
-import 'view_cadastros.dart'; // Importe o arquivo view_cadastros.dart
+import 'view_cadastros.dart';
 
 class BottomAppBarWidget extends StatelessWidget {
   const BottomAppBarWidget({Key? key});
