@@ -23,7 +23,7 @@ class BottomAppBarDemo extends StatelessWidget {
                 onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
+                    MaterialPageRoute(builder: (context) => const HomePage()),
                 );
                 },
             ),
@@ -32,7 +32,7 @@ class BottomAppBarDemo extends StatelessWidget {
                 onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ViewCadastros()),
+                    MaterialPageRoute(builder: (context) => const ViewCadastros()),
                 );
                 },
             ),
@@ -42,7 +42,7 @@ class BottomAppBarDemo extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ViewConfiguracoes()),
+                        builder: (context) => const ViewConfiguracoes()),
                 );
                 },
             ),

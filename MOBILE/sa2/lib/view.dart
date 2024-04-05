@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
     @override
     Widget build(BuildContext context) {
     return Scaffold(
@@ -17,19 +19,19 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
             IconButton(
-                icon: Icon(Icons.home),
+                icon: const Icon(Icons.home),
                 onPressed: () {
                 // Handle button press
                 },
             ),
             IconButton(
-                icon: Icon(Icons.list),
+                icon: const Icon(Icons.list),
                 onPressed: () {
                 // Handle button press
                 },
             ),
             IconButton(
-                icon: Icon(Icons.settings),
+                icon: const Icon(Icons.settings),
                 onPressed: () {
                 // Handle button press
                 },
