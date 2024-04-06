@@ -1,5 +1,7 @@
 // Arquivo view_configuracoes.dart
 
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters
+
 import 'package:flutter/material.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
@@ -21,7 +23,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
       body: ListView(
         children: [
           SwitchListTile(
-            title: Text('Modo Escuro'),
+            title: const Text('Modo Escuro'),
             value: widget.temaEscuroNotifier.value,
             onChanged: (value) {
               setState(() {
