@@ -14,6 +14,7 @@ class ConfiguracoesPage extends StatefulWidget {
 }
 
 class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +27,10 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
             title: const Text('Modo Escuro'),
             value: widget.temaEscuroNotifier.value,
             onChanged: (value) {
+              print('Tema Escuro alterado para: $value');
               setState(() {
                 widget.temaEscuroNotifier.value = value;
+                
               });
             },
           ),
@@ -35,4 +38,6 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
       ),
     );
   }
+
+
 }

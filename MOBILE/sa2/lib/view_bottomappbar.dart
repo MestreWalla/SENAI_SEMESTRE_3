@@ -65,4 +65,13 @@ class _BottomAppBarWidgetState extends State<BottomAppBarWidget> {
       ),
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+
+    widget.temaEscuroNotifier.addListener(() {
+      print('Tema Escuro: ${widget.temaEscuroNotifier.value}');
+    });
+  }
 }

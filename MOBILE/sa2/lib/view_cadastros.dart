@@ -1,9 +1,10 @@
 //Arquivo view_cadastros.dart
 
-import 'Controller.dart';
+import 'package:flutter/services.dart';
+
+import 'controller.dart';
 import 'model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class CadastrosPage extends StatefulWidget {
   const CadastrosPage({Key? key}) : super(key: key);
@@ -16,7 +17,6 @@ class _CadastrosPageState extends State<CadastrosPage> {
   final dbHelper = BancoDadosCrud();
   final _formKey = GlobalKey<FormState>();
 
-  // Controllers para os campos de texto
   TextEditingController _idController = TextEditingController();
   TextEditingController _nomeController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -59,6 +59,23 @@ class _CadastrosPageState extends State<CadastrosPage> {
               return ListTile(
                 title: Text(contact.name),
                 subtitle: Text(contact.email),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        _showEditContactDialog(context, contact);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        _deleteContact(contact.id);
+                      },
+                    ),
+                  ],
+                ),
                 onTap: () {
                   // Implement onTap functionality
                 },
@@ -70,62 +87,22 @@ class _CadastrosPageState extends State<CadastrosPage> {
     );
   }
 
-  // Método para exibir um diálogo para adicionar um novo contato
-  void _showAddContactDialog(BuildContext context) {
+  void _showEditContactDialog(BuildContext context, ContactModel contact) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return AlertDialog(
-          title: Text('Adicionar Contato'),
+          title: Text('Editar Contato'),
           content: Form(
             key: _formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextFormField(
-                  controller: _idController,
-                  decoration: InputDecoration(labelText: 'ID'),
-                  keyboardType: TextInputType
-                      .number, // Define o tipo de teclado para numérico
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter
-                        .digitsOnly // Permite apenas a entrada de dígitos
-                  ],
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Por favor, insira um ID';
-                    } else if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                      return 'Por favor, insira um ID válido (apenas dígitos permitidos)';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _nomeController,
-                  decoration: InputDecoration(labelText: 'Nome'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Por favor, insira um nome';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
-                ),
-                TextFormField(
-                  controller: _phoneController,
-                  decoration: InputDecoration(labelText: 'Telefone'),
-                ),
-                TextFormField(
-                  controller: _enderecoController,
-                  decoration: InputDecoration(labelText: 'Endereço'),
-                ),
+                // Adicionar campos de edição do contato (nome, email, telefone, endereço) com os valores preenchidos com os dados do contato existente
               ],
             ),
           ),
-          actions: <Widget>[
+          actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -135,7 +112,88 @@ class _CadastrosPageState extends State<CadastrosPage> {
             TextButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  _addContact();
+                  // Implementar a lógica para atualizar o contato com os novos dados
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Text('Salvar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _deleteContact(int id) {
+    dbHelper.delete(id);
+    setState(() {
+      // Atualizar a lista de contatos após a exclusão
+    });
+  }
+
+  void _showAddContactDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Adicionar Contato'),
+          content: Form(
+            key: _formKey,
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              // Adicionar campos para adicionar um novo contato (nome, email, telefone, endereço)
+              TextFormField(
+                controller: _idController,
+                decoration: InputDecoration(labelText: 'ID'),
+                keyboardType: TextInputType
+                    .number, // Define o tipo de teclado para numérico
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter
+                      .digitsOnly // Permite apenas a entrada de dígitos
+                ],
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Por favor, insira um ID';
+                  } else if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                    return 'Por favor, insira um ID válido (apenas dígitos permitidos)';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _nomeController,
+                decoration: InputDecoration(labelText: 'Nome'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Por favor, insira um nome';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'Email'),
+              ),
+              TextFormField(
+                controller: _phoneController,
+                decoration: InputDecoration(labelText: 'Telefone'),
+              ),
+              TextFormField(
+                controller: _enderecoController,
+                decoration: InputDecoration(labelText: 'Endereço'),
+              ),
+            ]),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  // Implementar a lógica para adicionar um novo contato no banco de dados
                   Navigator.of(context).pop();
                 }
               },
