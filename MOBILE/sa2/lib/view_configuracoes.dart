@@ -1,11 +1,12 @@
 // Arquivo view_configuracoes.dart
 
-// ignore_for_file: library_private_types_in_public_api, use_super_parameters
+// ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
   final ValueNotifier<bool> temaEscuroNotifier;
+
   const ConfiguracoesPage({Key? key, required this.temaEscuroNotifier})
       : super(key: key);
 
@@ -14,6 +15,21 @@ class ConfiguracoesPage extends StatefulWidget {
 }
 
 class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
+  @override
+  void initState() {
+    super.initState();
+    widget.temaEscuroNotifier.addListener(_updateTheme);
+  }
+
+  @override
+  void dispose() {
+    widget.temaEscuroNotifier.removeListener(_updateTheme);
+    super.dispose();
+  }
+
+  void _updateTheme() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +37,23 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
       appBar: AppBar(
         title: const Text('Configurações'),
       ),
-      body: ListView(
-        children: [
-          SwitchListTile(
-            title: const Text('Modo Escuro'),
-            value: widget.temaEscuroNotifier.value,
-            onChanged: (value) {
-              print('Tema Escuro alterado para: $value');
-              setState(() {
-                widget.temaEscuroNotifier.value = value;
-                
-              });
-            },
-          ),
-        ],
+      body: ValueListenableBuilder<bool>(
+        valueListenable: widget.temaEscuroNotifier,
+        builder: (context, isDarkMode, child) {
+          return ListView(
+            children: [
+              SwitchListTile(
+                title: const Text('Modo Meio Escuro'),
+                value: isDarkMode,
+                onChanged: (value) {
+                  widget.temaEscuroNotifier.value = value;
+                },
+              ),
+              // Outros widgets da página de configurações...
+            ],
+          );
+        },
       ),
     );
   }
-
-
 }

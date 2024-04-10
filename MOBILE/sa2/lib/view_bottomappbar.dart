@@ -30,48 +30,42 @@ class _BottomAppBarWidgetState extends State<BottomAppBarWidget> {
       });
     }
 
-    return MaterialApp(
-      theme: widget.temaEscuroNotifier.value ? ThemeData.dark() : ThemeData.light(),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Bottom Bar'),
-        ),
-        body: _pages[_selectedIndex],
-        bottomNavigationBar: BottomAppBar(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.home),
-                onPressed: () {
-                  _onItemTapped(0);
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.list),
-                onPressed: () {
-                  _onItemTapped(1);
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.settings),
-                onPressed: () {
-                  _onItemTapped(2);
-                },
-              ),
-            ],
-          ),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Bottom Bar'),
+      ),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: ValueListenableBuilder<bool>(
+        valueListenable: widget.temaEscuroNotifier,
+        builder: (context, isDarkMode, child) {
+          return BottomAppBar(
+            color: isDarkMode ? Colors.black : Theme.of(context).bottomAppBarTheme.color,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () {
+                    _onItemTapped(0);
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.list),
+                  onPressed: () {
+                    _onItemTapped(1);
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () {
+                    _onItemTapped(2);
+                  },
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    widget.temaEscuroNotifier.addListener(() {
-      print('Tema Escuro: ${widget.temaEscuroNotifier.value}');
-    });
   }
 }
