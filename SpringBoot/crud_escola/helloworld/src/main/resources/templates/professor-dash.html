@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/dashboard-adm.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Dashboard-ADM Professores</title>
+</head>
+
+<body>
+    <div th:insert="~{fragmentos/header.html :: header}"></div>
+
+    <div class="dashboard">
+        <!-- Título e botão "Voltar" -->
+        <div class="titulo-dash">
+            <!-- Ícone de voltar -->
+            <a href="/dashboard-adm" class="login"><i class="fas fa-arrow-left back-icon"></i>Voltar</a>
+            <h1>Administrar Bruxoes Seniors</h1>
+        </div>
+
+        <!-- Verificar se a lista de professores não é nula e não está vazia -->
+        <div th:if="${#objects.nullSafe(professores, 'default') != 'default' and not #lists.isEmpty(professores)}">
+            <div th:each="professor : ${professores}">
+                <div class="widget">
+                    <h2 th:text="${professor.username}"></h2>
+                    <p th:text="${professor.email}"></p>
+                    <p th:text="${professor.cpf}"></p>
+                    <!-- Disciplinas ministradas -->
+                    <p th:text="${'Disciplina: ' + professor.disciplina}"></p>
+                    <hr>
+                    <!-- Botões para editar ou excluir o professor -->
+                    <a th:href="@{/editar-professor/{id}(id=${professor.cpf})}" class="button">Editar</a>
+                    <a th:href="@{/excluir-professor/{id}(id=${professor.cpf})}" class="button">Excluir</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exibir mensagem se a lista de professores estiver vazia ou nula -->
+        <div th:if="${#objects.nullSafe(professores, 'default') == 'default' or #lists.isEmpty(professores)}">
+            <p>Nenhum professor cadastrado.</p>
+        </div>
+        <hr><br>
+        <a href="/cadastro-professor" class="login">Cadastrar novo professor</a>
+
+    </div>
+</body>
+
+</html>

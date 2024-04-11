@@ -6,19 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" th:href="@{/login-adm.css}">
-    <title>Login-ADM</title>
+    <title>Login Aluno</title>
 </head>
 
 <body>
     <div th:insert="~{fragmentos/header.html :: header}"></div>
     <div class="login-container">
-        <h2>Login Administração</h2>
-        <!-- Adicionando um elemento para exibir a mensagem de cadastro realizado com sucesso -->
+        <h2>Login Aluno</h2>
+        <!-- Adicionando um elemento para exibir a mensagem de login realizado com sucesso -->
         <div th:if="${param.success}" class="sucesso">
-            <p>Cadastro realizado com sucesso!</p>
+            <p>Login realizado com sucesso!</p>
         </div>
-        <div th:if="${param.error}" class="sucesso">
-            <p>Acesso negado, voce forneceu dados incorretos</p>
+        <!-- Adicionando um elemento para exibir a mensagem de erro -->
+        <div th:if="${param.error}" class="erro">
+            <p>Acesso negado. Verifique suas credenciais.</p>
         </div>
 
         <form action="#" method="POST">
@@ -31,7 +32,7 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <button type="submit">Entrar</button>
-            <a href="/cadastro-adm"><button type="button">Cadastrar</button></a>
+            <a href="/cadastro-aluno"><button type="button">Cadastrar</button></a>
         </form>
     </div>
 </body>

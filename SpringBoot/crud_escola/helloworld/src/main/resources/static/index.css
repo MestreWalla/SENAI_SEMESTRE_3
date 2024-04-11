@@ -1,0 +1,175 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    line-height: 1.6;
+    margin-top: 30vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background-color: #740001;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Remover aparência de link */
+a {
+    text-decoration: none; /* Remover sublinhado padrão */
+    color: inherit; /* Herdar a cor do texto do elemento pai */
+    cursor: pointer; /* Alterar o cursor para indicar que é clicável */
+}
+
+a:hover {
+    text-decoration: none; /* Manter o sublinhado removido ao passar o mouse */
+    color: inherit; /* Manter a cor do texto ao passar o mouse */
+}
+
+header h1 {
+    font-size: 2.5rem;
+}
+
+/* Highlight section */
+.highlight {
+    background-color: #740001;
+    background-image: url("img/background.jpg");
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+    
+}
+
+.highlight h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.highlight p {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+/* Courses section */
+.courses {
+    padding: 80px 0;
+}
+
+.course {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.course h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.course p {
+    font-size: 1.1rem;
+}
+
+/* Events section */
+.events {
+    background-color: #f9f9f9;
+    padding: 80px 0;
+}
+
+.event {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.event h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.event p {
+    font-size: 1.1rem;
+}
+
+/* Testimonials section */
+.testimonials {
+    padding: 80px 0;
+}
+
+.testimonial {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.testimonial blockquote {
+    font-style: italic;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.testimonial cite {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Contact section */
+.contact {
+    background-color: #740001;
+    background-image: url("img/background.jpg");
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.contact h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.contact p {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+.contact-info {
+    font-size: 1.2rem;
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+}
+
+.contact-info i {
+    margin-right: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+footer p {
+    font-size: 1rem;
+}

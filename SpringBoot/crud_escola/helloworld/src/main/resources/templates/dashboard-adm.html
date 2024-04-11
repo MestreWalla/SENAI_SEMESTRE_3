@@ -6,6 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" th:href="@{/dashboard-adm.css}">
+    <style>
+        /* Estilo para a tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para as células do cabeçalho */
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Estilo para as células da tabela */
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Estilo para as linhas pares */
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Estilo para o link */
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        /* Estilo para o link quando o mouse passa sobre ele */
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
     <title>Dashboard-ADM</title>
 </head>
 
@@ -17,26 +65,119 @@
 
         <div class="widget">
             <h2>Bruxinhos Cadastrados</h2>
-            <p>Visualize os bruxinhos cadastrados.</p>
-            <a href="/alunos-dash">Ver Bruxinhos</a>
+            <p>Bruxinhos cadastrados.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>CPF</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop para exibir até 5 alunos -->
+                    <tr th:each="aluno, iterStat : ${alunos}" th:if="${iterStat.index < 5}">
+                        <td th:text="${aluno.username}"></td>
+                        <td th:text="${aluno.email}"></td>
+                        <td th:text="${aluno.cpf}"></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <a href="/alunos-dash" class="button">Ver todos os Bruxinhos</a>
         </div>
+        
 
         <div class="widget">
             <h2>Bruxões Seniors Cadastrados</h2>
-            <p>Visualize os bruxões cadastrados.</p>
-            <a href="#">Ver Bruxões</a>
+            <p>Bruxões cadastrados.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>CPF</th>
+                        <th>Disciplina</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop para exibir até 5 professores -->
+                    <tr th:each="professor, iterStat : ${professores}" th:if="${iterStat.index < 5}">
+                        <td th:text="${professor.username}"></td>
+                        <td th:text="${professor.email}"></td>
+                        <td th:text="${professor.cpf}"></td>
+                        <td th:text="${professor.disciplina}"></td>
+                    </tr>                    
+                </tbody>
+            </table>
+            <a href="/professor-dash" class="button">Ver todos os Bruxões</a>
         </div>
+        
 
         <div class="widget">
             <h2>Inventario Bruxo</h2>
             <p>Gerencie inventarios da escola.</p>
-            <a href="#">Gerenciar Bens</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Informações fictícias no inventário -->
+                    <tr>
+                        <td>Vassouras</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>Caldrons</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>Varinhas</td>
+                        <td>100</td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="#" class="button">Gerenciar Bens</a>
         </div>
 
         <div class="widget">
             <h2>Analises</h2>
             <p>Analises semanais da escola.</p>
-            <a href="#">Ver Analises</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Semana</th>
+                        <th>Número de Alunos</th>
+                        <th>Número de Professores</th>
+                        <th>Atividades Realizadas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Informações fictícias nas análises semanais -->
+                    <tr>
+                        <td>Semana 1</td>
+                        <td>150</td>
+                        <td>25</td>
+                        <td>Realização de exames</td>
+                    </tr>
+                    <tr>
+                        <td>Semana 2</td>
+                        <td>160</td>
+                        <td>27</td>
+                        <td>Reuniões de equipe</td>
+                    </tr>
+                    <tr>
+                        <td>Semana 3</td>
+                        <td>155</td>
+                        <td>26</td>
+                        <td>Workshops de aprimoramento</td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="#" class="button">Ver Analises</a>
         </div>
     </div>
 </body>

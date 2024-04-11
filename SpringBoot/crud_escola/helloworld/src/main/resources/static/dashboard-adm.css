@@ -48,14 +48,36 @@ body {
     font-weight: bold;
 }
 
+.widget a.button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+}
+
+.widget a.button:hover {
+    background-color: #0056b3;
+}
+
 .widget a:hover {
-    color: #007bff;
+    color: white;
 }
 .titulo-dash {
     display: flex;
     gap: 15px;
     margin-bottom: 15px;
+    
 }
+.titulo-dash a:hover {
+    color: white;
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
 .titulo-dash a {
     display: flex;
     align-items: center;
@@ -63,4 +85,5 @@ body {
     text-decoration: none;
     font-size: 14px;
     font-weight: bold;
+    transition: transform 0.3s ease;
 }

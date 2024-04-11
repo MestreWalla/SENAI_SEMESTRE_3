@@ -6,28 +6,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import webapp.helloworld.model.Aluno;
-import webapp.helloworld.model.VerificaCadastroAluno;
 import webapp.helloworld.repository.AlunoRepository;
-import webapp.helloworld.repository.VerificaCadastroAlunoRepository;
 
 @Controller
 public class CadastroAlunoController {
     @Autowired
     private AlunoRepository ar;
-    @Autowired
-    private VerificaCadastroAlunoRepository vcar;
-
-    // @PostMapping("/cadastro-aluno")
-    // public String postCadastroAluno(Aluno aluno) {
-    // VerificaCadastroAluno verificaCadastroAluno = vcar.findByCpf(aluno.getCpf());
-    // if (verificaCadastroAluno != null &&
-    // verificaCadastroAluno.getCpf().equals(aluno.getCpf())) {
-    // ar.save(aluno);
-    // }
-    // // Após o cadastro ser realizado com sucesso
-    // return "redirect:/login-adm?success=true";
-    // }
-
     @PostMapping("/cadastro-aluno")
     public String postCadastroAluno(Aluno aluno) {
         ar.save(aluno);
@@ -56,7 +40,6 @@ public class CadastroAlunoController {
         // Consultar o banco de dados para verificar se existe um aluno com o
         // nome de usuário fornecido
         Aluno aluno = ar.findByUsername(username);
-
         // Verificar se o aluno foi encontrado e se a senha fornecida
         // corresponde à senha armazenada
         if (aluno != null && aluno.getSenha().equals(password)) {

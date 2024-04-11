@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" th:href="@{/login-adm.css}">
-    <title>Login-ADM</title>
+    <title>Cadastrar Professor</title>
 </head>
 <body>
     <div th:insert="~{fragmentos/header.html :: header}"></div>
     <div class="login-container">
-        <h2>Cadastrar Aluno</h2>
+        <h2>Cadastrar Professor</h2>
         <!-- Mensagem de cadastro realizado com sucesso -->
         <div th:if="${param.success}" class="sucesso">
             <p>Cadastro realizado com sucesso!</p>
         </div>
         <!-- Formulário de cadastro -->
-        <form method="POST" action="/cadastro-aluno">
+        <form method="POST" action="/cadastro-professor">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
@@ -34,7 +34,7 @@
                 <input type="text" id="email" name="email" required>
             </div>
             <button type="submit">Cadastrar</button>
-            <a href="/login-aluno"><button type="button">Logar</button></a>
+            <a href="/login-professor"><button type="button">Logar</button></a>
         </form>
     </div>
 </body>

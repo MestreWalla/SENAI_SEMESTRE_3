@@ -92,7 +92,7 @@ nav {
 }
 
 nav:hover {
-    background-color: white;
+    background-color: rgba(255, 218, 218, 0.767);
     transition: 0.3s;
 }
 

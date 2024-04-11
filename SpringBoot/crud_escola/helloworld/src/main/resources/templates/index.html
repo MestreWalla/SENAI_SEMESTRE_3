@@ -1,12 +1,102 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://thymeleaf.org/">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/style.css}">
-    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/index.css}">
+    <title>Escola Hogwarts</title>
 </head>
+
 <body>
+    <!-- Incluindo o cabeçalho -->
     <div th:insert="~{fragmentos/header.html :: header}"></div>
+
+    <!-- Seção de destaque -->
+    <section class="highlight">
+        <div class="container">
+            <h1>Bem-vindo à Escola Hogwarts</h1>
+            <p>Descubra a magia do aprender na Escola Hogwarts, onde cada aluno é especial e cada aula é uma aventura.</p>
+            <a href="#cursos" class="btn btn-primary">Explore nossos cursos</a>
+        </div>
+    </section>
+
+    <!-- Seção de Cursos -->
+    <section id="cursos" class="courses">
+        <div class="container">
+            <h2>Nossos Cursos</h2>
+            <div class="course">
+                <h3>Transfiguração</h3>
+                <p>Transforme objetos em outros objetos com o feitiço correto.</p>
+            </div>
+            <div class="course">
+                <h3>Defesa Contra as Artes das Trevas</h3>
+                <p>Aprenda a se defender contra criaturas mágicas e feitiços das trevas.</p>
+            </div>
+            <div class="course">
+                <h3>Poções</h3>
+                <p>Crie poções mágicas com ingredientes específicos e cuidado com os efeitos colaterais.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Eventos -->
+    <section class="events">
+        <div class="container">
+            <h2>Próximos Eventos</h2>
+            <div class="event">
+                <h3>Baile de Inverno</h3>
+                <p>Prepare-se para uma noite mágica de dança e diversão no Grande Salão.</p>
+            </div>
+            <div class="event">
+                <h3>Torneio de Quadribol</h3>
+                <p>Assista às emocionantes partidas de Quadribol e apoie sua casa favorita.</p>
+            </div>
+            <div class="event">
+                <h3>Competição de Duelos</h3>
+                <p>Teste suas habilidades mágicas em um duelo amigável contra seus colegas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Depoimentos -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Depoimentos de Alunos</h2>
+            <div class="testimonial">
+                <blockquote>
+                    "A Escola Hogwarts mudou minha vida. Nunca me senti tão em casa e tão desafiado ao mesmo tempo."
+                </blockquote>
+                <cite>- Harry Potter</cite>
+            </div>
+            <div class="testimonial">
+                <blockquote>
+                    "Estudar em Hogwarts foi uma experiência incrível. Os professores são fantásticos e os colegas são como uma família para mim."
+                </blockquote>
+                <cite>- Hermione Granger</cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Contato -->
+    <section class="contact">
+        <div class="container">
+            <h2>Entre em Contato</h2>
+            <p>Tem alguma dúvida sobre nossos cursos ou eventos? Entre em contato conosco e teremos prazer em ajudar.</p>
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> Email: contato@escolahogwarts.com</p>
+                <p><i class="fas fa-phone"></i> Telefone: (XX) XXXX-XXXX</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Escola Hogwarts. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 </body>
+
 </html>

@@ -19,6 +19,12 @@ public class IndexController {
         return "login-adm";
     }
 
+    @GetMapping("/login-aluno")
+    public String alunoLogin(Model model) {
+        return "login-aluno";
+    }
+    
+
     @GetMapping("/cadastro-adm")
     public String adminCadastro(Model model) {
         return "cadastro-adm";
@@ -28,15 +34,13 @@ public class IndexController {
     public String alunoCadastro(Model model) {
         return "cadastro-aluno";
     }
-
+    
+    @GetMapping("/cadastro-professor")
+    public String professorCadastro(Model model) {
+        return "cadastro-professor";
+    }
     @PostMapping("/logout")
     public String postMethodName(@RequestBody String entity) {
         return entity;
     }
-
-    @GetMapping("/dashboard-adm")
-    public String showDashboard(Model model) {
-        return "dashboard-adm";
-    }
-
 }

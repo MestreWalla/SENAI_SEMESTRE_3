@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import webapp.helloworld.model.Aluno;
 import webapp.helloworld.repository.AlunoRepository;
 
@@ -40,4 +43,75 @@ public class DashboardAlunoController {
 
         return "alunos-dash";
     }
+
+    @GetMapping("/editar-aluno/{cpf}")
+    public String editarAluno(@PathVariable String cpf, Model model) {
+        // Buscar o aluno com o CPF especificado no banco de dados
+        Aluno aluno = alunoRepository.findByCpf(cpf);
+
+        // Verificar se o aluno foi encontrado
+        if (aluno != null) {
+            // Adicionar o aluno ao modelo para ser exibido na página de edição
+            model.addAttribute("aluno", aluno);
+
+            // Retornar o nome da página de edição
+            return "editar-aluno"; // Substitua por sua página de edição
+        } else {
+            // Se o aluno não for encontrado, redirecionar de volta para o dashboard com uma
+            // mensagem de erro
+            return "redirect:/alunos-dash?error=Aluno não encontrado";
+        }
+    }
+
+    public class EdicaoAlunoController {
+
+        @Autowired
+        private AlunoRepository alunoRepository;
+
+        @PostMapping("/salvar-edicao-aluno")
+        public String salvarEdicaoAluno(Aluno aluno) {
+            // Verificar se o aluno existe no banco de dados
+            Aluno alunoExistente = alunoRepository.findByCpf(aluno.getCpf());
+            if (alunoExistente != null) {
+                // Atualizar as informações do aluno existente com base nos dados enviados do
+                // formulário de edição
+                alunoExistente.setUsername(aluno.getUsername());
+                alunoExistente.setEmail(aluno.getEmail());
+                alunoExistente.setMateria01(aluno.getMateria01());
+                alunoExistente.setMateria02(aluno.getMateria02());
+                alunoExistente.setProfessor01(aluno.getProfessor01());
+                alunoExistente.setProfessor02(aluno.getProfessor02());
+
+                // Salvar as alterações no banco de dados
+                alunoRepository.save(alunoExistente);
+
+                // Redirecionar de volta para o dashboard com uma mensagem de sucesso
+                return "redirect:/alunos-dash?success=Aluno editado com sucesso";
+            } else {
+                // Se o aluno não existir, redirecionar de volta para o dashboard com uma
+                // mensagem de erro
+                return "redirect:/alunos-dash?error=Aluno não encontrado";
+            }
+        }
+    }
+
+    @GetMapping("/excluir-aluno/{cpf}")
+    public String excluirAluno(@PathVariable String cpf) {
+        // Buscar o aluno com o CPF especificado no banco de dados
+        Aluno aluno = alunoRepository.findByCpf(cpf);
+
+        // Verificar se o aluno foi encontrado
+        if (aluno != null) {
+            // Excluir o aluno do banco de dados
+            alunoRepository.delete(aluno);
+
+            // Redirecionar de volta para o dashboard com uma mensagem de sucesso
+            return "redirect:/alunos-dash?success=Aluno excluído com sucesso";
+        } else {
+            // Se o aluno não for encontrado, redirecionar de volta para o dashboard com uma
+            // mensagem de erro
+            return "redirect:/alunos-dash?error=Aluno não encontrado";
+        }
+    }
+
 }

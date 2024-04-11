@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" th:href="@{/dashboard-adm.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Dashboard-ADM Alunos</title>
 </head>
 
@@ -13,9 +14,11 @@
     <div th:insert="~{fragmentos/header.html :: header}"></div>
 
     <div class="dashboard">
+        <!-- Título e botão "Voltar" -->
         <div class="titulo-dash">
-            <a href="/dashboard-adm" class="login">Voltar</a>
-            <h1>Administrador de Alunos</h1>
+            <!-- Ícone de voltar -->
+            <a href="/dashboard-adm" class="login"><i class="fas fa-arrow-left back-icon"></i>Voltar</a>
+            <h1>Administrar Bruxinhos</h1>
         </div>
 
 
@@ -31,13 +34,8 @@
                     <p th:text="${'Materia: ' + aluno.materia02 + ' - Professor(a): ' + aluno.professor02}"></p>
                     <hr>
                     <!-- Botões para editar ou excluir o aluno -->
-                    <a th:href="@{/editar-aluno/{id}(id=${aluno.cpf})}">
-                        <button>Editar</button>
-                    </a>
-                    <a th:href="@{/excluir-aluno/{id}(id=${aluno.cpf})}">
-                        <button>Excluir</button>
-                    </a>
-
+                    <a th:href="@{/editar-aluno/{id}(id=${aluno.cpf})}" class="button">Editar</a>
+                    <a th:href="@{/excluir-aluno/{id}(id=${aluno.cpf})}" class="button">Excluir</a>
                 </div>
             </div>
         </div>
@@ -46,7 +44,7 @@
             <p>Nenhum aluno cadastrado.</p>
         </div>
         <hr><br>
-        <a href="/cadastrar-aluno" class="login">Cadastrar novo bruxinho</a>
+        <a href="/cadastro-aluno" class="login">Cadastrar novo bruxinho</a>
 
     </div>
 </body>
