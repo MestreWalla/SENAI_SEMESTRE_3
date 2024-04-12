@@ -15071,3 +15071,15 @@ Caused by: java.lang.Error: Unresolved compilation problems:
 2024-04-10 21:54:09 [http-nio-8080-exec-6] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Maycon
 2024-04-10 21:54:09 [http-nio-8080-exec-6] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Dener
 2024-04-10 21:54:09 [http-nio-8080-exec-6] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Dener
+2024-04-10 21:58:17 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Número de alunos recuperados do banco de dados: 2
+2024-04-10 21:58:17 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Número de alunos recuperados do banco de dados: 2
+2024-04-10 21:58:17 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Maycon
+2024-04-10 21:58:17 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Maycon
+2024-04-10 21:58:17 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Dener
+2024-04-10 21:58:17 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Dener
+2024-04-10 21:58:20 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Número de alunos recuperados do banco de dados: 2
+2024-04-10 21:58:20 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Número de alunos recuperados do banco de dados: 2
+2024-04-10 21:58:20 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Maycon
+2024-04-10 21:58:20 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Maycon
+2024-04-10 21:58:20 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Dener
+2024-04-10 21:58:20 [http-nio-8080-exec-9] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Dener

@@ -1,14 +1,13 @@
 // Arquivo view_configuracoes.dart
 
-// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors
+// ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
   final ValueNotifier<bool> temaEscuroNotifier;
 
-  const ConfiguracoesPage({Key? key, required this.temaEscuroNotifier})
-      : super(key: key);
+  const ConfiguracoesPage({super.key, required this.temaEscuroNotifier});
 
   @override
   _ConfiguracoesPageState createState() => _ConfiguracoesPageState();
@@ -49,7 +48,6 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                   widget.temaEscuroNotifier.value = value;
                 },
               ),
-              // Outros widgets da página de configurações...
             ],
           );
         },
@@ -59,6 +57,8 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
 }
 
 class ConfiguracoesUsuarioPage extends StatelessWidget {
+  const ConfiguracoesUsuarioPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,9 +70,8 @@ class ConfiguracoesUsuarioPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Nome de Usuário:',
-              style: Theme.of(context).textTheme.titleMedium,
             ),
             const TextField(
               decoration: InputDecoration(
@@ -80,9 +79,8 @@ class ConfiguracoesUsuarioPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16.0),
-            Text(
+            const Text(
               'Email:',
-              style: Theme.of(context).textTheme.subtitle1,
             ),
             const TextField(
               decoration: InputDecoration(
@@ -90,9 +88,8 @@ class ConfiguracoesUsuarioPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16.0),
-            Text(
+            const Text(
               'Alterar Senha:',
-              style: Theme.of(context).textTheme.titleMedium,
             ),
             const TextField(
               obscureText: true,

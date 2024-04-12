@@ -4,7 +4,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:sa2/view.dart';
-import 'package:sa2/view_bottomappbar.dart';
 import 'package:sa2/view_cadastro.dart';
 import 'package:sa2/view_login.dart';
 import 'package:sa2/view_cadastros.dart';
@@ -40,7 +39,8 @@ class _MyAppState extends State<MyApp> {
             '/cadastros': (context) => const CadastrosPage(),
             '/configuracoes': (context) =>
                 ConfiguracoesPage(temaEscuroNotifier: _temaEscuroNotifier),
-                '/cadastro': (context) => CadastroPage(temaEscuroNotifier: _temaEscuroNotifier),
+            '/cadastro': (context) =>
+                CadastroPage(temaEscuroNotifier: _temaEscuroNotifier),
           },
           home: LoginPage(temaEscuroNotifier: _temaEscuroNotifier),
         );

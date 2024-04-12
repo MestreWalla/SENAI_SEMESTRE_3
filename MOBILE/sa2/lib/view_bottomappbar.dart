@@ -6,6 +6,7 @@ import 'view_configuracoes.dart';
 
 class BottomAppBarWidget extends StatefulWidget {
   final ValueNotifier<bool> temaEscuroNotifier;
+  
   const BottomAppBarWidget({Key? key, required this.temaEscuroNotifier})
       : super(key: key);
 
