@@ -1,33 +1,31 @@
-// Arquivo view_configuracoes.dart
-
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 
-class ConfiguracoesPage extends StatefulWidget {
+class ConfiguracoesTabsPage extends StatefulWidget {
   final ValueNotifier<bool> temaEscuroNotifier;
 
-  const ConfiguracoesPage({super.key, required this.temaEscuroNotifier});
+  const ConfiguracoesTabsPage({Key? key, required this.temaEscuroNotifier})
+      : super(key: key);
 
   @override
-  _ConfiguracoesPageState createState() => _ConfiguracoesPageState();
+  _ConfiguracoesTabsPageState createState() => _ConfiguracoesTabsPageState();
 }
 
-class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
+class _ConfiguracoesTabsPageState extends State<ConfiguracoesTabsPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
-    widget.temaEscuroNotifier.addListener(_updateTheme);
+    _tabController = TabController(
+        length: 3,
+        vsync: this); // Ajuste o comprimento do controlador de tab para 3
   }
 
   @override
   void dispose() {
-    widget.temaEscuroNotifier.removeListener(_updateTheme);
+    _tabController.dispose();
     super.dispose();
-  }
-
-  void _updateTheme() {
-    setState(() {});
   }
 
   @override
@@ -36,76 +34,116 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
       appBar: AppBar(
         title: const Text('Configurações'),
       ),
-      body: ValueListenableBuilder<bool>(
-        valueListenable: widget.temaEscuroNotifier,
-        builder: (context, isDarkMode, child) {
-          return ListView(
-            children: [
-              SwitchListTile(
-                title: const Text('Modo Meio Escuro'),
-                value: isDarkMode,
-                onChanged: (value) {
-                  widget.temaEscuroNotifier.value = value;
-                },
-              ),
+      body: Column(
+        children: [
+          TabBar(
+            controller: _tabController,
+            tabs: const [
+              Tab(text: 'Configurações do App'),
+              Tab(text: 'Configurações de Usuário'),
             ],
-          );
-        },
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                ConfiguracoesPage(
+                    temaEscuroNotifier: widget.temaEscuroNotifier),
+                ConfiguracoesUsuarioPage(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class ConfiguracoesUsuarioPage extends StatelessWidget {
-  const ConfiguracoesUsuarioPage({super.key});
+class ConfiguracoesPage extends StatelessWidget {
+  final ValueNotifier<bool> temaEscuroNotifier;
+
+  const ConfiguracoesPage({Key? key, required this.temaEscuroNotifier})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Configurações de Usuário'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return ValueListenableBuilder<bool>(
+      valueListenable: temaEscuroNotifier,
+      builder: (context, isDarkMode, child) {
+        return ListView(
           children: [
-            const Text(
-              'Nome de Usuário:',
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                hintText: 'Digite seu nome de usuário',
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            const Text(
-              'Email:',
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                hintText: 'Digite seu email',
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            const Text(
-              'Alterar Senha:',
-            ),
-            const TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: 'Digite sua nova senha',
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                // Implemente a lógica para salvar as configurações do usuário
+            SwitchListTile(
+              title: const Text('Modo Meio Escuro'),
+              value: isDarkMode,
+              onChanged: (value) {
+                temaEscuroNotifier.value = value;
               },
-              child: const Text('Salvar'),
             ),
+            // Adicione mais configurações aqui conforme necessário
+            const SizedBox(height: 16.0),
+            const Text('Língua Preferida:'),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: 'Selecione sua língua preferida',
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            const Text('Tamanho da Fonte:'),
+            Slider(
+              value: 0, // Defina o valor inicial conforme necessário
+              min: 0,
+              max: 100,
+              onChanged: (value) {
+                // Implemente a lógica para ajustar o tamanho da fonte
+              },
+            ),
+            const SizedBox(height: 16.0),
           ],
-        ),
+        );
+      },
+    );
+  }
+}
+
+class ConfiguracoesUsuarioPage extends StatelessWidget {
+  const ConfiguracoesUsuarioPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Nome de Usuário:'),
+          const TextField(
+            decoration: InputDecoration(
+              hintText: 'Digite seu nome de usuário',
+            ),
+          ),
+          const SizedBox(height: 16.0),
+          const Text('Email:'),
+          const TextField(
+            decoration: InputDecoration(
+              hintText: 'Digite seu email',
+            ),
+          ),
+          const SizedBox(height: 16.0),
+          const Text('Alterar Senha:'),
+          const TextField(
+            obscureText: true,
+            decoration: InputDecoration(
+              hintText: 'Digite sua nova senha',
+            ),
+          ),
+          const SizedBox(height: 16.0),
+          ElevatedButton(
+            onPressed: () {
+              // Implemente a lógica para salvar as configurações do usuário
+            },
+            child: const Text('Salvar'),
+          ),
+        ],
       ),
     );
   }

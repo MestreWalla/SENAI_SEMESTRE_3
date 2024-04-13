@@ -22,7 +22,7 @@ class _BottomAppBarWidgetState extends State<BottomAppBarWidget> {
     final List<Widget> _pages = [
       Placeholder(),
       CadastrosPage(),
-      ConfiguracoesPage(temaEscuroNotifier: widget.temaEscuroNotifier),
+      ConfiguracoesTabsPage(temaEscuroNotifier: widget.temaEscuroNotifier),
     ];
 
     void _onItemTapped(int index) {
@@ -32,9 +32,7 @@ class _BottomAppBarWidgetState extends State<BottomAppBarWidget> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bottom Bar'),
-      ),
+      // appBar: AppBar(title: const Text('Top Bar'),),
       body: _pages[_selectedIndex],
       bottomNavigationBar: ValueListenableBuilder<bool>(
         valueListenable: widget.temaEscuroNotifier,

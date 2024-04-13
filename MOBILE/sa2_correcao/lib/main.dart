@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sa2_correcao/view_login.dart';
 
 void main() {
-  runApp(MeuApp());
+  runApp(const MeuApp());
 }
 
 class MeuApp extends StatelessWidget {

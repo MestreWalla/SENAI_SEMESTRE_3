@@ -9,7 +9,7 @@ class CadastroScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro'),
+        title: const Text('Voltar'),
       ),
       body: Center(
         child: CadastroForm(),

@@ -1,5 +1,7 @@
 //Arquivo view_cadastros.dart
 
+// ignore_for_file: use_super_parameters
+
 import 'package:flutter/services.dart';
 
 import 'controller.dart';
@@ -17,17 +19,17 @@ class _CadastrosPageState extends State<CadastrosPage> {
   final dbHelper = BancoDadosCrud();
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _idController = TextEditingController();
-  TextEditingController _nomeController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _enderecoController = TextEditingController();
+  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _enderecoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastros'),
+        title: const Text('Cadastros'),
       ),
       body: SafeArea(
         child: _buildContent(),
@@ -36,7 +38,7 @@ class _CadastrosPageState extends State<CadastrosPage> {
         onPressed: () {
           _showAddContactDialog(context);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -46,11 +48,11 @@ class _CadastrosPageState extends State<CadastrosPage> {
       future: dbHelper.getContacts(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('Nenhum contato cadastrado.'));
+          return const Center(child: Text('Nenhum contato cadastrado.'));
         } else {
           return ListView.builder(
             itemCount: snapshot.data?.length,
@@ -63,13 +65,13 @@ class _CadastrosPageState extends State<CadastrosPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                       onPressed: () {
                         _showEditContactDialog(context, contact);
                       },
                     ),
                     IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       onPressed: () {
                         _deleteContact(contact.id);
                       },
@@ -88,41 +90,75 @@ class _CadastrosPageState extends State<CadastrosPage> {
   }
 
   void _showEditContactDialog(BuildContext context, ContactModel contact) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Editar Contato'),
-          content: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Adicionar campos de edição do contato (nome, email, telefone, endereço) com os valores preenchidos com os dados do contato existente
-              ],
-            ),
+  // Inicializar os controllers dos campos de texto com os dados do contato existente
+  _idController.text = contact.id.toString();
+  _nomeController.text = contact.name;
+  _emailController.text = contact.email;
+  _phoneController.text = contact.phone;
+  _enderecoController.text = contact.endereco;
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Editar Contato'),
+        content: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: _idController,
+                decoration: const InputDecoration(labelText: 'ID'),
+                readOnly: true, // ID não deve ser editável
+              ),
+              TextFormField(
+                controller: _nomeController,
+                decoration: const InputDecoration(labelText: 'Nome'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Por favor, insira um nome';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _emailController,
+                decoration: const InputDecoration(labelText: 'Email'),
+              ),
+              TextFormField(
+                controller: _phoneController,
+                decoration: const InputDecoration(labelText: 'Telefone'),
+              ),
+              TextFormField(
+                controller: _enderecoController,
+                decoration: const InputDecoration(labelText: 'Endereço'),
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                _updateContact(contact.id); // Atualizar o contato com os novos dados
                 Navigator.of(context).pop();
-              },
-              child: Text('Cancelar'),
-            ),
-            TextButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  // Implementar a lógica para atualizar o contato com os novos dados
-                  Navigator.of(context).pop();
-                }
-              },
-              child: Text('Salvar'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+              }
+            },
+            child: const Text('Salvar'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
   void _deleteContact(int id) {
     dbHelper.delete(id);
@@ -136,14 +172,14 @@ class _CadastrosPageState extends State<CadastrosPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Adicionar Contato'),
+          title: const Text('Adicionar Contato'),
           content: Form(
             key: _formKey,
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               // Adicionar campos para adicionar um novo contato (nome, email, telefone, endereço)
               TextFormField(
                 controller: _idController,
-                decoration: InputDecoration(labelText: 'ID'),
+                decoration: const InputDecoration(labelText: 'ID'),
                 keyboardType: TextInputType
                     .number, // Define o tipo de teclado para numérico
                 inputFormatters: <TextInputFormatter>[
@@ -161,7 +197,7 @@ class _CadastrosPageState extends State<CadastrosPage> {
               ),
               TextFormField(
                 controller: _nomeController,
-                decoration: InputDecoration(labelText: 'Nome'),
+                decoration: const InputDecoration(labelText: 'Nome'),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, insira um nome';
@@ -171,15 +207,15 @@ class _CadastrosPageState extends State<CadastrosPage> {
               ),
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Email'),
               ),
               TextFormField(
                 controller: _phoneController,
-                decoration: InputDecoration(labelText: 'Telefone'),
+                decoration: const InputDecoration(labelText: 'Telefone'),
               ),
               TextFormField(
                 controller: _enderecoController,
-                decoration: InputDecoration(labelText: 'Endereço'),
+                decoration: const InputDecoration(labelText: 'Endereço'),
               ),
             ]),
           ),
@@ -188,7 +224,7 @@ class _CadastrosPageState extends State<CadastrosPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancelar'),
+              child: const Text('Cancelar'),
             ),
             TextButton(
               onPressed: () {
@@ -197,7 +233,7 @@ class _CadastrosPageState extends State<CadastrosPage> {
                   Navigator.of(context).pop();
                 }
               },
-              child: Text('Adicionar'),
+              child: const Text('Adicionar'),
             ),
           ],
         );
@@ -220,4 +256,8 @@ class _CadastrosPageState extends State<CadastrosPage> {
       // Atualiza a lista de contatos
     });
   }
+}
+
+class _updateContact {
+  _updateContact(int id);
 }

@@ -12,9 +12,9 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('Login'),
+      // ),
       body: Center(
         child: LoginForm(),
       ),
@@ -49,7 +49,7 @@ class _LoginFormState extends State<LoginForm> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => ConfiguracoesScreen(email: user.email),
+              builder: (context) => ConfiguracoesPage(email: user.email),
             ),
           );
         } else {
