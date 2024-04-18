@@ -3,8 +3,6 @@ package webapp.helloworld.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +15,6 @@ import webapp.helloworld.repository.ProfessorRepository;
 
 @Controller
 public class DashboardAdmController {
-
-    private static final Logger logger = LoggerFactory.getLogger(DashboardAdmController.class);
 
     @Autowired
     private AlunoRepository alunoRepository;
@@ -42,24 +38,6 @@ public class DashboardAdmController {
         model.addAttribute("alunos", alunosList);
         model.addAttribute("professores", professoresList);
 
-        // Log do número de alunos recuperados do banco de dados
-        int numAlunos = alunosList.size();
-        logger.info("Número de alunos recuperados do banco de dados: {}", numAlunos);
-
-        // Log dos nomes dos alunos recuperados
-        for (Aluno aluno : alunosList) {
-            logger.info("Nome do aluno: {}", aluno.getUsername());
-        }
-
-        // Log do número de professores recuperados do banco de dados
-        int numProfessores = professoresList.size();
-        logger.info("Número de professores recuperados do banco de dados: {}", numProfessores);
-
-        // Log dos nomes dos professores recuperados
-        for (Professor professor : professoresList) {
-            logger.info("Nome do professor: {}", professor.getUsername());
-        }
-
-        return "dashboard-adm";
+        return "/dashboard-adm";
     }
 }

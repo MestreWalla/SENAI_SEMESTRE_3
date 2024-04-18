@@ -20,7 +20,12 @@
             <a href="/dashboard-adm" class="login"><i class="fas fa-arrow-left back-icon"></i>Voltar</a>
             <h1>Administrar Bruxoes Seniors</h1>
         </div>
-
+        <div th:if="${param.success}" class="sucesso">
+            <p>Edição realizada com sucesso!</p>
+        </div>
+        <div th:if="${param.error}" class="sucesso">
+            <p>Edição não realizada</p>
+        </div>
         <!-- Verificar se a lista de professores não é nula e não está vazia -->
         <div th:if="${#objects.nullSafe(professores, 'default') != 'default' and not #lists.isEmpty(professores)}">
             <div th:each="professor : ${professores}">
@@ -32,7 +37,7 @@
                     <p th:text="${'Disciplina: ' + professor.disciplina}"></p>
                     <hr>
                     <!-- Botões para editar ou excluir o professor -->
-                    <a th:href="@{/editar-professor/{id}(id=${professor.cpf})}" class="button">Editar</a>
+                    <a th:href="@{/editar-professor/{cpf}(cpf=${professor.cpf})}" class="button">Editar</a>
                     <a th:href="@{/excluir-professor/{id}(id=${professor.cpf})}" class="button">Excluir</a>
                 </div>
             </div>

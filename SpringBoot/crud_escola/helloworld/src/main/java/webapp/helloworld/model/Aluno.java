@@ -3,6 +3,7 @@ package webapp.helloworld.model;
 import java.io.Serializable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Aluno implements Serializable {
@@ -16,6 +17,8 @@ public class Aluno implements Serializable {
     private String materia02;
     private String professor01;
     private String professor02;
+    @JoinColumn(name="disciplina_id", referencedColumnName = "id")
+    private Disciplina disciplina;
     
     public String getCpf() {
         return cpf;

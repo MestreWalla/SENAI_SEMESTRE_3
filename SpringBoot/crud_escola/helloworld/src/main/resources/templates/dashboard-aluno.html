@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/dashboard-adm.css}">
+    <style>
+        /* Estilo para a tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para as células do cabeçalho */
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Estilo para as células da tabela */
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Estilo para as linhas pares */
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Estilo para o link */
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        /* Estilo para o link quando o mouse passa sobre ele */
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <title>Dashboard-Aluno</title>
+</head>
+
+<body>
+    <div th:insert="~{fragmentos/header.html :: header}"></div>
+
+    <div class="dashboard">
+        <h1>Dashboard do Aluno</h1>
+
+        <div class="widget">
+            <h2>Seus Cursos</h2>
+            <p>Lista de cursos em que você está matriculado.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome do Curso</th>
+                        <th>Professor</th>
+                        <th>Horário</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop para exibir os cursos do aluno -->
+                    <tr th:each="curso : ${cursos}">
+                        <td th:text="${curso.nome}"></td>
+                        <td th:text="${curso.professor}"></td>
+                        <td th:text="${curso.horario}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="/cursos" class="button">Ver Todos os Cursos</a>
+        </div>
+
+        <div class="widget">
+            <h2>Provas Agendadas</h2>
+            <p>Lista das próximas provas que você tem agendadas.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Disciplina</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     <!-- Loop para exibir as provas agendadas do aluno -->
+                    <tr th:each="prova : ${provas}">
+                        <td th:text="${prova.disciplina}"></td>
+                        <td th:text="${prova.data}"></td>
+                        <td th:text="${prova.horario}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="/provas" class="button">Ver Todas as Provas</a>
+        </div>
+
+        <div class="widget">
+            <h2>Notas</h2>
+            <p>Seu histórico de notas das disciplinas.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Disciplina</th>
+                        <th>Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="nota : ${notas}">
+                        <td th:text="${nota.disciplina}"></td>
+                        <td th:text="${nota.nota}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="/notas" class="button">Ver Todas as Notas</a>
+        </div>
+
+        <div class="widget">
+            <h2>Mensagens</h2>
+            <p>Últimas mensagens recebidas dos professores.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>De</th>
+                        <th>Mensagem</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop para exibir as mensagens recebidas do aluno -->
+                    <tr th:each="mensagem : ${mensagens}">
+                        <td th:text="${mensagem.de}"></td>
+                        <td th:text="${mensagem.mensagem}"></td>
+                        <td th:text="${mensagem.data}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="/mensagens" class="button">Ver Todas as Mensagens</a>
+        </div>
+    </div>
+</body>
+
+</html>

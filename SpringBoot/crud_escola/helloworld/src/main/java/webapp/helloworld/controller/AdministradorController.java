@@ -36,7 +36,7 @@ public class AdministradorController {
         if (validarCredenciais(username, password)) {
             // As credenciais são válidas, redireciona para a página do painel
             // administrativo
-            return "/dashboard-adm";
+            return "redirect:/dashboard-adm";
         } else {
             // As credenciais são inválidas, redireciona de volta para a página de login com
             // uma mensagem de erro

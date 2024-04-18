@@ -16,22 +16,22 @@ public class CadastroAlunoController {
     public String postCadastroAluno(Aluno aluno) {
         ar.save(aluno);
         // Após o cadastro ser realizado com sucesso
-        return "redirect:/login-adm?success=true";
+        return "redirect:/login-aluno?success=true";
     }
 
     // Método POST para processar o login do aluno
     @PostMapping("/login-aluno")
-    public String processAdminLogin(@RequestParam("username") String username,
+    public String processAlunoLogin(@RequestParam("username") String username,
             @RequestParam("password") String password) {
         // Lógica para processar o login do aluno
         if (validarCredenciais(username, password)) {
             // As credenciais são válidas, redireciona para a página do painel
             // administrativo
-            return "/dashboard-adm";
+            return "dashboard-aluno";
         } else {
             // As credenciais são inválidas, redireciona de volta para a página de login com
             // uma mensagem de erro
-            return "redirect:/login-adm?error";
+            return "redirect:/login-aluno?error";
         }
     }
 

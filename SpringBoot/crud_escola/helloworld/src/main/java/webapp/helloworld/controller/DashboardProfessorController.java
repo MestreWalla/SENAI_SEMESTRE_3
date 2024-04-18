@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.PostMapping;
 import webapp.helloworld.model.Professor;
 import webapp.helloworld.repository.ProfessorRepository;
 
@@ -50,6 +50,27 @@ public class DashboardProfessorController {
             return "editar-professor";
         } else {
             return "redirect:/professores-dash?error=Professor não encontrado";
+        }
+    }
+
+    @PostMapping("/salvar-edicao-professor")
+    public String salvarEdicaoProfessor(Professor professor) {
+        // Verifica se o professor existe no banco de dados
+        Professor professorExistente = professorRepository.findByCpf(professor.getCpf());
+        if (professorExistente != null) {
+            // Atualiza os dados do professor
+            professorExistente.setUsername(professor.getUsername());
+            professorExistente.setEmail(professor.getEmail());
+            professorExistente.setDisciplina(professor.getDisciplina());
+
+            // Salva as alterações no banco de dados
+            professorRepository.save(professorExistente);
+
+            // Redireciona para a página do painel de professores com uma mensagem de sucesso
+            return "redirect:/professor-dash?success=Professor editado com sucesso";
+        } else {
+            // Se o professor não for encontrado, redireciona com uma mensagem de erro
+            return "redirect:/professor-dash?error=Professor não encontrado";
         }
     }
 
