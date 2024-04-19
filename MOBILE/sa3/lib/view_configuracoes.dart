@@ -1,6 +1,8 @@
-// ignore_for_file: no_logic_in_create_state, library_private_types_in_public_api, use_key_in_widget_constructors
+// ignore_for_file: no_logic_in_create_state, library_private_types_in_public_api, use_key_in_widget_constructors, use_build_context_synchronously
 // arquivo view_configuracoes
 import 'package:flutter/material.dart';
+import 'package:sa3/controller_database.dart';
+import 'package:sa3/view_login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
@@ -54,6 +56,15 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
     await _prefs.setString('${email}SelIdioma', _idioma);
   }
 
+  Future<void> _fazerLogoff() async {
+  await AuthController.fazerLogoff();
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => LoginScreen()),
+  );
+}
+
+
   @override
   Widget build(BuildContext context) {
     return AnimatedTheme(
@@ -73,6 +84,14 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                         ? 'Prueba de Almacenamiento Interno'
                         : '',
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                _fazerLogoff();
+              },
+              icon: const Icon(Icons.logout),
+            ),
+          ],
         ),
         body: Center(
           child: Column(

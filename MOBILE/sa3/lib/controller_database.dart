@@ -2,13 +2,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sa3/model_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BancoDadosCrud {
   static const String nomeBancoDeDados = 'users.db'; // Nome do banco de dados
   static const String nomeTabela = 'users'; // Nome da tabela
   static const String tabelaUsuario =
-      "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY,nome TEXT, email TEXT, senha TEXT)";
+      "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY,nome TEXT, email TEXT, senha TEXT);";
 
   Future<Database> _chamarBancoDeDados() async {
     // Retorna um objeto Future que representa a promessa de um banco de dados
@@ -94,6 +95,27 @@ class BancoDadosCrud {
       }
       // Retorna o status de acesso como não permitido
       return acessoPermitido;
+    }
+  }
+}
+
+class AuthController {
+  // Método para fazer logoff
+  static Future<void> fazerLogoff() async {
+    try {
+      // Obtém uma instância do SharedPreferences
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      // Remove os dados de autenticação armazenados
+      await prefs.remove(
+          'email'); // Suponha que 'email' seja a chave para o email do usuário
+      await prefs.remove(
+          'senha'); // Suponha que 'senha' seja a chave para a senha do usuário
+
+      // Outras operações de limpeza, se necessário
+    } catch (ex) {
+      // Se ocorrer uma exceção durante o processo de logoff, imprime-a no console
+      print('Erro ao fazer logoff: $ex');
     }
   }
 }
