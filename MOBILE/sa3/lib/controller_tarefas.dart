@@ -123,9 +123,16 @@ class TarefaController {
         where: 'concluida = ?',
         whereArgs: [1],
       );
-      return List.generate(maps.length, (i) {
-        return Tarefa.fromMap(maps[i]);
-      });
+      for (final Map<String, dynamic> map in maps) {
+        final Tarefa tarefa = Tarefa.fromMap(map);
+        final int userId = map['usuario_id'] ?? 0;
+        final int taskId = tarefa.id;
+        if (kDebugMode) {
+          print(
+              'Tarefa ID: $taskId, Usuário ID: $userId, Título: ${tarefa.titulo}');
+        }
+      }
+      return List.generate(maps.length, (i) => Tarefa.fromMap(maps[i]));
     } catch (ex) {
       if (kDebugMode) {
         print('Erro ao obter as tarefas concluídas: $ex');
