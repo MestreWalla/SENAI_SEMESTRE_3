@@ -14,54 +14,52 @@ class TarefaController {
     final databasePath = await getDatabasesPath();
     final String path = join(databasePath, nomeBancoDeDados);
 
-    // Verificar se o banco de dados já existe
-    final exists = await databaseExists(path);
+    // Verificar se o banco de dados existe
+    bool bancoDeDadosExiste = await databaseExists(path);
 
-    if (!exists) {
-      // Se não existir, criar a tabela
-      return openDatabase(path, version: 1,
-          onCreate: (Database db, int version) async {
+    if (!bancoDeDadosExiste) {
+      // Se o banco de dados não existir, cria a tabela
+      return openDatabase(path, onCreate: (db, version) async {
         await db.execute(
-          'CREATE TABLE tarefas (id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, concluida INTEGER)',
-        );
-      });
+            "CREATE TABLE $nomeTabela(id INTEGER PRIMARY KEY AUTOINCREMENT, usuario_id INTEGER, titulo TEXT, concluida INTEGER)");
+      }, version: 1);
     } else {
-      // Se existir, apenas abrir o banco de dados
+      // Se o banco de dados já existir, simplesmente abra-o
       return openDatabase(path);
     }
   }
 
-  Future<void> adicionarTarefa(Tarefa tarefa) async {
-  try {
-    final Database db = await _chamarBancoDeDados();
-    await db.insert(
-      nomeTabela,
-      tarefa.toMapSemID(), // Utiliza o método toMapSemID para excluir o campo id
-    );
-  } catch (ex) {
-    if (kDebugMode) {
-      print(ex);
-    }
-    throw Exception("Erro ao adicionar a tarefa no banco de dados");
-  }
-}
-
-
-
-  Future<List<Tarefa>> getTarefas() async {
+  Future<void> adicionarTarefa(Tarefa tarefa, int userId) async {
     try {
       final Database db = await _chamarBancoDeDados();
-      final List<Map<String, dynamic>> maps = await db.query(nomeTabela);
-      print('Número de tarefas encontradas: ${maps.length}');
+      await db.insert(
+        nomeTabela,
+        tarefa.toMapComUsuarioId(userId),
+      );
+    } catch (ex) {
+      if (kDebugMode) {
+        print(ex);
+      }
+      return;
+    }
+  }
+
+  Future<List<Tarefa>> getTarefasUsuario(int userId) async {
+    try {
+      final Database db = await _chamarBancoDeDados();
+      final List<Map<String, dynamic>> maps = await db.query(
+        nomeTabela,
+        where: 'usuario_id = ?',
+        whereArgs: [userId],
+      );
       return List.generate(maps.length, (i) {
         return Tarefa.fromMap(maps[i]);
       });
     } catch (ex) {
-      print('Erro ao obter as tarefas: $ex');
       if (kDebugMode) {
         print(ex);
       }
-      throw Exception("Erro ao obter as tarefas do banco de dados");
+      return [];
     }
   }
 
@@ -118,43 +116,41 @@ class TarefaController {
   }
 
   Future<List<Tarefa>> getTarefasConcluidas() async {
-  try {
-    final Database db = await _chamarBancoDeDados();
-    final List<Map<String, dynamic>> maps = await db.query(
-      nomeTabela,
-      where: 'concluida = ?',
-      whereArgs: [1],
-    );
-    return List.generate(maps.length, (i) {
-      return Tarefa.fromMap(maps[i]);
-    });
-  } catch (ex) {
-    print('Erro ao obter as tarefas concluídas: $ex');
-    if (kDebugMode) {
-      print(ex);
+    try {
+      final Database db = await _chamarBancoDeDados();
+      final List<Map<String, dynamic>> maps = await db.query(
+        nomeTabela,
+        where: 'concluida = ?',
+        whereArgs: [1],
+      );
+      return List.generate(maps.length, (i) {
+        return Tarefa.fromMap(maps[i]);
+      });
+    } catch (ex) {
+      if (kDebugMode) {
+        print('Erro ao obter as tarefas concluídas: $ex');
+      }
+      throw Exception("Erro ao obter as tarefas concluídas do banco de dados");
     }
-    throw Exception("Erro ao obter as tarefas concluídas do banco de dados");
   }
-}
 
-Future<List<Tarefa>> getTarefasNaoConcluidas() async {
-  try {
-    final Database db = await _chamarBancoDeDados();
-    final List<Map<String, dynamic>> maps = await db.query(
-      nomeTabela,
-      where: 'concluida = ?',
-      whereArgs: [0],
-    );
-    return List.generate(maps.length, (i) {
-      return Tarefa.fromMap(maps[i]);
-    });
-  } catch (ex) {
-    print('Erro ao obter as tarefas não concluídas: $ex');
-    if (kDebugMode) {
-      print(ex);
+  Future<List<Tarefa>> getTarefasNaoConcluidas() async {
+    try {
+      final Database db = await _chamarBancoDeDados();
+      final List<Map<String, dynamic>> maps = await db.query(
+        nomeTabela,
+        where: 'concluida = ?',
+        whereArgs: [0],
+      );
+      return List.generate(maps.length, (i) {
+        return Tarefa.fromMap(maps[i]);
+      });
+    } catch (ex) {
+      if (kDebugMode) {
+        print('Erro ao obter as tarefas não concluídas: $ex');
+      }
+      throw Exception(
+          "Erro ao obter as tarefas não concluídas do banco de dados");
     }
-    throw Exception("Erro ao obter as tarefas não concluídas do banco de dados");
   }
-}
-
 }

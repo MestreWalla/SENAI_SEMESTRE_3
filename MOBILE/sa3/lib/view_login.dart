@@ -8,7 +8,29 @@ import 'package:sa3/model_user.dart';
 import 'package:sa3/view_bottombar.dart';
 import 'package:sa3/view_cadastro.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _printAllUsersOnLoad();
+  }
+
+  void _printAllUsersOnLoad() async {
+    BancoDadosCrud bancoDados = BancoDadosCrud();
+    try {
+      await bancoDados.printAllUsers();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Erro ao imprimir usuários: $e');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +52,7 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _senhaController = TextEditingController();
   bool _loading = false;
 
-  void _login() async {
+  Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
       String email = _emailController.text;
       String senha = _senhaController.text;
@@ -40,37 +62,41 @@ class _LoginFormState extends State<LoginForm> {
       });
 
       BancoDadosCrud bancoDados = BancoDadosCrud();
+      User? user;
       try {
-        User? user = await bancoDados.getUser(email, senha);
-        if (user != null) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MyBottomBar(
-                email: user.email,
-                darkMode: false, // Defina o modo escuro conforme necessário
-                idioma: 'pt-br', // Defina o idioma conforme necessário
-              ),
-            ),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Email ou senha incorretos'),
-          ));
-        }
+        // Consulta o banco de dados para obter o usuário com o email e senha fornecidos
+        print('Consultando banco de dados para o email: $email e senha: $senha');
+        user = await bancoDados.getUser(email, senha);
+        print('Resultado da consulta ao banco de dados: $user');
       } catch (e) {
-        if (kDebugMode) {
-          print('Erro durante o login: $e');
-        }
+        print('Erro durante a consulta ao banco de dados: $e');
+      }
+
+      if (user != null && user.id != null) {
+        // Verifica se o usuário e o ID não são nulos
+        print('Usuário autenticado com sucesso: ${user.email}');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyBottomBar(
+              email: user?.email ?? 'valor padrão',
+              senha: senha, // Passando a senha para MyBottomBar
+              darkMode: false, // Defina o modo escuro conforme necessário
+              idioma: 'pt-br', // Defina o idioma conforme necessário
+            ),
+          ),
+        );
+      } else {
+        print('Usuário ou ID nulo: $user');
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Erro durante o login. Tente novamente mais tarde.'),
+          content: Text('Email ou senha incorretos'),
         ));
-      } finally {
-        setState(() {
-          _loading = false;
-        });
       }
     }
+
+    setState(() {
+      _loading = false;
+    });
   }
 
   @override

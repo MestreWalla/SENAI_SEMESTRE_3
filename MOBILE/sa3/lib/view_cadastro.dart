@@ -29,29 +29,45 @@ class _CadastroFormState extends State<CadastroForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
 
-  void cadastrarUsuario(BuildContext context) async {
-    if (_formKey.currentState!.validate()) {
-      String name = _nomeController.text;
-      String email = _emailController.text;
-      String password = _senhaController.text;
+  void cadastrarUsuario() async {
+  if (_formKey.currentState!.validate()) {
+    String name = _nomeController.text;
+    String email = _emailController.text;
+    String password = _senhaController.text;
 
-      User user = User(nome: name, email: email, senha: password);
+    print('Dados do formulário:');
+    print('Nome: $name');
+    print('Email: $email');
+    print('Senha: $password');
 
-      BancoDadosCrud bancoDados = BancoDadosCrud();
-      try {
-        await bancoDados.create(user); // Cadastro do usuário
+    User user = User(nome: name, email: email, senha: password);
 
+    BancoDadosCrud bancoDados = BancoDadosCrud();
+    try {
+      // Verifica se o usuário já existe no banco de dados antes de cadastrar
+      if (await bancoDados.existsUser(email, password)) {
+        print('Usuário já cadastrado.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Usuário já cadastrado')),
+        );
+      } else {
+        // Se o usuário não existir, realiza o cadastro
+        print('Usuário não cadastrado. Realizando cadastro...');
+        await bancoDados.create(user);
+        print('Usuário cadastrado com sucesso!');
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Usuário cadastrado com sucesso!')),
         );
-        Navigator.pop(context); // Redireciona para a tela de login
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao cadastrar usuário: $e')),
-        );
+        Navigator.pop(context);
       }
+    } catch (e) {
+      print('Erro ao cadastrar usuário: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao cadastrar usuário: $e')),
+      );
     }
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +107,8 @@ class _CadastroFormState extends State<CadastroForm> {
                 if (value?.trim().isEmpty ?? true) {
                   return 'Por favor, insira seu e-mail';
                 }
-                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value!)) {
+                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                    .hasMatch(value!)) {
                   return 'E-mail inválido';
                 }
                 return null;
@@ -111,9 +128,7 @@ class _CadastroFormState extends State<CadastroForm> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                cadastrarUsuario(context);
-              },
+              onPressed: cadastrarUsuario,
               child: const Text('Cadastrar'),
             ),
           ],

@@ -1,4 +1,5 @@
-// arquivo controller_database.dart
+// ignore_for_file: avoid_print
+
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sa3/model_user.dart';
@@ -9,7 +10,11 @@ class BancoDadosCrud {
   static const String nomeBancoDeDados = 'users.db'; // Nome do banco de dados
   static const String nomeTabela = 'users'; // Nome da tabela
   static const String tabelaUsuario =
-      "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY,nome TEXT, email TEXT, senha TEXT);";
+  "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, email TEXT, senha TEXT);";
+
+  static const String tabelaTarefas =
+  "CREATE TABLE IF NOT EXISTS tarefas (id INTEGER PRIMARY KEY AUTOINCREMENT, usuario_id INTEGER, titulo TEXT, concluida INTEGER);";
+
 
   Future<Database> _chamarBancoDeDados() async {
     // Retorna um objeto Future que representa a promessa de um banco de dados
@@ -20,57 +25,89 @@ class BancoDadosCrud {
       onCreate: (db, version) {
         return db.execute(
             // Callback chamado quando o banco de dados é criado pela primeira vez
-            tabelaUsuario); // Executa o script de criação da tabela de usuários quando o banco é criado
+            '$tabelaUsuario $tabelaTarefas'); // Executa o script de criação da tabela de usuários quando o banco é criado
       },
       version: 1, // Versão do banco de dados
     );
   }
 
+  // Adiciona esta função à classe BancoDadosCrud
+  Future<void> printAllUsers() async {
+    try {
+      final Database db = await _chamarBancoDeDados();
+      final List<Map<String, dynamic>> users = await db.query(nomeTabela);
+      for (var user in users) {
+        print(
+            'ID: ${user['id']}, Nome: ${user['nome']}, Email: ${user['email']}, Senha: ${user['senha']}');
+      }
+    } catch (ex) {
+      print('Erro ao imprimir usuários: $ex');
+    }
+  }
+
   // Método para criar um novo contato no banco de dados
   Future<void> create(User user) async {
     try {
-      // Obtém uma referência ao banco de dados
+      print('Iniciando criação do usuário...');
+
       final Database db = await _chamarBancoDeDados();
-      // Insere o usuário na tabela do banco de dados
-      await db.insert(nomeTabela, user.toMap());
+      print('Banco de dados aberto com sucesso.');
+
+      final Map<String, dynamic> userData = user.toMap();
+      // userData.remove('id');
+      print('Dados do usuário a serem inseridos no banco de dados: $userData');
+
+      final id = await db.insert(nomeTabela, userData);
+      print('Usuário inserido com sucesso. ID: $id');
+
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt(
+          AuthController.userIdKey, id); // Usar user.id em vez de id
+      print('ID do usuário armazenado com sucesso no SharedPreferences.');
     } catch (ex) {
-      // Se ocorrer uma exceção durante a operação
-      if (kDebugMode) {
-        // Verifica se o aplicativo está em modo de depuração
-        print(
-            ex); // Imprime a exceção no console apenas se estiver em modo de depuração
-      }
-      return; // Retorna para encerrar a função
+      print('Erro ao criar usuário no banco de dados: $ex');
     }
   }
 
-// Método para obter o usuário do banco de dados
+  // Método para obter o usuário do banco de dados
   Future<User?> getUser(String email, String senha) async {
     try {
-      // Obtém uma referência ao banco de dados
+      print('Consultando banco de dados para o email: $email e senha: $senha');
       final Database db = await _chamarBancoDeDados();
-      // Consulta todos os registros na tabela do banco de dados que correspondem ao email e senha fornecidos
       final List<Map<String, dynamic>> maps = await db.query(nomeTabela,
           where: 'email = ? AND senha = ?', whereArgs: [email, senha]);
-      // Verifica se há pelo menos um registro retornado pela consulta
+      print('Resultado da consulta ao banco de dados: $maps');
       if (maps.isNotEmpty) {
-        // Se houver, converte o primeiro registro em um objeto User e o retorna
         return User.fromMap(maps.first);
       }
-      // Retorna null se nenhum usuário for encontrado com o email e senha fornecidos
     } catch (ex) {
-      // Se ocorrer uma exceção durante a operação
+      print('Erro durante a consulta ao banco de dados: $ex');
       if (kDebugMode) {
-        // Verifica se o aplicativo está em modo de depuração e imprime a exceção no console
         print(ex);
       }
-      // Retorna null em caso de erro
     }
-    // Retorna null se a consulta não retornar nenhum usuário ou se ocorrer uma exceção
     return null;
   }
 
-// Checar credenciais de usuario
+  static Future<int?> getUserId() async {
+    try {
+      print('Obtendo instância de SharedPreferences...');
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      print('Instância de SharedPreferences obtida com sucesso.');
+
+      print('Obtendo o ID do usuário das preferências compartilhadas...');
+      final int? userId = prefs.getInt(AuthController.userIdKey);
+      print('ID do usuário obtido com sucesso: $userId');
+
+      return userId;
+    } catch (ex) {
+      print('Erro ao obter o ID do usuário: $ex');
+      // Tratamento de exceções...
+      return null;
+    }
+  }
+
+  // Checar credenciais de usuario
   Future<bool> existsUser(String email, String senha) async {
     bool acessoPermitido =
         false; // Inicialmente definimos o acesso como não permitido
@@ -100,21 +137,19 @@ class BancoDadosCrud {
 }
 
 class AuthController {
-  // Método para fazer logoff
+  static const String userIdKey = 'userId';
+
   static Future<void> fazerLogoff() async {
     try {
-      // Obtém uma instância do SharedPreferences
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      // Remove os dados de autenticação armazenados
-      await prefs.remove(
-          'email'); // Suponha que 'email' seja a chave para o email do usuário
-      await prefs.remove(
-          'senha'); // Suponha que 'senha' seja a chave para a senha do usuário
+      // Remove os dados de autenticação e o ID do usuário
+      await prefs.remove('email');
+      await prefs.remove('senha');
+      await prefs.remove(userIdKey);
 
       // Outras operações de limpeza, se necessário
     } catch (ex) {
-      // Se ocorrer uma exceção durante o processo de logoff, imprime-a no console
       print('Erro ao fazer logoff: $ex');
     }
   }

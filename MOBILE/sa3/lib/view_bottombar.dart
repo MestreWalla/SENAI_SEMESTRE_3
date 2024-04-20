@@ -8,13 +8,15 @@ class MyBottomBar extends StatefulWidget {
   final String email;
   final bool darkMode;
   final String idioma;
+  final String senha; // Adicionando o argumento 'senha' aqui
 
   const MyBottomBar({
-    Key? key,
+    super.key,
     required this.email,
     required this.darkMode,
     required this.idioma,
-  }) : super(key: key);
+    required this.senha, // Atualizando o construtor para incluir 'senha'
+  });
 
   @override
   _MyBottomBarState createState() => _MyBottomBarState();
@@ -29,38 +31,39 @@ class _MyBottomBarState extends State<MyBottomBar> {
     });
   }
 
-@override
-Widget build(BuildContext context) {
-  return AnimatedTheme(
-    data: widget.darkMode
-          ? ThemeData.dark()
-          : ThemeData.light(),
-    duration: const Duration(milliseconds: 500),
-    child: Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedTheme(
+      data: widget.darkMode ? ThemeData.dark() : ThemeData.light(),
+      duration: const Duration(milliseconds: 500),
+      child: Scaffold(
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'Lista de Tarefas',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Configurações',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.blue,
+          onTap: _onItemTapped,
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Lista de Tarefas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Configurações',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
-      ),
-    ),
-  );
-}
+    );
+  }
 
   List<Widget> get _widgetOptions => <Widget>[
-        const TarefasView(),
+        TarefasView(
+          email: widget.email,
+          senha: widget.senha, // Passando 'senha' como argumento para TarefasView
+        ),
         ConfiguracoesPage(email: widget.email),
       ];
 }

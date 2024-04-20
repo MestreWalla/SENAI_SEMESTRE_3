@@ -1,13 +1,17 @@
-// arquivo view_tarefas.dart
-// ignore_for_file: use_build_context_synchronously, prefer_final_fields, library_private_types_in_public_api
+// ignore_for_file: avoid_print
 
-import 'package:flutter/material.dart';
-import 'controller_tarefas.dart';
-import 'model_tarefas.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:sa3/controller_database.dart';
+import 'package:sa3/controller_tarefas.dart';
+import 'package:sa3/model_tarefas.dart';
 
 class TarefasView extends StatefulWidget {
-  const TarefasView({super.key});
+  final String email;
+  final String senha;
+
+  const TarefasView({Key? key, required this.email, required this.senha})
+      : super(key: key);
 
   @override
   _TarefasViewState createState() => _TarefasViewState();
@@ -16,34 +20,64 @@ class TarefasView extends StatefulWidget {
 class _TarefasViewState extends State<TarefasView> {
   final TarefaController _controller = TarefaController();
   TextEditingController _tituloController = TextEditingController();
+  int? userId;
 
-  Future<List<Tarefa>> getTarefasConcluidas() async {
-    try {
-      final List<Tarefa> tarefas = await _controller.getTarefasConcluidas();
-      return tarefas;
-    } catch (ex) {
-      if (kDebugMode) {
-        print(ex);
-      }
-      throw Exception("Erro ao obter as tarefas concluídas do banco de dados");
-    }
+  @override
+  void initState() {
+    super.initState();
+    _buscarUserId(); // Chame _buscarUserId no initState
   }
 
-  Future<List<Tarefa>> getTarefasNaoConcluidas() async {
+  Future<void> _buscarUserId() async {
     try {
-      final List<Tarefa> tarefas = await _controller.getTarefasNaoConcluidas();
-      return tarefas;
-    } catch (ex) {
-      if (kDebugMode) {
-        print(ex);
+      print('Iniciando busca do ID do usuário...');
+      final userIdObject =await BancoDadosCrud().getUser(widget.email, widget.senha);
+      print('Resultado da consulta ao banco de dados: $userIdObject');
+      if (userIdObject != null) {
+        print('Usuário encontrado no banco de dados.');
+        final id = userIdObject.id;
+        if (id != null) {
+          setState(() {
+            userId = int.parse(id.toString());
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Usuário autenticado com sucesso.'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        } else {
+          print('ID do usuário inválido: $id');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Erro ao autenticar o usuário. Tente novamente mais tarde.'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      } else {
+        print('Usuário não encontrado no banco de dados.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Usuário não encontrado. Verifique suas credenciais.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
       }
-      throw Exception(
-          "Erro ao obter as tarefas não concluídas do banco de dados");
+    } catch (ex) {
+      print('Erro ao buscar ID do usuário: $ex');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro ao buscar ID do usuário. Por favor, tente novamente mais tarde.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    print('Construindo TarefasView...');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de Tarefas'),
@@ -63,7 +97,35 @@ class _TarefasViewState extends State<TarefasView> {
     );
   }
 
+  Future<List<Tarefa>> getTarefasNaoConcluidas() async {
+    try {
+      print('Obtendo tarefas não concluídas...');
+      final List<Tarefa> tarefas = await _controller.getTarefasNaoConcluidas();
+      return tarefas;
+    } catch (ex) {
+      if (kDebugMode) {
+        print(ex);
+      }
+      throw Exception(
+          "Erro ao obter as tarefas não concluídas do banco de dados");
+    }
+  }
+
+  Future<List<Tarefa>> getTarefasConcluidas() async {
+    try {
+      print('Obtendo tarefas concluídas...');
+      final List<Tarefa> tarefas = await _controller.getTarefasConcluidas();
+      return tarefas;
+    } catch (ex) {
+      if (kDebugMode) {
+        print(ex);
+      }
+      throw Exception("Erro ao obter as tarefas concluídas do banco de dados");
+    }
+  }
+
   Widget _buildTarefasNaoConcluidas() {
+    print('Construindo lista de tarefas não concluídas...');
     return Expanded(
       child: SingleChildScrollView(
         child: FutureBuilder<List<Tarefa>>(
@@ -115,6 +177,7 @@ class _TarefasViewState extends State<TarefasView> {
   }
 
   Widget _buildTarefasConcluidas() {
+    print('Construindo lista de tarefas concluídas...');
     return Expanded(
       child: SingleChildScrollView(
         child: FutureBuilder<List<Tarefa>>(
@@ -163,6 +226,7 @@ class _TarefasViewState extends State<TarefasView> {
   }
 
   void _mostrarDialogAdicionarTarefa(BuildContext context) {
+    print('Mostrando diálogo para adicionar tarefa...');
     showDialog(
       context: context,
       builder: (context) {
@@ -182,9 +246,14 @@ class _TarefasViewState extends State<TarefasView> {
             ElevatedButton(
               onPressed: () async {
                 final titulo = _tituloController.text;
-                if (titulo.isNotEmpty) {
-                  final novaTarefa = Tarefa(titulo: titulo, concluida: false);
-                  await _controller.adicionarTarefa(novaTarefa);
+                if (titulo.isNotEmpty && userId != null) {
+                  // Verifique se userId não é nulo
+                  final novaTarefa = Tarefa(
+                    titulo: titulo,
+                    concluida: false,
+                    usuarioId: userId!, // Use userId
+                  );
+                  await _controller.adicionarTarefa(novaTarefa, userId!);
                   _tituloController.clear();
                   Navigator.pop(context);
 
