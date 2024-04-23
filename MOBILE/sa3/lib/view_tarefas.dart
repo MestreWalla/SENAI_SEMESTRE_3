@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously, library_private_types_in_public_api
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +10,7 @@ class TarefasView extends StatefulWidget {
   final String email;
   final String senha;
 
-  const TarefasView({Key? key, required this.email, required this.senha})
-      : super(key: key);
+  const TarefasView({super.key, required this.email, required this.senha});
 
   @override
   _TarefasViewState createState() => _TarefasViewState();
@@ -19,7 +18,7 @@ class TarefasView extends StatefulWidget {
 
 class _TarefasViewState extends State<TarefasView> {
   final TarefaController _controller = TarefaController();
-  TextEditingController _tituloController = TextEditingController();
+  final TextEditingController _tituloController = TextEditingController();
   int? userId;
 
   @override
@@ -31,7 +30,8 @@ class _TarefasViewState extends State<TarefasView> {
   Future<void> _buscarUserId() async {
     try {
       print('Iniciando busca do ID do usuário...');
-      final userIdObject =await BancoDadosCrud().getUser(widget.email, widget.senha);
+      final userIdObject =
+          await BancoDadosCrud().getUser(widget.email, widget.senha);
       print('Resultado da consulta ao banco de dados: $userIdObject');
       if (userIdObject != null) {
         print('Usuário encontrado no banco de dados.');
@@ -50,7 +50,8 @@ class _TarefasViewState extends State<TarefasView> {
           print('ID do usuário inválido: $id');
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Erro ao autenticar o usuário. Tente novamente mais tarde.'),
+              content: Text(
+                  'Erro ao autenticar o usuário. Tente novamente mais tarde.'),
               duration: Duration(seconds: 2),
             ),
           );
@@ -59,7 +60,8 @@ class _TarefasViewState extends State<TarefasView> {
         print('Usuário não encontrado no banco de dados.');
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Usuário não encontrado. Verifique suas credenciais.'),
+            content:
+                Text('Usuário não encontrado. Verifique suas credenciais.'),
             duration: Duration(seconds: 2),
           ),
         );
@@ -68,7 +70,8 @@ class _TarefasViewState extends State<TarefasView> {
       print('Erro ao buscar ID do usuário: $ex');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Erro ao buscar ID do usuário. Por favor, tente novamente mais tarde.'),
+          content: Text(
+              'Erro ao buscar ID do usuário. Por favor, tente novamente mais tarde.'),
           duration: Duration(seconds: 2),
         ),
       );
@@ -97,10 +100,11 @@ class _TarefasViewState extends State<TarefasView> {
     );
   }
 
-  Future<List<Tarefa>> getTarefasNaoConcluidas() async {
+  Future<List<Tarefa>> getTarefasNaoConcluidas(int userId) async {
     try {
       print('Obtendo tarefas não concluídas...');
-      final List<Tarefa> tarefas = await _controller.getTarefasNaoConcluidas();
+      final List<Tarefa> tarefas =
+          await _controller.getTarefasNaoConcluidasUsuario(userId);
       return tarefas;
     } catch (ex) {
       if (kDebugMode) {
@@ -111,10 +115,11 @@ class _TarefasViewState extends State<TarefasView> {
     }
   }
 
-  Future<List<Tarefa>> getTarefasConcluidas() async {
+  Future<List<Tarefa>> getTarefasConcluidas(int userId) async {
     try {
       print('Obtendo tarefas concluídas...');
-      final List<Tarefa> tarefas = await _controller.getTarefasConcluidas();
+      final List<Tarefa> tarefas =
+          await _controller.getTarefasConcluidasUsuario(userId);
       return tarefas;
     } catch (ex) {
       if (kDebugMode) {
@@ -129,7 +134,8 @@ class _TarefasViewState extends State<TarefasView> {
     return Expanded(
       child: SingleChildScrollView(
         child: FutureBuilder<List<Tarefa>>(
-          future: getTarefasNaoConcluidas(),
+          future: getTarefasNaoConcluidas(userId ??
+              0), // Utilizando o operador ?? para fornecer um valor padrão
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -147,7 +153,7 @@ class _TarefasViewState extends State<TarefasView> {
                   return ListTile(
                     title: Text(tarefa.titulo),
                     leading: Checkbox(
-                      value: false,
+                      value: tarefa.concluida,
                       onChanged: (value) {
                         setState(() {
                           if (value != null && value) {
@@ -158,13 +164,24 @@ class _TarefasViewState extends State<TarefasView> {
                         });
                       },
                     ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        setState(() {
-                          _controller.removerTarefa(tarefa.id);
-                        });
-                      },
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                          onPressed: () {
+                            _mostrarDialogEditarTarefa(context, tarefa);
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            setState(() {
+                              _controller.removerTarefa(tarefa.id);
+                            });
+                          },
+                        ),
+                      ],
                     ),
                   );
                 },
@@ -181,7 +198,7 @@ class _TarefasViewState extends State<TarefasView> {
     return Expanded(
       child: SingleChildScrollView(
         child: FutureBuilder<List<Tarefa>>(
-          future: getTarefasConcluidas(),
+          future: getTarefasConcluidas(userId ?? 0),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -202,18 +219,28 @@ class _TarefasViewState extends State<TarefasView> {
                       value: true,
                       onChanged: (value) {
                         setState(() {
-                          _controller.desmarcarComoConcluida(
-                              tarefa.id); // Desmarca a tarefa como concluída
+                          _controller.desmarcarComoConcluida(tarefa.id);
                         });
                       },
                     ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        setState(() {
-                          _controller.removerTarefa(tarefa.id);
-                        });
-                      },
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                          onPressed: () {
+                            _mostrarDialogEditarTarefa(context, tarefa);
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            setState(() {
+                              _controller.removerTarefa(tarefa.id);
+                            });
+                          },
+                        ),
+                      ],
                     ),
                   );
                 },
@@ -267,6 +294,57 @@ class _TarefasViewState extends State<TarefasView> {
                 }
               },
               child: const Text('Adicionar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _mostrarDialogEditarTarefa(BuildContext context, Tarefa tarefa) {
+    print('Mostrando diálogo para editar tarefa...');
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Editar Tarefa'),
+          content: TextField(
+            controller: _tituloController,
+            decoration: InputDecoration(
+              labelText: 'Novo Título',
+              hintText: tarefa.titulo,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancelar'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final novoTitulo = _tituloController.text;
+                if (novoTitulo.isNotEmpty) {
+                  // Editar a tarefa com o novo título
+                  await _controller.editarTarefa(
+                    tarefa.id,
+                    novoTitulo,
+                    tarefa.concluida,
+                  );
+                  _tituloController.clear();
+                  Navigator.pop(context);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Tarefa editada com sucesso!'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                  setState(() {});
+                }
+              },
+              child: const Text('Salvar'),
             ),
           ],
         );

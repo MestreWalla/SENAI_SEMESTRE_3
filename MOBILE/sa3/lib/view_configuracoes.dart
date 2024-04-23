@@ -1,23 +1,18 @@
-// ignore_for_file: no_logic_in_create_state, library_private_types_in_public_api, use_key_in_widget_constructors, use_build_context_synchronously
-// arquivo view_configuracoes
 import 'package:flutter/material.dart';
 import 'package:sa3/controller_database.dart';
 import 'package:sa3/view_login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
-  //atributo
   final String email;
 
-  const ConfiguracoesPage({required this.email});
+  const ConfiguracoesPage({Key? key, required this.email}) : super(key: key);
 
   @override
-  _ConfiguracoesPageState createState() =>
-      _ConfiguracoesPageState(email: email);
+  _ConfiguracoesPageState createState() => _ConfiguracoesPageState(email: email);
 }
 
 class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
-  //Atributos
   late SharedPreferences _prefs;
   bool _darkMode = false;
   final String email;
@@ -25,7 +20,6 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
 
   _ConfiguracoesPageState({required this.email});
 
-  //Métodos
   @override
   void initState() {
     super.initState();
@@ -52,27 +46,21 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
       _idioma = novoIdioma;
     });
 
-    // Salvar o novo idioma nas preferências
     await _prefs.setString('${email}SelIdioma', _idioma);
   }
 
   Future<void> _fazerLogoff() async {
-  await AuthController.fazerLogoff();
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => LoginScreen()),
-  );
-}
-
+    await AuthController.fazerLogoff();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedTheme(
-      data: _darkMode
-          ? ThemeData.dark()
-          : ThemeData.light(), // Define o tema com base no modo escuro
-      duration:
-          const Duration(milliseconds: 500), // Define a duração da transição
+    return DefaultTabController(
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -92,57 +80,62 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
               icon: const Icon(Icons.logout),
             ),
           ],
-        ),
-        body: Center(
-          child: Column(
-            children: [
-              // Exibe o texto de acordo com o idioma selecionado
-              Text(
-                _idioma == 'pt-br'
-                    ? 'Selecione o Modo Escuro'
-                    : _idioma == 'en-us'
-                        ? 'Select Dark Mode'
-                        : _idioma == 'es-ar'
-                            ? 'Seleccione el Modo Oscuro'
-                            : '',
-              ),
-              Switch(
-                value: _darkMode,
-                onChanged: (value) {
-                  _mudarDarkMode();
-                },
-              ),
-              Text(
-                _idioma == 'pt-br'
-                    ? 'Selecione o Idioma'
-                    : _idioma == 'en-us'
-                        ? 'Select Language'
-                        : _idioma == 'es-ar'
-                            ? 'Seleccione el Idioma'
-                            : '',
-              ),
-              DropdownButton<String>(
-                value: _idioma,
-                onChanged: (value) {
-                  _mudarIdioma(value!);
-                },
-                items: const <DropdownMenuItem<String>>[
-                  DropdownMenuItem(
-                    value: 'pt-br',
-                    child: Text('Português (Brasil)'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'en-us',
-                    child: Text('Inglês (EUA)'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'es-ar',
-                    child: Text('Espanhol (Argentina)'),
-                  ),
-                ],
-              )
+          bottom: TabBar(
+            tabs: [
+              Tab(text: _idioma == 'pt-br' ? 'Sistema' : _idioma == 'en-us' ? 'System' : _idioma == 'es-ar' ? 'Sistema' : ''),
+              Tab(text: _idioma == 'pt-br' ? 'Usuário' : _idioma == 'en-us' ? 'User' : _idioma == 'es-ar' ? 'Usuario' : ''),
             ],
           ),
+        ),
+        body: TabBarView(
+          children: [
+            // Aba de configurações do sistema
+            Center(
+              child: Column(
+                children: [
+                  Text(
+                    _idioma == 'pt-br' ? 'Selecione o Modo Escuro' : _idioma == 'en-us' ? 'Select Dark Mode' : _idioma == 'es-ar' ? 'Seleccione el Modo Oscuro' : '',
+                  ),
+                  Switch(
+                    value: _darkMode,
+                    onChanged: (value) {
+                      _mudarDarkMode();
+                    },
+                  ),
+                ],
+              ),
+            ),
+            // Aba de configurações do usuário
+            Center(
+              child: Column(
+                children: [
+                  Text(
+                    _idioma == 'pt-br' ? 'Selecione o Idioma' : _idioma == 'en-us' ? 'Select Language' : _idioma == 'es-ar' ? 'Seleccione el Idioma' : '',
+                  ),
+                  DropdownButton<String>(
+                    value: _idioma,
+                    onChanged: (value) {
+                      _mudarIdioma(value!);
+                    },
+                    items: const <DropdownMenuItem<String>>[
+                      DropdownMenuItem(
+                        value: 'pt-br',
+                        child: Text('Português (Brasil)'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'en-us',
+                        child: Text('Inglês (EUA)'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'es-ar',
+                        child: Text('Espanhol (Argentina)'),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

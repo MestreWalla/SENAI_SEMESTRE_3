@@ -1,4 +1,6 @@
 // controller_tarefas.dart
+// ignore_for_file: avoid_print
+
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -115,49 +117,62 @@ class TarefaController {
     }
   }
 
-  Future<List<Tarefa>> getTarefasConcluidas() async {
+  Future<List<Tarefa>> getTarefasConcluidasUsuario(int userId) async {
     try {
       final Database db = await _chamarBancoDeDados();
       final List<Map<String, dynamic>> maps = await db.query(
         nomeTabela,
-        where: 'concluida = ?',
-        whereArgs: [1],
+        where: 'concluida = ? AND usuario_id = ?',
+        whereArgs: [1, userId],
       );
-      for (final Map<String, dynamic> map in maps) {
-        final Tarefa tarefa = Tarefa.fromMap(map);
-        final int userId = map['usuario_id'] ?? 0;
-        final int taskId = tarefa.id;
-        if (kDebugMode) {
-          print(
-              'Tarefa ID: $taskId, Usuário ID: $userId, Título: ${tarefa.titulo}');
-        }
-      }
       return List.generate(maps.length, (i) => Tarefa.fromMap(maps[i]));
     } catch (ex) {
       if (kDebugMode) {
-        print('Erro ao obter as tarefas concluídas: $ex');
+        print('Erro ao obter as tarefas concluídas do usuário: $ex');
       }
       throw Exception("Erro ao obter as tarefas concluídas do banco de dados");
     }
   }
 
-  Future<List<Tarefa>> getTarefasNaoConcluidas() async {
+  Future<List<Tarefa>> getTarefasNaoConcluidasUsuario(int userId) async {
     try {
       final Database db = await _chamarBancoDeDados();
       final List<Map<String, dynamic>> maps = await db.query(
         nomeTabela,
-        where: 'concluida = ?',
-        whereArgs: [0],
+        where: 'concluida = ? AND usuario_id = ?',
+        whereArgs: [
+          0,
+          userId
+        ], // Filtrando tarefas não concluídas do usuário atual
       );
-      return List.generate(maps.length, (i) {
-        return Tarefa.fromMap(maps[i]);
-      });
+      return List.generate(maps.length, (i) => Tarefa.fromMap(maps[i]));
     } catch (ex) {
       if (kDebugMode) {
-        print('Erro ao obter as tarefas não concluídas: $ex');
+        print('Erro ao obter as tarefas não concluídas do usuário: $ex');
       }
       throw Exception(
           "Erro ao obter as tarefas não concluídas do banco de dados");
+    }
+  }
+
+  Future<void> editarTarefa(
+      int id, String novoTitulo, bool novaConclusao) async {
+    try {
+      final Database db = await _chamarBancoDeDados();
+      await db.update(
+        nomeTabela,
+        {
+          'titulo': novoTitulo,
+          'concluida': novaConclusao ? 1 : 0,
+        },
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } catch (ex) {
+      if (kDebugMode) {
+        print(ex);
+      }
+      throw Exception("Erro ao editar a tarefa no banco de dados");
     }
   }
 }
