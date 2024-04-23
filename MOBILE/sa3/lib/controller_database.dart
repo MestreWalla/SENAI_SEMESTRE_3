@@ -107,6 +107,17 @@ class BancoDadosCrud {
     }
   }
 
+  Future<int?> update(User user) async {
+  try {
+    final Database db = await _chamarBancoDeDados();
+    return await db.update(nomeTabela, user.toMap(),
+        where: 'id = ?', whereArgs: [user.id]);
+  } catch (ex) {
+    print('Erro ao atualizar usuário: $ex');
+  }
+  return null;
+}
+
   // Checar credenciais de usuario
   Future<bool> existsUser(String email, String senha) async {
     bool acessoPermitido =
@@ -154,3 +165,4 @@ class AuthController {
     }
   }
 }
+

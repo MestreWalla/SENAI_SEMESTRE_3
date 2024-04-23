@@ -46,25 +46,6 @@ class TarefaController {
     }
   }
 
-  Future<List<Tarefa>> getTarefasUsuario(int userId) async {
-    try {
-      final Database db = await _chamarBancoDeDados();
-      final List<Map<String, dynamic>> maps = await db.query(
-        nomeTabela,
-        where: 'usuario_id = ?',
-        whereArgs: [userId],
-      );
-      return List.generate(maps.length, (i) {
-        return Tarefa.fromMap(maps[i]);
-      });
-    } catch (ex) {
-      if (kDebugMode) {
-        print(ex);
-      }
-      return [];
-    }
-  }
-
   Future<void> marcarComoConcluida(int id) async {
     try {
       final Database db = await _chamarBancoDeDados();
