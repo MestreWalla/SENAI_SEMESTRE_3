@@ -1,0 +1,17 @@
+[
+    {
+        "nome":"CPU",
+        "preco":599.90,
+        "categoria":"informatica"
+    },
+    {
+        "nome":"Camiseta Linux",
+        "preco":49.00,
+        "categoria":"vesturáio"
+    },
+    {
+        "nome":"Mousepad",
+        "preco":19.90,
+        "categoria":"acessórios"
+    }
+]
