@@ -13,10 +13,10 @@ public class Aluno implements Serializable {
     private String username;
     private String email;
     private String senha;
-    private String materia01;
-    private String materia02;
-    private String professor01;
-    private String professor02;
+    private String materia01; //Eliminar
+    private String materia02; //Eliminar
+    private String professor01; //Eliminar
+    private String professor02; //Eliminar
     @JoinColumn(name="disciplina_id", referencedColumnName = "id")
     private Disciplina disciplina;
     

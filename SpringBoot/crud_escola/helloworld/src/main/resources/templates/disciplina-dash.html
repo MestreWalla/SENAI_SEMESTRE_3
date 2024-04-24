@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <title>Exibir Disciplinas</title>
+</head>
+
+<body>
+    <div th:insert="~{fragmentos/header.html :: header}"></div>
+
+    <div class="container">
+        <h1>Disciplinas Cadastradas</h1>
+        
+        <!-- Verificar se a lista de disciplinas não é nula e não está vazia -->
+        <div th:if="${#objects.nullSafe(disciplinas, 'default') != 'default' and not #lists.isEmpty(disciplinas)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Iterar sobre as disciplinas -->
+                    <tr th:each="disciplina : ${disciplinas}">
+                        <td th:text="${disciplina.id}"></td>
+                        <td th:text="${disciplina.nome}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Exibir mensagem se a lista de disciplinas estiver vazia ou nula -->
+        <div th:if="${#objects.nullSafe(disciplinas, 'default') == 'default' or #lists.isEmpty(disciplinas)}">
+            <p>Nenhuma disciplina cadastrada.</p>
+        </div>
+        
+        <br>
+        <a href="/cadastro-disciplina" class="button">Cadastrar nova disciplina</a>
+    </div>
+</body>
+
+</html>

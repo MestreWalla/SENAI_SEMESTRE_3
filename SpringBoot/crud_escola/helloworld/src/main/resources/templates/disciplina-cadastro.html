@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <title>Cadastro de Disciplina</title>
+</head>
+
+<body>
+    <div th:insert="~{fragmentos/header.html :: header}"></div>
+
+    <div class="container">
+        <h1>Cadastro de Nova Disciplina</h1>
+        <form action="/salvar-disciplina" method="post">
+            <div class="form-group">
+                <label for="nome">Nome da Disciplina:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <button type="submit" class="button">Salvar Disciplina</button>
+        </form>
+    </div>
+</body>
+
+</html>
