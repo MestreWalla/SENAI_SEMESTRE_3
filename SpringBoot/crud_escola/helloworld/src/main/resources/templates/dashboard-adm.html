@@ -128,19 +128,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Informações fictícias de Disciplinas -->
-                    <tr>
-                        <td>Voo com vassoura - Falso</td>
-                        <td>Bruno - Falso</td>
-                    </tr>
-                    <tr>
-                        <td>Quadribol - Falso</td>
-                        <td>Hebert - Falso</td>
-                    </tr>
-                    <tr th:each="professor, iterStat : ${professores}" th:if="${iterStat.index < 5}">
-                        <td th:text="${professor.disciplina}"></td>
-                        <td th:text="${professor.username}"></td>
-                    </tr>
+                    <!-- Loop para exibir até 5 disciplinas -->
+                    <tr th:each="disciplina, iterStat : ${disciplinas}" th:if="${iterStat.index < 5}">
+                        <td th:text="${disciplina.nome}"></td>
+                    </tr>        
                 </tbody>
             </table>
             <a href="/disciplina-dash" class="button">Gerenciar Disciplinas</a>

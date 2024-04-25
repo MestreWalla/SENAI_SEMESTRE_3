@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/login-adm.css}">
+    <title>Cadastrar Disciplina</title>
+</head>
+<body>
+    <div th:insert="~{fragmentos/header.html :: header}"></div>
+    <div class="login-container">
+        <h2>Cadastrar Disciplina</h2>
+        <!-- Mensagem de cadastro realizado com sucesso -->
+        <div th:if="${param.success}" class="sucesso">
+            <p>Cadastro realizado com sucesso!</p>
+        </div>
+        <!-- Formulário de cadastro -->
+        <form method="POST" action="/salvar-disciplina">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <!-- Adicione outros campos conforme necessário para o cadastro da disciplina -->
+            <button type="submit">Cadastrar</button>
+            <a href="/disciplina-dash"><button type="button">Gerenciar Disciplinas</button></a>
+        </form>
+    </div>
+</body>
+</html>

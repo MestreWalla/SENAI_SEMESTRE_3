@@ -5,14 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/dashboard-adm.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Exibir Disciplinas</title>
 </head>
 
 <body>
     <div th:insert="~{fragmentos/header.html :: header}"></div>
 
-    <div class="container">
-        <h1>Disciplinas Cadastradas</h1>
+    <div class="dashboard">
+        <div class="titulo-dash">
+            <!-- Ícone de voltar -->
+            <a href="/dashboard-adm" class="login"><i class="fas fa-arrow-left back-icon"></i>Voltar</a>
+            <h1>Disciplinas Cadastradas</h1>
+        </div>
         
         <!-- Verificar se a lista de disciplinas não é nula e não está vazia -->
         <div th:if="${#objects.nullSafe(disciplinas, 'default') != 'default' and not #lists.isEmpty(disciplinas)}">
