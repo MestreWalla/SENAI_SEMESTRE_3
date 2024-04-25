@@ -99,7 +99,11 @@
             <input type="email" id="email" name="email" th:value="${professor.email}" /><br />
 
             <label for="disciplina">Disciplina:</label>
-            <input type="text" id="disciplina" name="disciplina" th:value="${professor.disciplina}" /><br />
+            <!-- Lista de seleção com as disciplinas já cadastradas -->
+            <select id="disciplina" name="disciplina">
+                <option th:each="disciplina : ${disciplinas}" th:value="${disciplina.nome}"
+                    th:text="${disciplina.nome}"></option>
+            </select><br />
 
             <!-- Botão de envio do formulário -->
             <input type="submit" value="Salvar" />

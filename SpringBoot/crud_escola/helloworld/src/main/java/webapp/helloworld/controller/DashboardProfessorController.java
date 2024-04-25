@@ -8,7 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import webapp.helloworld.model.Disciplina;
 import webapp.helloworld.model.Professor;
+import webapp.helloworld.repository.DisciplinaRepository;
 import webapp.helloworld.repository.ProfessorRepository;
 
 import java.util.ArrayList;
@@ -21,6 +24,8 @@ public class DashboardProfessorController {
 
     @Autowired
     private ProfessorRepository professorRepository;
+    @Autowired
+    private DisciplinaRepository disciplinaRepository; // Adicione esta linha
 
     @GetMapping("/professor-dash")
     public String dashboardProfessor(Model model) {
@@ -46,6 +51,12 @@ public class DashboardProfessorController {
         Professor professor = professorRepository.findByCpf(cpf);
 
         if (professor != null) {
+            // Recuperar as disciplinas do banco de dados
+            List<Disciplina> disciplinas = disciplinaRepository.findAll();
+
+            // Passar as disciplinas para a visualização
+            model.addAttribute("disciplinas", disciplinas);
+
             model.addAttribute("professor", professor);
             return "editar-professor";
         } else {
@@ -66,7 +77,8 @@ public class DashboardProfessorController {
             // Salva as alterações no banco de dados
             professorRepository.save(professorExistente);
 
-            // Redireciona para a página do painel de professores com uma mensagem de sucesso
+            // Redireciona para a página do painel de professores com uma mensagem de
+            // sucesso
             return "redirect:/professor-dash?success=Professor editado com sucesso";
         } else {
             // Se o professor não for encontrado, redireciona com uma mensagem de erro

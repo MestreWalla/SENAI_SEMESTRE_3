@@ -3,6 +3,7 @@ package webapp.helloworld.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import webapp.helloworld.model.Professor;
 import webapp.helloworld.repository.ProfessorRepository;
 
@@ -10,6 +11,7 @@ import webapp.helloworld.repository.ProfessorRepository;
 public class CadastroProfessorController {
     @Autowired
     private ProfessorRepository professorRepository;
+
 
     @PostMapping("/cadastro-professor")
     public String postCadastroProfessor(Professor professor) {
