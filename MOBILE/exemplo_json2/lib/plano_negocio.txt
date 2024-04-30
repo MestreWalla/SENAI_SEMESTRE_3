@@ -1,0 +1,14 @@
+- livros_model (
+    titulo,
+    autor,
+    sinopse,
+    categoria,
+    isbm,
+    );
+
+
+- Controller (
+    livros_controller (loadLivros(Json), addLivros);
+    livros_view (Listar todos os livros do catalogo), (onTap(Livos) => info);
+    livros_info_view (Carregar todas as informacioes do livro);
+)
