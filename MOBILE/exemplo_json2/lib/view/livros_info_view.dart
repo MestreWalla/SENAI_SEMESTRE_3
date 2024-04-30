@@ -20,7 +20,7 @@ class LivroInfoPage extends StatelessWidget {
             Text(info.autor),
             Text(info.sinopse),
             Text(info.categoria),
-            Text(info.isbm.toString()), // Corrigido para acessar o ISBN como String
+            Text(info.isbm.toString()),
           ],
         ),
       ),
