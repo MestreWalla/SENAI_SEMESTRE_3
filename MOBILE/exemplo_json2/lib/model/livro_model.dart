@@ -6,7 +6,8 @@ class Livro {
   final String autor;
   final String sinopse;
   final String categoria;
-  final int isbm;
+  final int isbn;
+  final String capa;
 
   // Cosntrutor
   Livro(
@@ -14,7 +15,8 @@ class Livro {
       required this.autor,
       required this.sinopse,
       required this.categoria,
-      required this.isbm});
+      required this.isbn,
+      required this.capa});
 
 // Método toJson
   Map<String, dynamic> toJson() => {
@@ -22,7 +24,8 @@ class Livro {
         'autor': autor,
         'sinopse': sinopse,
         'categoria': categoria,
-        'isbm': isbm,
+        'isbn': isbn,
+        'capa': capa,
       };
 
 // Método fromJson
@@ -32,7 +35,8 @@ class Livro {
       autor: map['autor'],
       sinopse: map['sinopse'],
       categoria: map['categoria'],
-      isbm: map['isbm'],
+      isbn: map['isbn'],
+      capa: map['capa'],
     );
   }
 }

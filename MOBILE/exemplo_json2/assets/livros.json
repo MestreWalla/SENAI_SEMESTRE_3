@@ -4,328 +4,119 @@
         "autor": "Isaac Asimov",
         "sinopse": "O Fim da Eternidade é um romance de ficção científica que explora os paradoxos do tempo e das viagens temporais, apresentando uma sociedade secreta responsável por manipular a história da humanidade. Quando um dos agentes dessa organização se apaixona, ele questiona as consequências de suas ações e o significado da existência.",
         "categoria": "Fantasia",
-        "isbn": "9788576570859"
-    },
-    {
-        "titulo": "O homem que inventou o tempo",
-        "autor": "Hugo",
-        "sinopse": "O Homem que Inventou o Tempo é uma obra que mistura elementos de ficção científica e fantasia. Conta a história de um inventor excêntrico que cria uma máquina capaz de viajar no tempo. No entanto, ao usá-la, ele se vê preso em paradoxos temporais e precisa encontrar uma maneira de corrigir seus erros antes que seja tarde demais.",
-        "categoria": "Ficção Científica",
-        "isbn": "9781234567890"
+        "isbn": 9788576570859,
+        "capa" : "assets/img/o_fim_da_eternidade.jpg"
     },
     {
         "titulo": "A Torre Negra",
         "autor": "Stephen King",
         "sinopse": "A Torre Negra é uma saga épica que mistura elementos de fantasia, ficção científica e western. O protagonista, Roland Deschain, é um pistoleiro solitário em busca da lendária Torre Negra, um centro místico que une todos os universos. Ao longo de sua jornada, ele enfrenta inúmeros desafios e descobre segredos sobre si mesmo e sobre o mundo que o rodeia.",
         "categoria": "Fantasia",
-        "isbn": "9780452284692"
+        "isbn": 9780452284692,
+        "capa" : "assets/img/a_torre_negra.jpg"
     },
     {
         "titulo": "Fundação",
         "autor": "Isaac Asimov",
         "sinopse": "Fundação é o primeiro livro de uma série clássica de ficção científica. A história se passa em um futuro distante, onde um império galáctico está em decadência. Um matemático visionário, Hari Seldon, desenvolve a ciência da psico-história para prever o futuro e guiar a humanidade através da queda do império.",
         "categoria": "Ficção Científica",
-        "isbn": "9780553293357"
+        "isbn": 9780553293357,
+        "capa" : "assets/img/fundacao.png"
     },
     {
         "titulo": "Harry Potter e a Pedra Filosofal",
         "autor": "J.K. Rowling",
         "sinopse": "Harry Potter e a Pedra Filosofal é o primeiro livro da série Harry Potter. Conta a história do jovem bruxo Harry Potter, que descobre aos 11 anos de idade que é um bruxo famoso por sobreviver a um ataque do terrível bruxo das trevas, Voldemort. Ele ingressa na Escola de Magia e Bruxaria de Hogwarts, onde faz novos amigos e descobre o mundo da magia.",
         "categoria": "Fantasia",
-        "isbn": "9788532530279"
+        "isbn": 9788532530279,
+        "capa" : "assets/img/harry_potter_e_a_pedra_filosofal.jpg"
     },
     {
         "titulo": "1984",
         "autor": "George Orwell",
         "sinopse": "1984 é um clássico da distopia que descreve um mundo totalitário onde a liberdade individual é suprimida pelo Partido e seu líder, o Grande Irmão. O protagonista, Winston Smith, trabalha no Ministério da Verdade reescrevendo documentos históricos para se adequarem à narrativa do Partido. Porém, ele começa a questionar a verdade e a rebelar-se contra o regime opressivo.",
         "categoria": "Ficção Científica",
-        "isbn": "9788535914849"
+        "isbn": 9788535914849,
+        "capa" : "assets/img/1984.jpg"
     },
     {
         "titulo": "Duna",
         "autor": "Frank Herbert",
         "sinopse": "Duna é uma saga de ficção científica que se passa em um futuro distante, onde planetas são governados por casas nobres em um universo dominado pela luta pelo controle da substância mais valiosa, a Especiaria. O jovem Paul Atreides, herdeiro da Casa Atreides, é lançado em uma jornada épica de autodescoberta e luta pelo poder em um deserto hostil.",
         "categoria": "Ficção Científica",
-        "isbn": "9788586026367"
+        "isbn": 9788586026367,
+        "capa" : "assets/img/duna.jpg"
     },
     {
         "titulo": "O Hobbit",
         "autor": "J.R.R. Tolkien",
         "sinopse": "O Hobbit é um clássico da literatura fantástica que narra a jornada do hobbit Bilbo Bolseiro em uma aventura épica para recuperar o tesouro guardado pelo dragão Smaug. Ele é recrutado pelo mago Gandalf e um grupo de treze anões liderados por Thorin Escudo-de-Carvalho. Durante a jornada, Bilbo encontra trolls, elfos, aranhas gigantes e o temido dragão.",
         "categoria": "Fantasia",
-        "isbn": "9788581300923"
+        "isbn": 9788581300923,
+        "capa" : "assets/img/o_hobbit.jpg"
     },
     {
         "titulo": "Neuromancer",
         "autor": "William Gibson",
         "sinopse": "Neuromancer é um marco da ficção científica cyberpunk que influenciou gerações de escritores e cineastas. Ambientado em um futuro distópico, acompanha Case, um cowboy da internet, que é contratado para realizar um último grande assalto cibernético. No entanto, ele se vê envolvido em uma conspiração global que o leva a questionar a natureza da realidade e da identidade.",
         "categoria": "Ficção Científica",
-        "isbn": "9788533309517"
+        "isbn": 9788533309517,
+        "capa" : "assets/img/neuromancer.jpg"
     },
     {
         "titulo": "O Senhor dos Anéis: A Sociedade do Anel",
         "autor": "J.R.R. Tolkien",
         "sinopse": "A Sociedade do Anel é o primeiro volume da trilogia O Senhor dos Anéis, uma das obras mais famosas da literatura fantástica. Narra a jornada do hobbit Frodo Bolseiro, que é encarregado de destruir o Um Anel, uma arma do mal supremo, antes que caia nas mãos do Senhor do Escuro, Sauron. Ao longo de sua jornada, Frodo é acompanhado por um grupo diverso de companheiros, formando a Sociedade do Anel.",
         "categoria": "Fantasia",
-        "isbn": "9788578270782"
+        "isbn": 9788578270782,
+        "capa" : "assets/img/o_senhor_dos_aneis.jpg"
     },
     {
         "titulo": "A Mão Esquerda da Escuridão",
         "autor": "Ursula K. Le Guin",
         "sinopse": "A Mão Esquerda da Escuridão é um romance de ficção científica que explora questões de gênero e sociedade. Ambientado no planeta gelado de Gethen, acompanha o enviado terrestre Genly Ai em sua missão de convencer os habitantes de Gethen a se juntarem à comunidade intergaláctica. No entanto, ele se vê confrontado com a estranha e fluida sexualidade dos habitantes do planeta.",
         "categoria": "Ficção Científica",
-        "isbn": "9788525417758"
+        "isbn": 9788525417758,
+        "capa" : "assets/img/a_mao_esquerda_da_escuridao.jpg"
     },
     {
         "titulo": "O Guia do Mochileiro das Galáxias",
         "autor": "Douglas Adams",
         "sinopse": "O Guia do Mochileiro das Galáxias é o primeiro livro da famosa série de comédia de ficção científica. A história segue Arthur Dent, um inglês comum que é salvo do fim do mundo por seu amigo alienígena Ford Prefect. Juntos, embarcam em uma aventura intergaláctica cheia de humor e absurdo, descobrindo o verdadeiro significado da vida, do universo e de tudo mais.",
         "categoria": "Ficção Científica",
-        "isbn": "9788599296462"
+        "isbn": 9788599296462,
+        "capa" : "assets/img/o_guia_do_mochileiro_das_galaxias.jpg"
     },
     {
         "titulo": "Solaris",
         "autor": "Stanisław Lem",
         "sinopse": "Solaris é um romance de ficção científica que se passa em uma estação espacial orbitando o planeta Solaris, coberto por um oceano misterioso que parece ter consciência própria. O protagonista, Kris Kelvin, é enviado para estudar o planeta, mas se vê confrontado com acontecimentos estranhos e perturbadores que desafiam sua compreensão da realidade.",
         "categoria": "Ficção Científica",
-        "isbn": "9788576573324"
+        "isbn": 9788576573324,
+        "capa" : "assets/img/solaris.webp"
     },
     {
         "titulo": "Os Jogos Vorazes",
         "autor": "Suzanne Collins",
         "sinopse": "Os Jogos Vorazes é o primeiro livro de uma trilogia de ficção distópica. Ambientado em um futuro pós-apocalíptico, narra a história de Katniss Everdeen, uma jovem que se voluntaria para participar dos Jogos Vorazes, um evento brutal onde adolescentes de diferentes distritos são obrigados a lutar até a morte em uma arena televisionada.",
         "categoria": "Ficção Científica",
-        "isbn": "9788579800781"
+        "isbn": 9788579800781,
+        "capa" : "assets/img/os_jogos_vorazes.jpg"
     },
     {
         "titulo": "Eu, Robô",
         "autor": "Isaac Asimov",
         "sinopse": "Eu, Robô é uma coletânea de contos de ficção científica que exploram as interações entre humanos e robôs em diferentes contextos. Os contos apresentam os Três Princípios da Robótica, formulados pelo autor, que estabelecem as regras éticas para a criação e o comportamento dos robôs.",
         "categoria": "Ficção Científica",
-        "isbn": "9788576572280"
+        "isbn": 9788576572280,
+        "capa": "assets/img/eu_robo.jpg"
     },
     {
         "titulo": "A Revolução dos Bichos",
         "autor": "George Orwell",
         "sinopse": "A Revolução dos Bichos é uma fábula política que satiriza a Revolução Russa e critica regimes totalitários. Os animais da Granja do Solar, cansados dos maus tratos do fazendeiro, se rebelam e tomam o controle da fazenda. No entanto, a liderança dos porcos acaba reproduzindo as injustiças que eles inicialmente combateram, mostrando como o poder corrompe.",
         "categoria": "Ficção Científica",
-        "isbn": "9788535915907"
-    },
-    {
-        "titulo": "Hyperion",
-        "autor": "Dan Simmons",
-        "sinopse": "Hyperion é o primeiro livro de uma série de ficção científica que combina elementos de space opera, filosofia e mitologia. Ambientado em um futuro distante, acompanha sete peregrinos que viajam para o planeta Hyperion, onde encontram o Tempo das Máquinas, uma entidade misteriosa que concede um desejo a cada um deles em troca de suas histórias de vida.",
-        "categoria": "Ficção Científica",
-        "isbn": "9780553283686"
-    },
-    {
-        "titulo": "A Bússola de Ouro",
-        "autor": "Philip Pullman",
-        "sinopse": "A Bússola de Ouro é o primeiro livro da trilogia Fronteiras do Universo. Ambientado em um universo alternativo onde as almas das pessoas se manifestam como animais de espírito chamados dæmons, narra a jornada da jovem Lyra Belacqua em busca de seu amigo sequestrado e da verdade por trás de um misterioso fenômeno conhecido como Pó.",
-        "categoria": "Fantasia",
-        "isbn": "9788535906561"
-    },
-    {
-        "titulo": "Eu sou a lenda",
-        "autor": "Richard Matheson",
-        "sinopse": "Eu sou a lenda é um romance de horror e ficção científica que segue Robert Neville, o último homem na Terra depois de uma pandemia que transformou o resto da humanidade em vampiros. Neville luta para sobreviver enquanto tenta descobrir uma cura para a praga que assola o mundo, ao mesmo tempo em que é perseguido pelas criaturas da noite.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788576571061"
-    },
-    {
-        "titulo": "O Jogo do Exterminador",
-        "autor": "Orson Scott Card",
-        "sinopse": "O Jogo do Exterminador é o primeiro livro da saga dos Ender, uma série de ficção científica que segue a jornada do jovem Ender Wiggin em um futuro distante, onde a humanidade está em guerra contra uma raça alienígena conhecida como os Insetores. Ender é recrutado para a Escola de Combate, onde é treinado para se tornar um comandante militar genial.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788576570736"
-    },
-    {
-        "titulo": "O Planeta dos Macacos",
-        "autor": "Pierre Boulle",
-        "sinopse": "O Planeta dos Macacos é um clássico da ficção científica que narra a história do astronauta Ulysse Mérou, que viaja para um planeta distante habitado por macacos inteligentes e humanos primitivos. Ele descobre que os macacos dominam a sociedade e tratam os humanos como animais, invertendo as relações de poder.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788532524834"
-    },
-    {
-        "titulo": "A Princesa Prometida",
-        "autor": "William Goldman",
-        "sinopse": "A Princesa Prometida é uma história de aventura e romance que mistura elementos de conto de fadas e sátira. Narra as desventuras do herói Westley em sua busca para resgatar sua amada, a princesa Buttercup, das garras do malvado príncipe Humperdinck. No entanto, o caminho para o amor verdadeiro está repleto de perigos e reviravoltas inesperadas.",
-        "categoria": "Fantasia",
-        "isbn": "9788599296899"
-    },
-    {
-        "titulo": "Fahrenheit 451",
-        "autor": "Ray Bradbury",
-        "sinopse": "Fahrenheit 451 é um clássico da ficção científica distópica que descreve uma sociedade onde os livros são proibidos e queimados pelos bombeiros. O protagonista, Guy Montag, é um desses bombeiros, encarregado de destruir os últimos vestígios da literatura. No entanto, ao conhecer uma jovem rebelde, ele começa a questionar suas crenças e a buscar o conhecimento proibido.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788535915839"
-    },
-    {
-        "titulo": "Mistborn: O Império Final",
-        "autor": "Brandon Sanderson",
-        "sinopse": "Mistborn: O Império Final é o primeiro livro de uma trilogia de fantasia épica. Ambientado em um mundo onde o Senhor Soberano governa com punho de ferro, acompanha a ladra Vin em sua jornada para derrubar o regime opressivo. Com a ajuda de um grupo de rebeldes e seus poderes mágicos, ela se lança em uma luta desesperada pela liberdade.",
-        "categoria": "Fantasia",
-        "isbn": "9788576570941"
-    },
-    {
-        "titulo": "Snow Crash",
-        "autor": "Neal Stephenson",
-        "sinopse": "Snow Crash é um romance de ficção científica cyberpunk que combina elementos de ação, aventura e sátira. Ambientado em um futuro distópico onde corporações governam o mundo e a realidade virtual é uma droga viciante, segue o hacker Hiro Protagonist em sua busca para impedir um vírus que pode destruir a internet e o mundo real.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788532522465"
-    },
-    {
-        "titulo": "O Nome do Vento",
-        "autor": "Patrick Rothfuss",
-        "sinopse": "O Nome do Vento é o primeiro livro da trilogia Crônica do Matador do Rei. Narra a história de Kvothe, um músico e mago lendário, que conta sua vida de humildade a glória para um cronista. Ao longo de sua jornada, ele enfrenta inúmeros desafios, descobre segredos antigos e busca vingança contra aqueles que destruíram sua família.",
-        "categoria": "Fantasia",
-        "isbn": "9788599296684"
-    },
-    {
-        "titulo": "Perdido em Marte",
-        "autor": "Andy Weir",
-        "sinopse": "Perdido em Marte é um romance de ficção científica que narra a história do astronauta Mark Watney, deixado para trás em Marte após uma missão que deu errado. Utilizando seus conhecimentos científicos e engenhosidade, ele luta para sobreviver no planeta hostil enquanto aguarda o resgate.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788580579653"
-    },
-    {
-        "titulo": "Admirável Mundo Novo",
-        "autor": "Aldous Huxley",
-        "sinopse": "Admirável Mundo Novo é um clássico da ficção científica distópica que descreve uma sociedade futurista onde as pessoas são geneticamente condicionadas para viver em harmonia e conformidade. O protagonista, Bernard Marx, questiona os valores e a ordem social vigente, enfrentando as consequências de sua rebeldia.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788525430832"
-    },
-    {
-        "titulo": "O Clube de Leitura de Jane Austen",
-        "autor": "Karen Joy Fowler",
-        "sinopse": "O Clube de Leitura de Jane Austen é um romance contemporâneo que narra a história de um grupo de pessoas que se reúne para discutir os livros de Jane Austen. Ao longo de suas reuniões, eles compartilham suas vidas, experiências e desafios, encontrando conforto e inspiração nos romances da famosa autora.",
-        "categoria": "Ficção Contemporânea",
-        "isbn": "9788532530132"
-    },
-    {
-        "titulo": "A Estrada",
-        "autor": "Cormac McCarthy",
-        "sinopse": "A Estrada é um romance pós-apocalíptico que narra a jornada de um pai e seu filho através de um mundo devastado por uma catástrofe desconhecida. Eles enfrentam a fome, o frio e a violência enquanto buscam sobreviver e encontrar um lugar seguro em um mundo desolado.",
-        "categoria": "Ficção Contemporânea",
-        "isbn": "9788532524919"
-    },
-    {
-        "titulo": "O Ladrão de Raios",
-        "autor": "Rick Riordan",
-        "sinopse": "O Ladrão de Raios é o primeiro livro da série Percy Jackson e os Olimpianos. Narra a história de Percy Jackson, um garoto aparentemente normal que descobre ser um semideus, filho de Poseidon, o deus do mar. Ele é levado para o Acampamento Meio-Sangue, onde aprende sobre seus poderes e enfrenta inúmeras aventuras no mundo dos deuses gregos.",
-        "categoria": "Fantasia",
-        "isbn": "9788598078377"
-    },
-    {
-        "titulo": "A Revolução dos Bichos",
-        "autor": "George Orwell",
-        "sinopse": "A Revolução dos Bichos é uma fábula política que satiriza a Revolução Russa e critica regimes totalitários. Os animais da Granja do Solar, cansados dos maus tratos do fazendeiro, se rebelam e tomam o controle da fazenda. No entanto, a liderança dos porcos acaba reproduzindo as injustiças que eles inicialmente combateram, mostrando como o poder corrompe.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788535915907"
-    },
-    {
-        "titulo": "Hyperion",
-        "autor": "Dan Simmons",
-        "sinopse": "Hyperion é o primeiro livro de uma série de ficção científica que combina elementos de space opera, filosofia e mitologia. Ambientado em um futuro distante, acompanha sete peregrinos que viajam para o planeta Hyperion, onde encontram o Tempo das Máquinas, uma entidade misteriosa que concede um desejo a cada um deles em troca de suas histórias de vida.",
-        "categoria": "Ficção Científica",
-        "isbn": "9780553283686"
-    },
-    {
-        "titulo": "A Bússola de Ouro",
-        "autor": "Philip Pullman",
-        "sinopse": "A Bússola de Ouro é o primeiro livro da trilogia Fronteiras do Universo. Ambientado em um universo alternativo onde as almas das pessoas se manifestam como animais de espírito chamados dæmons, narra a jornada da jovem Lyra Belacqua em busca de seu amigo sequestrado e da verdade por trás de um misterioso fenômeno conhecido como Pó.",
-        "categoria": "Fantasia",
-        "isbn": "9788535906561"
-    },
-    {
-        "titulo": "Eu sou a lenda",
-        "autor": "Richard Matheson",
-        "sinopse": "Eu sou a lenda é um romance de horror e ficção científica que segue Robert Neville, o último homem na Terra depois de uma pandemia que transformou o resto da humanidade em vampiros. Neville luta para sobreviver enquanto tenta descobrir uma cura para a praga que assola o mundo, ao mesmo tempo em que é perseguido pelas criaturas da noite.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788576571061"
-    },
-    {
-        "titulo": "O Jogo do Exterminador",
-        "autor": "Orson Scott Card",
-        "sinopse": "O Jogo do Exterminador é o primeiro livro da saga dos Ender, uma série de ficção científica que segue a jornada do jovem Ender Wiggin em um futuro distante, onde a humanidade está em guerra contra uma raça alienígena conhecida como os Insetores. Ender é recrutado para a Escola de Combate, onde é treinado para se tornar um comandante militar genial.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788576570736"
-    },
-    {
-        "titulo": "O Planeta dos Macacos",
-        "autor": "Pierre Boulle",
-        "sinopse": "O Planeta dos Macacos é um clássico da ficção científica que narra a história do astronauta Ulysse Mérou, que viaja para um planeta distante habitado por macacos inteligentes e humanos primitivos. Ele descobre que os macacos dominam a sociedade e tratam os humanos como animais, invertendo as relações de poder.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788532524834"
-    },
-    {
-        "titulo": "A Princesa Prometida",
-        "autor": "William Goldman",
-        "sinopse": "A Princesa Prometida é uma história de aventura e romance que mistura elementos de conto de fadas e sátira. Narra as desventuras do herói Westley em sua busca para resgatar sua amada, a princesa Buttercup, das garras do malvado príncipe Humperdinck. No entanto, o caminho para o amor verdadeiro está repleto de perigos e reviravoltas inesperadas.",
-        "categoria": "Fantasia",
-        "isbn": "9788599296899"
-    },
-    {
-        "titulo": "Fahrenheit 451",
-        "autor": "Ray Bradbury",
-        "sinopse": "Fahrenheit 451 é um clássico da ficção científica distópica que descreve uma sociedade onde os livros são proibidos e queimados pelos bombeiros. O protagonista, Guy Montag, é um desses bombeiros, encarregado de destruir os últimos vestígios da literatura. No entanto, ao conhecer uma jovem rebelde, ele começa a questionar suas crenças e a buscar o conhecimento proibido.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788535915839"
-    },
-    {
-        "titulo": "Mistborn: O Império Final",
-        "autor": "Brandon Sanderson",
-        "sinopse": "Mistborn: O Império Final é o primeiro livro de uma trilogia de fantasia épica. Ambientado em um mundo onde o Senhor Soberano governa com punho de ferro, acompanha a ladra Vin em sua jornada para derrubar o regime opressivo. Com a ajuda de um grupo de rebeldes e seus poderes mágicos, ela se lança em uma luta desesperada pela liberdade.",
-        "categoria": "Fantasia",
-        "isbn": "9788576570941"
-    },
-    {
-        "titulo": "Snow Crash",
-        "autor": "Neal Stephenson",
-        "sinopse": "Snow Crash é um romance de ficção científica cyberpunk que combina elementos de ação, aventura e sátira. Ambientado em um futuro distópico onde corporações governam o mundo e a realidade virtual é uma droga viciante, segue o hacker Hiro Protagonist em sua busca para impedir um vírus que pode destruir a internet e o mundo real.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788532522465"
-    },
-    {
-        "titulo": "O Nome do Vento",
-        "autor": "Patrick Rothfuss",
-        "sinopse": "O Nome do Vento é o primeiro livro da trilogia Crônica do Matador do Rei. Narra a história de Kvothe, um músico e mago lendário, que conta sua vida de humildade a glória para um cronista. Ao longo de sua jornada, ele enfrenta inúmeros desafios, descobre segredos antigos e busca vingança contra aqueles que destruíram sua família.",
-        "categoria": "Fantasia",
-        "isbn": "9788599296684"
-    },
-    {
-        "titulo": "Perdido em Marte",
-        "autor": "Andy Weir",
-        "sinopse": "Perdido em Marte é um romance de ficção científica que narra a história do astronauta Mark Watney, deixado para trás em Marte após uma missão que deu errado. Utilizando seus conhecimentos científicos e engenhosidade, ele luta para sobreviver no planeta hostil enquanto aguarda o resgate.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788580579653"
-    },
-    {
-        "titulo": "Admirável Mundo Novo",
-        "autor": "Aldous Huxley",
-        "sinopse": "Admirável Mundo Novo é um clássico da ficção científica distópica que descreve uma sociedade futurista onde as pessoas são geneticamente condicionadas para viver em harmonia e conformidade. O protagonista, Bernard Marx, questiona os valores e a ordem social vigente, enfrentando as consequências de sua rebeldia.",
-        "categoria": "Ficção Científica",
-        "isbn": "9788525430832"
-    },
-    {
-        "titulo": "O Clube de Leitura de Jane Austen",
-        "autor": "Karen Joy Fowler",
-        "sinopse": "O Clube de Leitura de Jane Austen é um romance contemporâneo que narra a história de um grupo de pessoas que se reúne para discutir os livros de Jane Austen. Ao longo de suas reuniões, eles compartilham suas vidas, experiências e desafios, encontrando conforto e inspiração nos romances da famosa autora.",
-        "categoria": "Ficção Contemporânea",
-        "isbn": "9788532530132"
-    },
-    {
-        "titulo": "A Estrada",
-        "autor": "Cormac McCarthy",
-        "sinopse": "A Estrada é um romance pós-apocalíptico que narra a jornada de um pai e seu filho através de um mundo devastado por uma catástrofe desconhecida. Eles enfrentam a fome, o frio e a violência enquanto buscam sobreviver e encontrar um lugar seguro em um mundo desolado.",
-        "categoria": "Ficção Contemporânea",
-        "isbn": "9788532524919"
-    },
-    {
-        "titulo": "O Ladrão de Raios",
-        "autor": "Rick Riordan",
-        "sinopse": "O Ladrão de Raios é o primeiro livro da série Percy Jackson e os Olimpianos. Narra a história de Percy Jackson, um garoto aparentemente normal que descobre ser um semideus, filho de Poseidon, o deus do mar. Ele é levado para o Acampamento Meio-Sangue, onde aprende sobre seus poderes e enfrenta inúmeras aventuras no mundo dos deuses gregos.",
-        "categoria": "Fantasia",
-        "isbn": "9788598078377"
+        "isbn": 9788535915907,
+        "capa" : "assets/img/a_revolucao_dos_bichos.jpg"
     }
 ]
