@@ -12,6 +12,7 @@ import webapp.helloworld.repository.AlunoRepository;
 public class CadastroAlunoController {
     @Autowired
     private AlunoRepository ar;
+    
     @PostMapping("/cadastro-aluno")
     public String postCadastroAluno(Aluno aluno) {
         ar.save(aluno);
