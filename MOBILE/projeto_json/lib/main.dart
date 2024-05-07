@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/home': (context) => const HomeScreenPage(),
-        '/listar': (context) => const CarrosListarScreen(),
+        '/listar': (context) =>
+            const CarrosListarScreen(),
         '/cadastrar': (context) => const CarroCadastroScreen(),
       },
     );

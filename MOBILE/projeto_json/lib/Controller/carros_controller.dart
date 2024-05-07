@@ -1,58 +1,55 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
+
+import '../Model/carros_model.dart';
+
 class CarrosController {
-  final List<Carro> _carros = [];
+  List<Carro> _carroList = [];
 
-  List<Carro> getCarros() {
-    return _carros;
+  List<Carro> get carroList {
+    return _carroList;
   }
 
-  Future<void> cadastrarCarro(
-    String nome,
-    String placa,
-    String modelo,
-    String marca,
-    int ano,
-    String cor,
-    String descricao,
-    double valor,
-    File imagem,
-  ) async {
-    final carro = Carro(
-      nome: nome,
-      placa: placa,
-      modelo: modelo,
-      marca: marca,
-      ano: ano,
-      cor: cor,
-      descricao: descricao,
-      valor: valor,
-      imagem: imagem,
-    );
-    _carros.add(carro);
+  void addCarro(Carro carro) {
+    _carroList.add(carro);
+    saveCarrosToFile();
   }
-}
 
-class Carro {
-  final String nome;
-  final String placa;
-  final String modelo;
-  final String marca;
-  final int ano;
-  final String cor;
-  final String descricao;
-  final double valor;
-  final File imagem;
+  void deleteCarro(Carro carro) {
+    _carroList.removeAt(0);
+    saveCarrosToFile();
+  }
 
-  Carro({
-    required this.nome,
-    required this.placa,
-    required this.modelo,
-    required this.marca,
-    required this.ano,
-    required this.cor,
-    required this.descricao,
-    required this.valor,
-    required this.imagem,
-  });
+  void editCarro(Carro carro) {
+    // Encontre o índice do carro na lista
+    final index =
+        _carroList.indexWhere((element) => element.placa == carro.placa);
+    if (index == -1) return;
+    _carroList[index] = carro;
+    saveCarrosToFile();
+  }
+
+  //Salva para o Json
+  Future<void> saveCarrosToFile() async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String path = appDocDir.path;
+    final file = File('$path/carros.json');
+    final jsonList = _carroList.map((carro) => carro.toJson()).toList();
+    await file.writeAsString(jsonEncode(jsonList));
+  }
+
+  //Buscar do Json
+  Future<void> loadCarrosFromFile() async {
+    try {
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      String path = appDocDir.path;
+      final file = File('$path/carros.json');
+      final jsonList = jsonDecode(await file.readAsString());
+      _carroList = jsonList.map<Carro>((json) => Carro.fromJson(json)).toList();
+    } catch (e) {
+      _carroList = [];
+    }
+  }
 }

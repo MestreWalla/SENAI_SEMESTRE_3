@@ -2,14 +2,15 @@
 // placa. modelo, marca, ano, cor, descricao, foto, valor.
 class Carro {
   // Atributos
-  final String nome;
-  final String modelo;
-  final String marca;
-  final int ano;
-  final String cor;
-  final String descricao;
-  final String foto;
-  final double valor;
+  String nome;
+  String modelo;
+  String marca;
+  int ano;
+  String cor;
+  String descricao;
+  String foto;
+  double valor;
+  String placa;
 
   // Construtor
   Carro(
@@ -20,7 +21,9 @@ class Carro {
       required this.cor,
       required this.descricao,
       required this.foto,
-      required this.valor});
+      required this.valor,
+      required this.placa
+      });
 
   // Método toMap
   Map<String, dynamic> toJson() {
@@ -33,6 +36,7 @@ class Carro {
       'descricao': descricao,
       'foto': foto,
       'valor': valor,
+      'placa': placa,
     };
   }
 
@@ -47,6 +51,7 @@ class Carro {
       descricao: map['descricao'],
       foto: map['foto'],
       valor: map['valor'],
+      placa: map['placa'],
     );
   }
 }

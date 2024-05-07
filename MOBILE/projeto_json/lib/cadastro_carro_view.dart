@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:projeto_json/Controller/carros_controller.dart';
+import 'package:projeto_json/Model/carros_model.dart';
 
 class CarroCadastroScreen extends StatefulWidget {
   const CarroCadastroScreen({super.key});
@@ -174,5 +176,69 @@ class _CarroCadastroScreenState extends State<CarroCadastroScreen> {
     }
   }
 
-  void _cadastrarCarro() {}
+  Carro criarObjeto() {
+    return Carro(
+      nome: _nomeController.text,
+      placa: _placaController.text,
+      modelo: _modeloController.text,
+      marca: _marcaController.text,
+      ano: int.parse(_anoController.text),
+      cor: _corController.text,
+      descricao: _descricaoController.text,
+      valor: double.parse(_valorController.text),
+      foto: _imagemSelecionada!.path,
+    );
+  }
+
+  final CarrosController _controller = CarrosController();
+
+  void _limparValores() {
+    _nomeController.clear();
+    _placaController.clear();
+    _modeloController.clear();
+    _marcaController.clear();
+    _anoController.clear();
+    _corController.clear();
+    _descricaoController.clear();
+    _valorController.clear();
+    _imagemSelecionada = null;
+    _formKey.currentState!.reset();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Valores limpos!"),
+      ),
+    );
+  }
+
+  void _apagarCampos() {
+    _nomeController.clear();
+    _placaController.clear();
+    _modeloController.clear();
+    _marcaController.clear();
+    _anoController.clear();
+    _corController.clear();
+    _descricaoController.clear();
+    _valorController.clear();
+    _imagemSelecionada = null;
+    _formKey.currentState!.reset();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Campos apagados!"),
+      ),
+    );
+  }
+
+  void _cadastrarCarro() {
+    // verificar se placa ja existe
+    // adicionar carro
+    _controller.addCarro(criarObjeto());
+    _limparValores();
+    _apagarCampos();
+    // Snakebar
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Carro cadastrado com sucesso!"),
+      ),
+    );
+  }
 }
