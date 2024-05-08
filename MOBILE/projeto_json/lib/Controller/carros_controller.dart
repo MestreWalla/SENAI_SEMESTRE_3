@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:path_provider/path_provider.dart';
-
 import '../Model/carros_model.dart';
 
 class CarrosController {
@@ -51,5 +49,14 @@ class CarrosController {
     } catch (e) {
       _carroList = [];
     }
+  }
+
+  bool placaExiste(String placa) {
+    for (var carro in carroList) {
+      if (carro.placa == placa) {
+        return true; // Placa já existe na lista
+      }
+    }
+    return false; // Placa não encontrada na lista
   }
 }

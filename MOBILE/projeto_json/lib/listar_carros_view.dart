@@ -13,6 +13,7 @@ class CarrosListarScreen extends StatefulWidget {
 
 class _CarrosListarScreenState extends State<CarrosListarScreen> {
   CarrosController controller = CarrosController();
+  Map<int, bool> isExpandedMap = {};
 
   @override
   Widget build(BuildContext context) {
@@ -38,27 +39,46 @@ class _CarrosListarScreenState extends State<CarrosListarScreen> {
                 itemCount: controller.carroList.length,
                 itemBuilder: (context, index) {
                   final carro = controller.carroList[index];
-                  return ListTile(
-                    leading: Image.file(File(carro.foto)),
-                    title: Text(carro.modelo),
-                    subtitle: Text(carro.marca),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          onPressed: () {
-                            _editarCarro(context, carro);
-                          },
+                  final isExpanded = isExpandedMap[index] ?? false;
+                  return Column(
+                    children: [
+                      ListTile(
+                        onTap: () {
+                          setState(() {
+                            isExpandedMap[index] = !isExpanded;
+                          });
+                        },
+                        leading: Image.file(File(carro.foto)),
+                        title: Text(carro.modelo),
+                        subtitle: Text(carro.marca),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () {
+                                _editarCarro(context, carro);
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                _confirmarExclusao(context, carro);
+                              },
+                            ),
+                          ],
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            _confirmarExclusao(context, carro);
-                          },
-                        ),
+                      ),
+                      if (isExpanded) ...[
+                        Text('Nome: ${carro.nome}'),
+                        Text('Cor: ${carro.cor}'),
+                        Text('Ano: ${carro.ano}'),
+                        Text('Valor: ${carro.valor}'),
+                        Text('Placa: ${carro.placa}'),
+                        Text('Descricao: ${carro.descricao}'),
                       ],
-                    ),
+                      const Divider(),
+                    ],
                   );
                 },
               );
@@ -75,24 +95,78 @@ class _CarrosListarScreenState extends State<CarrosListarScreen> {
       builder: (context) {
         String novoModelo = carro.modelo;
         String novaMarca = carro.marca;
+        String novoNome = carro.nome;
+        String novaPlaca = carro.placa;
+        String novaCor = carro.cor;
+        double novoValor = carro.valor;
+        String novoDescricao = carro.descricao;
+        int novoAno = carro.ano;
+
         return AlertDialog(
           title: const Text('Editar Carro'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'Novo Modelo'),
-                onChanged: (value) {
-                  novoModelo = value;
-                },
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Nova Marca'),
-                onChanged: (value) {
-                  novaMarca = value;
-                },
-              ),
-            ],
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Novo Modelo'),
+                  controller: TextEditingController(text: novoModelo),
+                  onChanged: (value) {
+                    novoModelo = value;
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Nova Marca'),
+                  controller: TextEditingController(text: novaMarca),
+                  onChanged: (value) {
+                    novaMarca = value;
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Novo Nome'),
+                  controller: TextEditingController(text: novoNome),
+                  onChanged: (value) {
+                    novoNome = value;
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Nova Placa'),
+                  controller: TextEditingController(text: novaPlaca),
+                  onChanged: (value) {
+                    novaPlaca = value;
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Nova Cor'),
+                  controller: TextEditingController(text: novaCor),
+                  onChanged: (value) {
+                    novaCor = value;
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Novo Valor'),
+                  controller: TextEditingController(text: novoValor.toString()),
+                  onChanged: (value) {
+                    novoValor = double.tryParse(value) ?? 0.0;
+                  },
+                ),
+                TextField(
+                  decoration:
+                      const InputDecoration(labelText: 'Nova Descrição'),
+                  controller: TextEditingController(text: novoDescricao),
+                  onChanged: (value) {
+                    novoDescricao = value;
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Novo Ano'),
+                  controller: TextEditingController(text: novoAno.toString()),
+                  onChanged: (value) {
+                    novoAno = int.tryParse(value) ?? 0;
+                  },
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -106,8 +180,14 @@ class _CarrosListarScreenState extends State<CarrosListarScreen> {
                 setState(() {
                   carro.modelo = novoModelo;
                   carro.marca = novaMarca;
+                  carro.nome = novoNome;
+                  carro.placa = novaPlaca;
+                  carro.cor = novaCor;
+                  carro.valor = novoValor;
+                  carro.descricao = novoDescricao;
+                  carro.ano = novoAno;
                 });
-                // Aqui você pode chamar a função para salvar as alterações
+                controller.editCarro(carro);
                 Navigator.pop(context);
               },
               child: const Text('Salvar'),
@@ -146,7 +226,7 @@ class _CarrosListarScreenState extends State<CarrosListarScreen> {
 
   void _excluirCarro(BuildContext context, Carro carro) {
     setState(() {
-      // Aqui você pode chamar a função para excluir o carro da lista
+      controller.deleteCarro(carro);
     });
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

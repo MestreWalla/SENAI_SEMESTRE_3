@@ -25,6 +25,12 @@ class _CarroCadastroScreenState extends State<CarroCadastroScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    _controller.loadCarrosFromFile();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -203,11 +209,6 @@ class _CarroCadastroScreenState extends State<CarroCadastroScreen> {
     _valorController.clear();
     _imagemSelecionada = null;
     _formKey.currentState!.reset();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Valores limpos!"),
-      ),
-    );
   }
 
   void _apagarCampos() {
@@ -221,20 +222,26 @@ class _CarroCadastroScreenState extends State<CarroCadastroScreen> {
     _valorController.clear();
     _imagemSelecionada = null;
     _formKey.currentState!.reset();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Campos apagados!"),
-      ),
-    );
   }
 
   void _cadastrarCarro() {
-    // verificar se placa ja existe
-    // adicionar carro
+    if (_controller.placaExiste(_placaController.text)) {
+      // Se a placa já existe, exiba uma mensagem ou realize a ação apropriada
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Placa já cadastrada!"),
+        ),
+      );
+      return; // Sai do método sem adicionar o carro
+    }
+
+    // Se a placa não existe, continue com o cadastro do carro
     _controller.addCarro(criarObjeto());
+    _controller.saveCarrosToFile();
     _limparValores();
     _apagarCampos();
-    // Snakebar
+
+    // Snackbar informando que o carro foi cadastrado com sucesso
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text("Carro cadastrado com sucesso!"),
