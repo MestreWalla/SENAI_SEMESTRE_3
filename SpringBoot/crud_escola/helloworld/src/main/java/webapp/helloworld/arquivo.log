@@ -5658,3 +5658,23 @@ org.springframework.expression.spel.SpelEvaluationException: EL1008E: Property o
 2024-04-24 21:51:47 [http-nio-8080-exec-3] INFO  w.h.c.DashboardAlunoController - Nome do aluno: mestre
 2024-04-24 21:51:47 [http-nio-8080-exec-3] INFO  w.h.c.DashboardAlunoController - Nome do aluno: MestreWalla
 2024-04-24 21:51:47 [http-nio-8080-exec-3] INFO  w.h.c.DashboardAlunoController - Nome do aluno: MestreWalla
+2024-05-08 18:48:09 [http-nio-8080-exec-4] INFO  w.h.c.DashboardAlunoController - Número de alunos recuperados do banco de dados: 4
+2024-05-08 18:48:09 [http-nio-8080-exec-4] INFO  w.h.c.DashboardAlunoController - Número de alunos recuperados do banco de dados: 4
+2024-05-08 18:48:09 [http-nio-8080-exec-4] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Maycon
+2024-05-08 18:48:09 [http-nio-8080-exec-4] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Maycon
+2024-05-08 18:48:09 [http-nio-8080-exec-4] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Dener
+2024-05-08 18:48:09 [http-nio-8080-exec-4] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Dener
+2024-05-08 18:48:09 [http-nio-8080-exec-4] INFO  w.h.c.DashboardAlunoController - Nome do aluno: mestre
+2024-05-08 18:48:09 [http-nio-8080-exec-4] INFO  w.h.c.DashboardAlunoController - Nome do aluno: mestre
+2024-05-08 18:48:09 [http-nio-8080-exec-4] INFO  w.h.c.DashboardAlunoController - Nome do aluno: MestreWalla
+2024-05-08 18:48:09 [http-nio-8080-exec-4] INFO  w.h.c.DashboardAlunoController - Nome do aluno: MestreWalla
+2024-05-08 18:48:14 [http-nio-8080-exec-8] INFO  w.h.c.DashboardAlunoController - Número de alunos recuperados do banco de dados: 4
+2024-05-08 18:48:14 [http-nio-8080-exec-8] INFO  w.h.c.DashboardAlunoController - Número de alunos recuperados do banco de dados: 4
+2024-05-08 18:48:14 [http-nio-8080-exec-8] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Maycon
+2024-05-08 18:48:14 [http-nio-8080-exec-8] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Maycon
+2024-05-08 18:48:14 [http-nio-8080-exec-8] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Dener
+2024-05-08 18:48:14 [http-nio-8080-exec-8] INFO  w.h.c.DashboardAlunoController - Nome do aluno: Dener
+2024-05-08 18:48:14 [http-nio-8080-exec-8] INFO  w.h.c.DashboardAlunoController - Nome do aluno: mestre
+2024-05-08 18:48:14 [http-nio-8080-exec-8] INFO  w.h.c.DashboardAlunoController - Nome do aluno: mestre
+2024-05-08 18:48:14 [http-nio-8080-exec-8] INFO  w.h.c.DashboardAlunoController - Nome do aluno: MestreWalla
+2024-05-08 18:48:14 [http-nio-8080-exec-8] INFO  w.h.c.DashboardAlunoController - Nome do aluno: MestreWalla
