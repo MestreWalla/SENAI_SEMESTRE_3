@@ -4,7 +4,7 @@
 CREATE DATABASE Exercicios_Aula;
 
 -- Utilização do Banco de Dados criado
-USE Exercicios_Aula;
+USE exercicios_aula;
 
 -- Criação das Tabelas
 CREATE TABLE Fornecedor (
@@ -37,7 +37,6 @@ CREATE TABLE Projeto (
 
 CREATE TABLE Fornecimento (
     Fcod INT PRIMARY KEY,
-    Fcod INT,
     Pcod INT,
     PRcod INT,
     Quantidade INT,
@@ -64,6 +63,8 @@ ALTER TABLE Projeto RENAME COLUMN PRcod TO PRcod;
 ALTER TABLE Projeto ADD COLUMN Ccod INT;
 ALTER TABLE Fornecimento RENAME COLUMN Fcod TO Fcod;
 
+DROP TABLE Instituicao;
+
 --EXERCICIO_03 - INSERÇÃO DE DADOS
 
 INSERT INTO Fornecedor (Fcod, Fnome, Status, Fone, Ccod) VALUES
@@ -79,10 +80,10 @@ INSERT INTO Cidade (Ccod, Cnome, uf) VALUES
 (14, 'Piracicaba', 'SP');
 
 INSERT INTO Peca (Pcod, Pnome, Cor, Peso, Ccod) VALUES
-(0001, 'Processador', 'Padrão', 300, 13),
-(0002, 'Lona Azul', NULL, 12, 11),
-(0003, 'Cachaça Transparente', NULL, NULL, 11),
-(0004, 'Hyundai Creta', NULL, 100, 10000);
+(0001, 'Processador', 'Padrão', 300, 12),
+(0002, 'Lona', 'Azul', 12, 11),
+(0003, 'Cachaça', 'Transparente', 11, 13),
+(0004, 'Hyundai Creta', 'Prata', 1000, 14);
 
 INSERT INTO Projeto (PRcod, PRnome, Ccod) VALUES
 (01, 'Eletrônicos', 11),
@@ -93,3 +94,11 @@ INSERT INTO Fornecimento (Fcod, Pcod, PRcod, Quantidade) VALUES
 (01, 0001, 01, 660),
 (02, 0002, 03, 10),
 (04, 0004, 02, 220);
+
+--VISUALIZAR TABELAS
+
+SELECT * FROM public.Fornecedor ORDER BY Fcod ASC
+SELECT * FROM public.Cidade ORDER BY Ccod ASC
+SELECT * FROM public.Peca ORDER BY Pcod ASC
+SELECT * FROM public.Projeto ORDER BY PRcod ASC
+SELECT * FROM public.Fornecimento ORDER BY Fcod ASC
