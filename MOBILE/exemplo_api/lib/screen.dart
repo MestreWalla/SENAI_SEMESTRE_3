@@ -15,13 +15,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
   // Instância do serviço WeatherService para obter os dados de previsão do tempo.
   final WeatherService _weatherService = WeatherService(
     apiKey:
-        '681126f28e7d6fa3a7cfe0da0671e599', // Chave de API para acesso à API de previsão do tempo.
+        'b9ebe666087f299f5e2aad3a03d093b6', // Chave de API para acesso à API de previsão do tempo.
     baseUrl:
         'https://api.openweathermap.org/data/2.5', // URL base da API de previsão do tempo.
   );
 
   // Mapa que armazenará os dados de previsão do tempo.
   late Map<String, dynamic> _weatherData;
+  TextEditingController _cityController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -50,30 +52,20 @@ class _WeatherScreenState extends State<WeatherScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
-        child: FutureBuilder(
-            future: _fetchWeatherData("Limeira"),
-            builder: (context, snapshot) {
-              if (_weatherData.isEmpty) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('City: ${_weatherData['name']}'),
-                      Text('Temperature: ${_weatherData['main']['temp'] -273} ºC'),
-                      Text('Description: ${_weatherData['weather'][0]['description']}'),
-                      Text('Pressure: ${_weatherData['main']['pressure']}'),
-                      Text('Humidity: ${_weatherData['main']['humidity']}'),
-                      Text('Wind: ${_weatherData['wind']['speed']}'),
-                      Text('Wind Direction: ${_weatherData['wind']['deg']}'), 
-                    ],
-                  ),
-                );
-              }
-            }),
+        child: Center(
+          child: Form(
+              child: Column(children: [
+            TextFormField(
+              controller: _cityController,
+              decoration: const InputDecoration(label: "Digite a cidade: "),
+              validator: (value) {
+                if (value!.trim().isEmpty) {
+                  return "insira uma cidade";
+                }
+              },
+            )
+          ])),
+        ),
       ),
     );
   }
