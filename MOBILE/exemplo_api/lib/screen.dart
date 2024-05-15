@@ -1,8 +1,7 @@
-// ignore_for_file: unused_field
-
 import 'package:exemplo_api/sevice.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
@@ -12,30 +11,42 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  // Instância do serviço WeatherService para obter os dados de previsão do tempo.
   final WeatherService _weatherService = WeatherService(
-    apiKey:
-        'b9ebe666087f299f5e2aad3a03d093b6', // Chave de API para acesso à API de previsão do tempo.
-    baseUrl:
-        'https://api.openweathermap.org/data/2.5', // URL base da API de previsão do tempo.
+    apiKey: 'b9ebe666087f299f5e2aad3a03d093b6',
+    baseUrl: 'https://api.openweathermap.org/data/2.5',
   );
 
-  // Mapa que armazenará os dados de previsão do tempo.
   late Map<String, dynamic> _weatherData;
-  TextEditingController _cityController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    _weatherData = <String, dynamic>{};
+    _weatherData = new Map<String, dynamic>();
   }
 
   Future<void> _fetchWeatherData(String city) async {
     try {
       final weatherData = await _weatherService.getWeather(city);
       setState(() {
-        _weatherData = weatherData as Map<String, dynamic>;
+        _weatherData = weatherData;
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
+  Future<void> _fetchWeatherLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      final weatherData = await _weatherService.getWeatherByLocation(
+          position.latitude, position.longitude);
+      setState(() {
+        _weatherData = weatherData;
       });
     } catch (e) {
       if (kDebugMode) {
@@ -45,28 +56,44 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Exemplo Weather-API'),
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('Exemplo Weather-API'),
+    ),
+    body: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: FutureBuilder(
+        future: _fetchWeatherLocation(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Erro ao carregar os dados.'));
+          } else if (snapshot.hasData) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('city: ${_weatherData['name']}',
+                    style: const TextStyle(fontSize: 24.0),
+                  ),
+                  Text('Temperature: ${(_weatherData['main']['temp']).toInt - 273} ºC',
+                    style: const TextStyle(fontSize: 16.0),
+                  ),
+                  Text('Description: ${_weatherData['weather'][0]['description']}',
+                    style: const TextStyle(fontSize: 16.0),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return const Center(child: Text('Nenhum dado disponível.'));
+          }
+        },
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Center(
-          child: Form(
-              child: Column(children: [
-            TextFormField(
-              controller: _cityController,
-              decoration: const InputDecoration(label: "Digite a cidade: "),
-              validator: (value) {
-                if (value!.trim().isEmpty) {
-                  return "insira uma cidade";
-                }
-              },
-            )
-          ])),
-        ),
-      ),
-    );
-  }
+    ),
+  );
+}
+
 }
