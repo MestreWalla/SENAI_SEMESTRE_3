@@ -10,6 +10,10 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+Widget preview() {
+  return const HomeScreen();
+}
+
 class _HomeScreenState extends State<HomeScreen> {
   Map<String, dynamic> _weatherData = {};
   final WeatherService _weatherService = WeatherService();
