@@ -17,13 +17,52 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _checkLocationPermission();
+  }
+
+  Future<void> _checkLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Verifica se o serviço de localização está habilitado
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      if (kDebugMode) {
+        print('Serviço de localização está desativado.');
+      }
+      return;
+    }
+
+    // Verifica se a permissão foi concedida
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        if (kDebugMode) {
+          print('Permissão de localização negada.');
+        }
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      if (kDebugMode) {
+        print('Permissão de localização negada permanentemente.');
+      }
+      return;
+    }
+
+    // Se a permissão foi concedida, busca a localização
     _getWeatherInit();
   }
 
   Future<void> _getWeatherInit() async {
     try {
       Position position = await Geolocator.getCurrentPosition();
-      final weatherData = await _weatherService.getWeatherByLocation(position.latitude, position.longitude);
+      final weatherData = await _weatherService.getWeatherByLocation(
+        position.latitude,
+        position.longitude,
+      );
       setState(() {
         _weatherData = weatherData;
       });
