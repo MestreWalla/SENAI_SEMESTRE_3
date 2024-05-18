@@ -44,7 +44,7 @@ GROUP BY cliente.nome;
 SELECT cliente.nome AS CLIENTE, COUNT(venda.duplic) AS VENCIDOS
 FROM cliente
 INNER JOIN venda ON cliente.codcli = venda.codcli
-WHERE venda.data_vencimento < '2003-12-31' AND venda.status = 'VENCIDO'
+WHERE venda.VENCTO < '2003-12-31' AND venda.status = 'VENCIDO'
 GROUP BY cliente.nome;
 
 --EXERCICIO 07 - Consultar as duplicatas em atraso, anteriores à data de 31/12/1999, em que devem ser apresentados, além do nome do cliente, o valor da duplicata, o valor dos juros (10%) e o valor total a ser cobrado por título atrasado, ordenados por cliente.
