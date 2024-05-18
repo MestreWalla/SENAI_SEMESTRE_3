@@ -52,13 +52,14 @@ JOIN VENDA v ON c.CODCLI = v.CODCLI
 WHERE v.VENCTO < '2003-12-31'
 GROUP BY c.NOME;
 
---EXERCICIO 07 - Consultar as duplicatas em atraso, anteriores à data de 31/12/1999,
+-- EXERCICIO 07 - Consultar as duplicatas em atraso, anteriores à data de 31/12/1999,
 -- em que devem ser apresentados, além do nome do cliente, o valor da duplicata,
 -- o valor dos juros (10%) e o valor total a ser cobrado por título atrasado,
 -- ordenados por cliente.
-SELECT c.NOME AS CLIENTE,
-COUNT(v.DUPLIC) AS VENCIDOS
+SELECT c.NOME AS CLIENTE, v.DUPLIC, v.VALOR AS VALOR, 
+  ROUND(v.VALOR * 1.10, 2) AS VALOR_JUROS, 
+  ROUND(v.VALOR + (v.VALOR * 0.10)) AS VALOR_TOTAL 
 FROM CLIENTE c
-JOIN VENDA v ON c.CODCLI = v.CODCLI
-WHERE v.VENCTO < '2003-12-31'
-GROUP BY c.NOME;
+JOIN VENDA v ON c.CODCLI = v.CODCLI 
+WHERE v.VENCTO < '1999-12-31'
+ORDER BY c.NOME;
