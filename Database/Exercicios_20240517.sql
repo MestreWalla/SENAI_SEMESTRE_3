@@ -22,14 +22,14 @@ ORDER BY venda.VENCTO;
 
 --EXERCICIO 03 - Apresentar o nome dos clientes e todas as duplicatas que possuem
 -- vencimento no mês de outubro de qualquer ano.
-SELECT cliente.nome, venda.duplic, venda.data_vencimento
+SELECT cliente.nome, venda.DUPLIC, venda.VENCTO
 FROM cliente
 INNER JOIN venda ON cliente.codcli = venda.codcli
-WHERE MONTH(venda.data_vencimento) = 10;
+WHERE EXTRACT (MONTH FROM venda.VENCTO) = 10;
 
 --EXERCICIO 04 - Consultar o nome do cliente, a quantidade de títulos em carteira por
 -- cliente e o total que cada cliente deve.
-SELECT cliente.nome, COUNT(venda.duplic) AS quantidade_titulos, SUM(venda.valor) AS total
+SELECT cliente.nome, COUNT(venda.DUPLIC) AS quantidade_titulos, SUM(venda.valor) AS total
 FROM cliente
 INNER JOIN venda ON cliente.codcli = venda.codcli
 GROUP BY cliente.nome;
