@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:projeto_api_geo/Controller/weather_controller.dart';
 import 'package:projeto_api_geo/Service/weather_service_api.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,8 +16,7 @@ Widget preview() {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Map<String, dynamic> _weatherData = {};
-  final WeatherService _weatherService = WeatherService();
+  final WeatherController _controller = WeatherController();
 
   @override
   void initState() {
@@ -63,13 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _getWeatherInit() async {
     try {
       Position position = await Geolocator.getCurrentPosition();
-      final weatherData = await _weatherService.getWeatherByLocation(
+      _controller.getWeatherByLocation(
         position.latitude,
         position.longitude,
       );
-      setState(() {
-        _weatherData = weatherData;
-      });
+      setState(() {});
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -110,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 20,
             ),
-            _weatherData.isEmpty
+            _controller.weatherList.isEmpty
                 ? Row(
                     children: [
                       const Text("Erro de conexão"),
@@ -123,28 +121,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 : Column(
                     children: [
                       Text(
-                        _weatherData["name"],
+                        _controller.weatherList.last.name,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        _weatherData["weather"][0]["description"],
+                        _controller.weatherList.last.description,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        _weatherData["main"]["temp"].toString(),
+                        _controller.weatherList.last.temp.toString(),
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        _weatherData["weather"][0]["icon"],
+                        _controller.weatherList.last.,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
