@@ -21,15 +21,30 @@ class WeatherController {
       }
     }
   }
+
   //metodo para buscar por longitude e latitude
   Future<void> getWeatherByLocation(double longitude, double latitude) async {
     try {
-      Weather weather = Weather.fromJson(await _service.getWeatherByLocation(longitude, latitude));
+      Weather weather = Weather.fromJson(
+          await _service.getWeatherByLocation(longitude, latitude));
       weatherList.add(weather);
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
+    }
+  }
+
+  Future<bool> findCity(String city) async {
+    try {
+      Weather weather = Weather.fromJson(await _service.getWeather(city));
+      weatherList.add(weather);
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
     }
   }
 }

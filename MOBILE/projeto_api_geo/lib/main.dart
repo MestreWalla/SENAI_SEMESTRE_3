@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_api_geo/View/historico_screen.dart';
+import 'package:projeto_api_geo/View/details_weather_screen.dart';
 import 'package:projeto_api_geo/View/home_screen.dart';
-import 'package:projeto_api_geo/View/pesquisa_screen.dart';
+import 'package:projeto_api_geo/View/search_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,11 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter API GEO',
-      home: const HomeScreen(),
+      home: const SearchScreen(),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/historico': (context) => const HistoricoScreen(),
-        '/pesquisa': (context) => const PesquisaScreen(),
+        '/home': (context) => const HomeScreen(),
+        '/search': (context) => const SearchScreen(),
+        '/details': (context) => const DetailsWeatherScreen(),
       },
     );
   }

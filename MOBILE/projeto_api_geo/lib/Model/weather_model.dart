@@ -5,7 +5,7 @@ class Weather {
   final double temp;
   final double tempMin;
   final double tempMax;
-  final int preasure;
+  final int preassure;
   final int humidity;
   final int seaLevel;
   final int grndLevel;
@@ -19,7 +19,7 @@ class Weather {
     required this.temp,
     required this.tempMin,
     required this.tempMax,
-    required this.preasure,
+    required this.preassure,
     required this.humidity,
     required this.seaLevel,
     required this.grndLevel,
@@ -35,7 +35,7 @@ class Weather {
       temp: json['main']['temp'],
       tempMin: json['main']['temp_min'],
       tempMax: json['main']['temp_max'],
-      preasure: json['main']['pressure'],
+      preassure: json['main']['pressure'],
       humidity: json['main']['humidity'],
       seaLevel: json['main']['sea_level'],
       grndLevel: json['main']['grnd_level'],

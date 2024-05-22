@@ -128,6 +128,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Text(
+                        _controller.weatherList.last.main,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
                         _controller.weatherList.last.description,
                         style: const TextStyle(
                           fontSize: 20,
@@ -135,19 +142,61 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Text(
-                        _controller.weatherList.last.temp.toString(),
+                        (_controller.weatherList.last.temp-273).toStringAsFixed(2),
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        _controller.weatherList.last.,
+                        (_controller.weatherList.last.tempMax-273).toStringAsFixed(2),
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      Text(
+                        (_controller.weatherList.last.tempMin-273).toStringAsFixed(2),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        (_controller.weatherList.last.preassure).toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                       Text(
+                        (_controller.weatherList.last.humidity).toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        (_controller.weatherList.last.seaLevel).toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        (_controller.weatherList.last.grndLevel).toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        (_controller.weatherList.last.feelsLike).toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
                     ],
                   ),
           ],
