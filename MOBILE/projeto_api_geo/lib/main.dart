@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_api_geo/View/details_weather_screen.dart';
 import 'package:projeto_api_geo/View/home_screen.dart';
 import 'package:projeto_api_geo/View/search_screen.dart';
 
@@ -19,7 +18,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => const HomeScreen(),
         '/search': (context) => const SearchScreen(),
-        '/details': (context) => const DetailsWeatherScreen(),
       },
     );
   }
