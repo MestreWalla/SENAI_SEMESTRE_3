@@ -45,11 +45,20 @@ CREATE TABLE IF NOT EXISTS pedido (
     CONSTRAINT fk_id_pizza FOREIGN KEY (id_pizza) REFERENCES pizzas (id_pizza)
 );
 
+CREATE TABLE IF NOT EXISTS funcionarios (
+    id_funcionario SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cargo VARCHAR(255) NOT NULL,
+    status VARCHAR(50) NOT NULL
+);
+
+
 DROP TABLE IF EXISTS pedido;
 DROP TABLE IF EXISTS pizzas;
 DROP TABLE IF EXISTS status_pizzas;
 DROP TABLE IF EXISTS entregas;
 DROP TABLE IF EXISTS contatos;
+DROP TABLE IF EXISTS funcionarios;
 
 INSERT INTO contatos (id_contato, nome, email, cell, pizza, cadastro) VALUES
 
