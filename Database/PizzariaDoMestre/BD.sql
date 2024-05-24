@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS contatos (
     nome VARCHAR(225) NOT NULL,
     email VARCHAR(225) NOT NULL,
     cell VARCHAR(225) NOT NULL,
-    pizza VARCHAR(225) NOT NULL,
     cadastro DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -27,6 +26,14 @@ CREATE TABLE IF NOT EXISTS ENTREGAS (
     ENTREGA VARCHAR(255) NOT NULL CHECK (ENTREGA IN ('Em Andamento', 'Finalizada')) 
 );
 
+CREATE TABLE IF NOT EXISTS pizzas (
+    id_pizza SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    tamanho VARCHAR(255) NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    ingredientes TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS pedido (
     id_pedido SERIAL PRIMARY KEY,
     id_entregas INT NOT NULL,
@@ -38,14 +45,10 @@ CREATE TABLE IF NOT EXISTS pedido (
     CONSTRAINT fk_id_pizza FOREIGN KEY (id_pizza) REFERENCES pizzas (id_pizza)
 );
 
-CREATE TABLE IF NOT EXISTS pizzas (
-    id_pizza SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    tamanho VARCHAR(255) NOT NULL,
-    preco DECIMAL(10, 2) NOT NULL,
-    ingredientes TEXT NOT NULL
-);
-
+DROP TABLE IF EXISTS pedido;
+DROP TABLE IF EXISTS pizzas;
+DROP TABLE IF EXISTS status_pizzas;
+DROP TABLE IF EXISTS entregas;
 DROP TABLE IF EXISTS contatos;
 
 INSERT INTO contatos (id_contato, nome, email, cell, pizza, cadastro) VALUES

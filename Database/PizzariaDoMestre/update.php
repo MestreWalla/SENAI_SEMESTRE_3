@@ -32,15 +32,15 @@ if (isset($_GET['id'])) {
 <?=template_header('Atualizar/Alterar Pedidos')?>
 
 <div class="content update">
-    <h2>Atualizar Pedido ---- <?=$contatos['nome']?></h2>
+    <h2><i class="fas fa-edit"></i> Atualizar Pedido <?=$contatos['nome']?></h2>
+
     <form action="update.php?id=<?=$contatos['id_contato']?>" method="post">
-    <h2><i class="fas fa-edit"></i> Atualizar Contato</h2>
     <label for="id_contato">ID</label>
     <label for="nome">Nome</label>
     <input type="text" name="id" placeholder="" value="<?=$contatos['id_contato']?>" id="id_contato">
     <input type="text" name="nome" placeholder="Seu Nome" value="<?=$contatos['nome']?>" id="nome">
     <label for="email">Email</label>
-    <label for="cell">Cellular</label>
+    <label for="cell">Celular</label>
     <input type="text" name="email" placeholder="seuemail@seuprovedor.com.br" value="<?=$contatos['email']?>"
         id="email">
     <input type="text" name="cell" placeholder="(XX) X.XXXX-XXXX" value="<?=$contatos['cell']?>" id="cell">

@@ -65,6 +65,8 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM contatos')->fetchColumn();
         <a href="read.php?page=<?=$page+1?>"><i class="fas fa-angle-double-right fa-sm"></i></a>
         <?php endif; ?>
     </div>
+    <a href="details.php" class="create-contact"><i class="fas fa-list"></i> Visualização Detalhada Pedido</a>
+
 </div>
 
 <?=template_footer()?>
