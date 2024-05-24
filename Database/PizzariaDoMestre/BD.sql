@@ -17,6 +17,25 @@ CREATE TABLE IF NOT EXISTS status_pizzas (
     FOREIGN KEY (id_contato) REFERENCES contatos(id_contato)
 );
 
+CREATE TABLE IF NOT EXISTS pedido (
+    id_pedido SERIAL PRIMARY KEY,
+    id_entregas INT NOT NULL,
+    id_contato INT NOT NULL,
+    id_pizza INT NOT NULL,
+    data_pedido DATE NOT NULL,
+    CONSTRAINT fk_id_entregas FOREIGN KEY (id_entregas) REFERENCES entregas (id_entregas),
+    CONSTRAINT fk_id_contato FOREIGN KEY (id_contato) REFERENCES contatos (id_contato),
+    CONSTRAINT fk_id_pizza FOREIGN KEY (id_pizza) REFERENCES pizzas (id_pizza)
+);
+
+CREATE TABLE IF NOT EXISTS pizzas (
+    id_pizza SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    tamanho VARCHAR(255) NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    ingredientes TEXT NOT NULL
+);
+
 DROP TABLE IF EXISTS contatos;
 
 INSERT INTO contatos (id_contato, nome, email, cell, pizza, cadastro) VALUES
