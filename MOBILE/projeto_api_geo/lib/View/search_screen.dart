@@ -18,13 +18,6 @@ class _SearchScreenState extends State<SearchScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _cityController = TextEditingController();
   final CityDbService _dbService = CityDbService();
-  List<City> _cityList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _cityList = _dbService.getAllCities() as List<City>;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,40 +83,41 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     child: const Text("Pesquisar"),
                   ),
-                  FutureBuilder(
-                      future: _dbService.getAllCities(),
-                      builder: (context, snapshot) {
-                        if (_cityList.isEmpty) {
-                          return const Text("");
-                        } else {
-                          return ListView.builder(
-                            itemCount: _cityList.length,
+                  const SizedBox(height: 16),
+                  FutureBuilder<List<City>>(
+                    future: _dbService.getAllCities(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return const Center(
+                          child: Text("Erro ao carregar histórico de pesquisa"),
+                        );
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(
+                          child: Text("Sem histórico de pesquisa"),
+                        );
+                      } else {
+                        return SizedBox(
+                          height: 200, // Altura máxima para a lista
+                          child: ListView.builder(
+                            itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
+                              final city = snapshot.data![index];
                               return ListTile(
+                                title: Text(city.cityName),
                                 onTap: () {
-                                  _findByCity(_cityList[index].cityName);
+                                  _findByCity(city.cityName);
                                 },
-                                title: Text(
-                                  _cityList[index].cityName,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  _cityList[index].cityName,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                  ),
-                                ),
                               );
                             },
-                          );
-                        }
-                      })
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
@@ -135,6 +129,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Future<void> _findByCity(String city) async {
     if (await _controller.findCity(city)) {
+      //snackbar
       City cidade = City(cityName: city, favoriteCities: false);
       _dbService.insertCity(cidade);
       ScaffoldMessenger.of(context).showSnackBar(

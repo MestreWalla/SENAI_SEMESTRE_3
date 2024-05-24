@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_api_geo/Controller/weather_controller.dart';
+import 'package:projeto_api_geo/Model/city_model.dart';
+import 'package:projeto_api_geo/Service/city_db_service.dart';
 
 class DetailsWeatherScreen extends StatefulWidget {
   final String city;
   const DetailsWeatherScreen({super.key, required this.city});
+
 
   @override
   State<DetailsWeatherScreen> createState() => _DetailsWeatherScreenState();
@@ -11,6 +14,7 @@ class DetailsWeatherScreen extends StatefulWidget {
 
 class _DetailsWeatherScreenState extends State<DetailsWeatherScreen> {
   final WeatherController _controller = WeatherController();
+  final CityDbService _dbService = CityDbService();
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +72,11 @@ class _DetailsWeatherScreenState extends State<DetailsWeatherScreen> {
                               Icons.favorite,
                               color: Colors.red,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              City cidade = City(cityName:widget.city,favoriteCities:true);
+                              _dbService.updateCity(cidade);
+
+                            },
                           ),
                         ],
                       ),

@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:projeto_api_geo/Controller/weather_controller.dart';
-import 'package:projeto_api_geo/Service/weather_service_api.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:projeto_api_geo/Model/city_model.dart';
 import 'package:sqflite/sqflite.dart';
@@ -34,8 +35,32 @@ class CityDbService {
     );
   }
 
-  Future<int> insertCity(Map<String, dynamic> city) async {
-    Database db = await _getDatabase();
-    return await db.insert(tableName, city);
+  Future<int> insertCity(City city) async {
+    try {
+      Database db = await _getDatabase();
+      if (kDebugMode) {
+        print("banco");
+      }
+      return await db.insert(tableName, city.toMap());
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return 0;
+    }
+  }
+
+  // Update
+  Future<void> updateCity(City city) async {
+    try {
+      Database db = await _getDatabase();
+      print("banco");
+      db.update(tableName, city.toMap(), 
+        where: "cityname =?", 
+        whereArgs: [city.cityName]
+        );
+    } catch (e) {
+      print(e);
+    }
   }
 }
