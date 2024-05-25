@@ -33,7 +33,9 @@ echo <<<EOT
     	<div>
     		<h1> Pizzaria do Mestre </h1>
             <a href="index.php"><i class="fas fa-home"></i>Inicio</a>
-    		<a href="read.php"><i class="fas fa-shopping-basket"></i>Pedidos</a>
+    		<a href="contacts.php"><i class="fas fa-shopping-basket"></i>contatos</a>
+            <a href="workers.php"><i class="fas fa-shopping-basket"></i>funcionarios</a>
+            <a href="details.php"><i class="fas fa-shopping-basket"></i>pedidos</a>
             <a href="status.php"><i class="fas fa-list"></i> Status dos pedidos</a>
     	</div>
     </nav>

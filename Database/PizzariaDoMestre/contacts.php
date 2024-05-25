@@ -20,7 +20,7 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM contatos')->fetchColumn();
 ?>
 
 
-<?=template_header('Visualizar Pedidos')?>
+<?=template_header('Visualizar Contatos')?>
 
 <div class="content read">
     <h2>Visualizar Pedidos</h2>
@@ -32,7 +32,6 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM contatos')->fetchColumn();
                 <td><i class="fas fa-user"></i> Nome</td>
                 <td><i class="far fa-envelope"></i> Email</td>
                 <td><i class="fas fa-mobile-alt"></i> Celular</td>
-                <td><i class="fas fa-pizza-slice"></i> Pizza</td>
                 <td><i class="far fa-calendar-alt"></i> Data do Pedido</td>
                 <td><i class="fas fa-cogs"></i> Ações</td>
             </tr>
@@ -44,7 +43,6 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM contatos')->fetchColumn();
                 <td><?=$contact['nome']?></td>
                 <td><?=$contact['email']?></td>
                 <td><?=$contact['cell']?></td>
-                <td><?=$contact['pizza']?></td>
                 <td><?=$contact['cadastro']?></td>
                 <td class="actions">
                     <a href="update.php?id=<?=$contact['id_contato']?>" class="edit"><i
@@ -59,14 +57,12 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM contatos')->fetchColumn();
     </table>
     <div class="pagination">
         <?php if ($page > 1): ?>
-        <a href="read.php?page=<?=$page-1?>"><i class="fas fa-angle-double-left fa-sm"></i></a>
+        <a href="contacts.php?page=<?=$page-1?>"><i class="fas fa-angle-double-left fa-sm"></i></a>
         <?php endif; ?>
         <?php if ($page*$records_per_page < $num_contacts): ?>
-        <a href="read.php?page=<?=$page+1?>"><i class="fas fa-angle-double-right fa-sm"></i></a>
+        <a href="contacts.php?page=<?=$page+1?>"><i class="fas fa-angle-double-right fa-sm"></i></a>
         <?php endif; ?>
     </div>
-    <a href="details.php" class="create-contact"><i class="fas fa-list"></i> Visualização Detalhada Pedido</a>
-
 </div>
 
 <?=template_footer()?>

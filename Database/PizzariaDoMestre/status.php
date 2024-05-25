@@ -39,9 +39,6 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM contatos')->fetchColumn();
             <tr>
                 <td><i class="fas fa-id-badge"></i> ID</td>
                 <td><i class="fas fa-user"></i> Nome</td>
-                <td><i class="far fa-envelope"></i> Email</td>
-                <td><i class="fas fa-mobile-alt"></i> Celular</td>
-                <td><i class="fas fa-pizza-slice"></i> Pizza</td>
                 <td><i class="fas fa-cogs"></i> Status Produção</td>
                 <td><i class="fas fa-cogs"></i> Status Entrega</td>
                 <td><i class="far fa-calendar-alt"></i> Data do Pedido</td>
@@ -53,9 +50,6 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM contatos')->fetchColumn();
             <tr>
                 <td><?=$contact['id_contato']?></td>
                 <td><?=$contact['nome']?></td>
-                <td><?=$contact['email']?></td>
-                <td><?=$contact['cell']?></td>
-                <td><?=$contact['pizza']?></td>
                 <td>
                     <select
                         class="update-pedido 
@@ -107,10 +101,10 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM contatos')->fetchColumn();
     </table>
     <div class="pagination">
         <?php if ($page > 1): ?>
-        <a href="read.php?page=<?=$page-1?>"><i class="fas fa-angle-double-left fa-sm"></i></a>
+        <a href="status.php?page=<?=$page-1?>"><i class="fas fa-angle-double-left fa-sm"></i></a>
         <?php endif; ?>
         <?php if ($page*$records_per_page < $num_contacts): ?>
-        <a href="read.php?page=<?=$page+1?>"><i class="fas fa-angle-double-right fa-sm"></i></a>
+        <a href="status.php?page=<?=$page+1?>"><i class="fas fa-angle-double-right fa-sm"></i></a>
         <?php endif; ?>
     </div>
 </div>

@@ -110,7 +110,7 @@ body {
 }
 .read .pagination {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 .read .pagination a {
     display: inline-block;
