@@ -33,18 +33,26 @@ echo <<<EOT
     	<div>
     		<h1> Pizzaria do Mestre </h1>
             <a href="index.php"><i class="fas fa-home"></i>Inicio</a>
+            <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
     		<a href="contacts.php"><i class="fas fa-shopping-basket"></i>contatos</a>
             <a href="workers.php"><i class="fas fa-shopping-basket"></i>funcionarios</a>
-            <a href="details.php"><i class="fas fa-shopping-basket"></i>pedidos</a>
+            <a href="order.php"><i class="fas fa-shopping-basket"></i>pedidos</a>
             <a href="status.php"><i class="fas fa-list"></i> Status dos pedidos</a>
     	</div>
     </nav>
 EOT;
 }
 function template_footer() {
-echo <<<EOT
+    echo <<<EOT
+    </div> <!-- fecha a div container -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Pizzaria do Mestre. Todos os direitos reservados.</p>
+            <p>Desenvolvido por: Maycon Correa</p>
+        </div>
+    </footer>
     </body>
-</html>
+    </html>
 EOT;
 }
 ?>

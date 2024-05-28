@@ -10,13 +10,32 @@ $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] :
 // Número de registros para mostrar em cada página
 $records_per_page = 5;
 
-// Preparar a instrução SQL para obter os dados da tabela contatos juntamente com os dados de status da tabela status_pizzas
-$stmt = $pdo->prepare('SELECT contatos.*, status_pizzas.status_producao, status_pizzas.status_entrega 
-                       FROM contatos 
-                       LEFT JOIN status_pizzas ON contatos.id_contato = status_pizzas.id_contato 
-                       ORDER BY contatos.id_contato 
-                       OFFSET :offset 
-                       LIMIT :limit');
+// Inicializar a variável de pesquisa
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+// Preparar a parte principal da consulta SQL sem a cláusula WHERE
+$sql = 'SELECT contatos.*, status_pizzas.status_producao, status_pizzas.status_entrega 
+        FROM contatos 
+        LEFT JOIN status_pizzas ON contatos.id_contato = status_pizzas.id_contato ';
+
+// Adicionar a cláusula WHERE se a pesquisa estiver presente
+if (!empty($search)) {
+    // Usar ILIKE para busca de texto insensível a maiúsculas e minúsculas
+    $sql .= 'WHERE lower(contatos.nome) LIKE lower(:search) ';
+}
+
+// Adicionar a cláusula ORDER BY, OFFSET e LIMIT
+$sql .= 'ORDER BY contatos.id_contato 
+         OFFSET :offset 
+         LIMIT :limit';
+
+// Preparar e executar a consulta SQL
+$stmt = $pdo->prepare($sql);
+
+// Adicionar o parâmetro de pesquisa, se necessário
+if (!empty($search)) {
+    $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+}
 
 $stmt->bindValue(':offset', ($page - 1) * $records_per_page, PDO::PARAM_INT);
 $stmt->bindValue(':limit', $records_per_page, PDO::PARAM_INT);
@@ -26,14 +45,29 @@ $stmt->execute();
 $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Obter o número total de contatos, isso é para determinar se deve haver um botão de próxima e anterior
-$num_contacts = $pdo->query('SELECT COUNT(*) FROM contatos')->fetchColumn();
+if (!empty($search)) {
+    $stmt_count = $pdo->prepare('SELECT COUNT(*) FROM contatos WHERE lower(nome) LIKE lower(:search)');
+    $stmt_count->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+} else {
+    $stmt_count = $pdo->query('SELECT COUNT(*) FROM contatos');
+}
+
+$num_contacts = $stmt_count->fetchColumn();
 ?>
+
 
 <?=template_header('Visualizar Pedidos')?>
 
 <div class="content read">
     <h2>Visualizar Pedidos</h2>
     <a href="create.php" class="create-contact"><i class="fas fa-cart-plus"></i> Realizar Pedido</a>
+
+    <!-- Formulário de pesquisa -->
+    <form action="" method="get">
+        <input type="text" name="search" placeholder="Pesquisar por nome..." value="<?=htmlspecialchars($search, ENT_QUOTES)?>">
+        <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
+
     <table>
         <thead>
             <tr>
@@ -46,65 +80,28 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM contatos')->fetchColumn();
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($contacts as $contact): ?>
-            <tr>
-                <td><?=$contact['id_contato']?></td>
-                <td><?=$contact['nome']?></td>
-                <td>
-                    <select
-                        class="update-pedido 
-                   <?php echo ($contact['status_producao'] == 'Concluído') ? 'concluido' : (($contact['status_producao'] == 'Produzindo' || $contact['status_producao'] == 'Entregando') ? 'em-andamento' : ''); ?>"
-                        onchange="updateStatus('producao', <?=$contact['id_contato']?>, this.value);">
-                        <option value="" <?php echo (empty($contact['status_producao'])) ? 'selected' : ''; ?>>Alterar
-                        </option>
-                        <option value="Produzindo"
-                            <?php echo ($contact['status_producao'] == 'Produzindo') ? 'selected' : ''; ?>>Produzindo
-                        </option>
-                        <option value="Entregando"
-                            <?php echo ($contact['status_producao'] == 'Entregando') ? 'selected' : ''; ?>>Entregando
-                        </option>
-                        <option value="Concluído"
-                            <?php echo ($contact['status_producao'] == 'Concluído') ? 'selected' : ''; ?>>Concluído
-                        </option>
-                    </select>
-                </td>
-                <td>
-                    <select
-                        class="update-pedido 
-                   <?php echo ($contact['status_entrega'] == 'Concluído') ? 'concluido' : (($contact['status_entrega'] == 'Esperando') ? '' : 'em-andamento'); ?>"
-                        onchange="updateStatus('entrega', <?=$contact['id_contato']?>, this.value);">
-                        <option value="" <?php echo (empty($contact['status_entrega'])) ? 'selected' : ''; ?>>Alterar
-                        </option>
-                        <option value="Esperando"
-                            <?php echo ($contact['status_entrega'] == 'Esperando') ? 'selected' : ''; ?>>Esperando
-                        </option>
-                        <option value="Em andamento"
-                            <?php echo ($contact['status_entrega'] == 'Em andamento') ? 'selected' : ''; ?>>Em andamento
-                        </option>
-                        <option value="Concluído"
-                            <?php echo ($contact['status_entrega'] == 'Concluído') ? 'selected' : ''; ?>>Concluído
-                        </option>
-                    </select>
-                </td>
+        <?php foreach ($contacts as $contact): ?>
+<tr>
+    <td><?=$contact['id_contato']?></td>
+    <td><?=$contact['nome']?></td>
+    <td><?=$contact['status_producao']?></td>
+    <td><?=$contact['status_entrega']?></td>
+    <td><?=$contact['cadastro']?></td>
+    <td class="actions">
+        <a href="update.php?id=<?=$contact['id_contato']?>" class="edit"><i class="fas fa-edit fa-xs"></i></a>
+        <a href="delete.php?id=<?=$contact['id_contato']?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
+    </td>
+</tr>
+<?php endforeach; ?>
 
-
-                <td><?=$contact['cadastro']?></td>
-                <td class="actions">
-                    <a href="update.php?id=<?=$contact['id_contato']?>" class="edit"><i
-                            class="fas fa-edit fa-xs"></i></a>
-                    <a href="delete.php?id=<?=$contact['id_contato']?>" class="trash"><i
-                            class="fas fa-trash fa-xs"></i></a>
-                </td>
-            </tr>
-            <?php endforeach; ?>
         </tbody>
     </table>
     <div class="pagination">
         <?php if ($page > 1): ?>
-        <a href="status.php?page=<?=$page-1?>"><i class="fas fa-angle-double-left fa-sm"></i></a>
+        <a href="status.php?page=<?=$page-1?>&search=<?=$search?>"><i class="fas fa-angle-double-left fa-sm"></i></a>
         <?php endif; ?>
         <?php if ($page*$records_per_page < $num_contacts): ?>
-        <a href="status.php?page=<?=$page+1?>"><i class="fas fa-angle-double-right fa-sm"></i></a>
+        <a href="status.php?page=<?=$page+1?>&search=<?=$search?>"><i class="fas fa-angle-double-right fa-sm"></i></a>
         <?php endif; ?>
     </div>
 </div>
