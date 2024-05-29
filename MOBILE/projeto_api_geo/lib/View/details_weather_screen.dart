@@ -73,9 +73,8 @@ class _DetailsWeatherScreenState extends State<DetailsWeatherScreen> {
                               color: Colors.red,
                             ),
                             onPressed: () {
-                              City cidade = City(cityName:widget.city,favoriteCities:true);
+                              City cidade = City(cityName:widget.city,favoriteCities:1);
                               _dbService.updateCity(cidade);
-
                             },
                           ),
                         ],

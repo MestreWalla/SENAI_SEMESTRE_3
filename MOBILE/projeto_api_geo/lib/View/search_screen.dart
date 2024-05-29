@@ -1,10 +1,9 @@
-import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:projeto_api_geo/Controller/weather_controller.dart';
 import 'package:projeto_api_geo/Model/city_model.dart';
-import 'package:projeto_api_geo/Service/city_db_service.dart';
 import 'package:projeto_api_geo/View/details_weather_screen.dart';
+
+import '../Controller/city_db_ controller.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -17,7 +16,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final WeatherController _controller = WeatherController();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _cityController = TextEditingController();
-  final CityDbService _dbService = CityDbService();
+  final CityDbController _dbController = CityDbController();
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   const SizedBox(height: 16),
                   FutureBuilder<List<City>>(
-                    future: _dbService.getAllCities(),
+                    future: _dbController.listCities(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
@@ -130,14 +129,15 @@ class _SearchScreenState extends State<SearchScreen> {
   Future<void> _findByCity(String city) async {
     if (await _controller.findCity(city)) {
       //snackbar
-      City cidade = City(cityName: city, favoriteCities: false);
-      _dbService.insertCity(cidade);
+      City cidade = City(cityName: city, favoriteCities: 0);
+      _dbController.addCity(cidade);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Cidade encontrada!"),
           duration: Duration(seconds: 1),
         ),
       );
+      setState(() {});
       Navigator.push(
           context,
           MaterialPageRoute(

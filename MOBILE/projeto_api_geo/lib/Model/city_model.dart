@@ -1,6 +1,6 @@
 class City {
   final String cityName;
-  final bool favoriteCities;
+  final int favoriteCities;
 
   // Construtor
   City({required this.cityName, required this.favoriteCities});
@@ -14,10 +14,10 @@ class City {
   }
 
   // Construtor fromMap
-  factory City.fromMap(Map<String,dynamic> map ) {
+  factory City.fromMap(Map<String, dynamic> map) {
     return City(
       cityName: map['cityname'],
-      favoriteCities:map['favoritecities'],
+      favoriteCities: map['favoritecities'],
     );
   }
 }
