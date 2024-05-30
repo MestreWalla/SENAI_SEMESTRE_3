@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>API REST Senai</title>
+    <style>
+        /* Estilos CSS anteriores aqui */
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #555;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="submit"],
+        .form-group button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .form-group input[type="submit"]:hover,
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>API REST Senai</h1>
+
+    <h2>Responsáveis</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="responsavel : ${responsaveis}">
+                <td th:text="${responsavel.id}"></td>
+                <td th:text="${responsavel.nome}"></td>
+                <td>
+                    <form th:action="@{'/responsavel/' + ${id}}" method="delete">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="delete-btn">Excluir</button>
+                    </form>
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form id="formResponsavel" action="/responsavel" method="post">
+        <div class="form-group">
+            <label for="idResponsavel">ID:</label>
+            <input type="text" id="idResponsavel" name="idResponsavel" required>
+        </div>
+        <div class="form-group">
+            <label for="nomeResponsavel">Nome:</label>
+            <input type="text" id="nomeResponsavel" name="nomeResponsavel" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Cadastrar Responsável">
+        </div>
+    </form>
+
+    <h2>Ambientes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ambiente : ${ambientes}">
+                <td th:text="${ambiente.id}"></td>
+                <td th:text="${ambiente.nome}"></td>
+                <td>
+                    <form action="/ambiente/{id}" method="post">
+                        <button type="submit" class="delete-btn">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form id="formAmbiente" action="/ambiente" method="post">
+        <div class="form-group">
+            <label for="idAmbiente">ID:</label>
+            <input type="text" id="idAmbiente" name="idAmbiente" required>
+        </div>
+        <div class="form-group">
+            <label for="nomeAmbiente">Nome:</label>
+            <input type="text" id="nomeAmbiente" name="nomeAmbiente" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Cadastrar Ambiente">
+        </div>
+    </form>
+
+    <h2>Ativos Patrimoniais</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ativo : ${ativos}">
+                <td th:text="${ativo.id}"></td>
+                <td th:text="${ativo.nome}"></td>
+                <td>
+                    <form action="/ativo/{id}" method="post">
+                        <button type="submit" class="delete-btn">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form id="formAtivo" action="/ativo" method="post">
+        <div class="form-group">
+            <label for="idAtivo">ID:</label>
+            <input type="text" id="idAtivo" name="idAtivo" required>
+        </div>
+        <div class="form-group">
+            <label for="nomeAtivo">Nome:</label>
+            <input type="text" id="nomeAtivo" name="nomeAtivo" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Cadastrar Ativo">
+        </div>
+    </form>
+
+</body>
+
+</html>
