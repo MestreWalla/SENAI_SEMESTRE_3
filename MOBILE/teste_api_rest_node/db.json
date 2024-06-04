@@ -1,14 +1,34 @@
 {
-    "ususarios": [
-        {
-            "id": 1,
-            "nombre": "Juan",
-            "apellido": "Perez"
-        },
-        {
-            "id": 2,
-            "nombre": "Pedro",
-            "apellido": "Gonzalez"
-        }
-    ]
+  "usuarios": [
+    {
+      "id": "1",
+      "nombre": "Juan",
+      "apellido": "Perez"
+    },
+    {
+      "id": "2",
+      "nombre": "Pedro",
+      "apellido": "Gonzalez"
+    }
+  ],
+  "produtos": [
+    {
+      "id": "1",
+      "nome": "Produto 1",
+      "codigo": "A1",
+      "preco": 100
+    },
+    {
+      "id": "2",
+      "nome": "Produto 2",
+      "codigo": "A2",
+      "preco": 200
+    },
+    {
+      "id": "3",
+      "nome": "Produto3",
+      "codigo": "A3",
+      "preco": 10
+    }
+  ]
 }
