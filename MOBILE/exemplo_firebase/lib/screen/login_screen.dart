@@ -18,75 +18,100 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+      ),
       body: Center(
         child: Form(
           key: _formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Insira um email';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _emailController.text = value!;
-                },
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Senha',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.remove_red_eye),
-                    onPressed: () {
-                      _passwordController.text = '';
-                    },
-                    tooltip: 'Mostrar senha',
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.blue),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  suffixIconConstraints: const BoxConstraints(
-                    minWidth: 40,
-                    minHeight: 40,
-                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Insira um email';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _emailController.text = value!;
+                  },
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Insira uma senha';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _passwordController.text = value!;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState?.save();
-                    await _loginUser();
-                  }
-                },
-                child: const Text('Entrar'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  await _auth.logoutUsuario();
-                },
-                child: const Text('Sair'),
-              ),
-              const SizedBox(height: 20),
-            ],
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Senha',
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.remove_red_eye),
+                      onPressed: () {
+                        _passwordController.text = '';
+                      },
+                      tooltip: 'Mostrar senha',
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.blue),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Insira uma senha';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _passwordController.text = value!;
+                  },
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState?.save();
+                      await _loginUser();
+                    }
+                  },
+                  child: const Text('Entrar'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _auth.logoutUsuario();
+                  },
+                  child: const Text('Sair'),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),

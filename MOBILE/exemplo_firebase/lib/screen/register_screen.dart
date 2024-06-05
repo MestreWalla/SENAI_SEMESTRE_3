@@ -62,7 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   validator: (value) {
-                    if (value != null) {
+                    if (value!.isEmpty) {
                       return 'Insira uma senha';
                     }
                     return null;
@@ -82,13 +82,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   validator: (value) {
-                    if (value != null) {
+                    if (value!.isEmpty) {
                       return 'Insira uma senha';
                     }
                     return null;
-                  },
-                  onSaved: (value) {
-                    _confirmedPasswordController.text = value!;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -117,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<User?> _registrarUser() async {
     if (_formKey.currentState!.validate()) {
-      if (_passwordController == _confirmedPasswordController) {
+      if (_passwordController.text == _confirmedPasswordController.text) {
         return await _service.registerUsuario(
             _emailController.text, _confirmedPasswordController.text);
         // Navegação para pagina /login
@@ -131,6 +128,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       }
     }
+    _passwordController.clear();
+    _confirmedPasswordController.clear();
     return null;
   }
 }
