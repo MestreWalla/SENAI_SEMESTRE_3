@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "610593626583",
+    "project_id": "testefirebase-b9f53",
+    "storage_bucket": "testefirebase-b9f53.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610593626583:android:abd4260cb7e6ffe5591392",
+        "android_client_info": {
+          "package_name": "br.com.tutorial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610593626583-0g259ctjlc4dukd7u6qpcmgf2st4rso9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxB9lpADoCDZsihSjnA2oy66tmHLW4fcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610593626583-0g259ctjlc4dukd7u6qpcmgf2st4rso9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
