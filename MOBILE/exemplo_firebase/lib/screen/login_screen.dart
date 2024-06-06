@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:exemplo_firebase/screen/todolist_screen.dart';
 import 'package:exemplo_firebase/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +9,7 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -97,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState?.save();
-                      await _loginUser();
+                      _acessarTodoList();
                     }
                   },
                   child: const Text('Entrar'),
@@ -124,7 +128,25 @@ class _LoginScreenState extends State<LoginScreen> {
         _emailController.text,
         _passwordController.text,
       );
+    } else {
+      return null;
     }
-    return null;
+  }
+
+  Future<void> _acessarTodoList() async {
+    User? user = await _loginUser();
+    if (user != null && user.email != null) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => TodolistScreen(user: user)));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Usuário ou senha inválidos'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      _emailController.clear();
+      _passwordController.clear();
+    }
   }
 }

@@ -29,9 +29,28 @@ class AuthService {
         password: password,
       );
       return userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      // Verifique o código de erro e trate-o adequadamente
+      switch (e.code) {
+        case 'email-already-in-use':
+          if (kDebugMode) {
+            print('O email já está em uso.');
+          }
+          break;
+        case 'weak-password':
+          if (kDebugMode) {
+            print('Senha fraca. Use uma senha mais forte.');
+          }
+          break;
+        default:
+          if (kDebugMode) {
+            print('Erro desconhecido: $e.code');
+          }
+      }
+      return null;
     } catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        print('Erro desconhecido: $e');
       }
       return null;
     }
@@ -47,7 +66,4 @@ class AuthService {
       }
     }
   }
-
-
-  signOut() {}
 }
