@@ -37,6 +37,19 @@ function listAllEmployeesWithRoles($pdo) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+// Função para listar todos os clientes e seus pedidos
+function listAllClientsWithOrders($pdo) {
+    $sql = '
+        SELECT c.nome AS nome_cliente, c.email, c.cell, p.id_pedido, pi.nome AS nome_pizza, b.nome AS nome_bebida
+        FROM contatos c
+        INNER JOIN pedido p ON c.id_contato = p.id_contato
+        LEFT JOIN pizzas pi ON p.id_pizza = pi.id_pizza
+        LEFT JOIN bebidas b ON p.id_bebidas = b.id_bebidas;
+    ';
+    $stmt = $pdo->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 // Exibir a tabela de pedidos com detalhes do cliente
 $ordersWithClientDetails = listAllOrdersWithClientDetails($pdo);
 
@@ -45,6 +58,9 @@ $orderItemsWithPizzaDetails = listAllOrderItemsWithPizzaDetails($pdo);
 
 // Exibir a tabela de funcionários com suas respectivas atribuições
 $employeesWithRoles = listAllEmployeesWithRoles($pdo);
+
+// Exibir a tabela de clientes e seus pedidos
+$clientsWithOrders = listAllClientsWithOrders($pdo);
 ?>
 
 <!-- Exibir cabeçalho da página -->
@@ -65,12 +81,12 @@ $employeesWithRoles = listAllEmployeesWithRoles($pdo);
         <!-- corpo da tabela -->
         <tbody>
             <?php foreach ($ordersWithClientDetails as $order): ?>
-                <tr>
-                    <td><?= $order['id_pedido'] ?></td>
-                    <td><?= $order['nome_contato'] ?></td>
-                    <td><?= $order['email'] ?></td>
-                    <td><?= $order['cell'] ?></td>
-                </tr>
+            <tr>
+                <td><?= $order['id_pedido'] ?></td>
+                <td><?= $order['nome_contato'] ?></td>
+                <td><?= $order['email'] ?></td>
+                <td><?= $order['cell'] ?></td>
+            </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
@@ -92,13 +108,13 @@ $employeesWithRoles = listAllEmployeesWithRoles($pdo);
         <!-- corpo da tabela -->
         <tbody>
             <?php foreach ($orderItemsWithPizzaDetails as $item): ?>
-                <tr>
-                    <td><?= $item['id_pedido'] ?></td>
-                    <td><?= $item['nome_pizza'] ?></td>
-                    <td><?= $item['tamanho'] ?></td>
-                    <td><?= $item['preco'] ?></td>
-                    <td><?= $item['ingredientes'] ?></td> <!-- Exibindo os ingredientes -->
-                </tr>
+            <tr>
+                <td><?= $item['id_pedido'] ?></td>
+                <td><?= $item['nome_pizza'] ?></td>
+                <td><?= $item['tamanho'] ?></td>
+                <td><?= $item['preco'] ?></td>
+                <td><?= $item['ingredientes'] ?></td> <!-- Exibindo os ingredientes -->
+            </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
@@ -117,13 +133,52 @@ $employeesWithRoles = listAllEmployeesWithRoles($pdo);
         <!-- corpo da tabela -->
         <tbody>
             <?php foreach ($employeesWithRoles as $employee): ?>
-                <tr>
-                    <td><?= $employee['nome_funcionario'] ?></td>
-                    <td><?= $employee['cargo'] ?></td>
-                </tr>
+            <tr>
+                <td><?= $employee['nome_funcionario'] ?></td>
+                <td><?= $employee['cargo'] ?></td>
+            </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+
+<div class="content read">
+    <h2>Listagem de Clientes e seus Pedidos</h2>
+    <table>
+        <!-- cabeçalho da tabela -->
+        <thead>
+            <tr>
+                <td>Nome Cliente</td>
+                <td>Email</td>
+                <td>Celular</td>
+                <td>Pedidos</td>
+            </tr>
+        </thead>
+        <!-- corpo da tabela -->
+        <tbody>
+            <?php foreach ($clientsWithOrders as $client): ?>
+            <tr>
+                <td><?= $client['nome_cliente'] ?></td>
+                <td><?= $client['email'] ?></td>
+                <td><?= $client['cell'] ?></td>
+                <td>
+                    <?php 
+                    // Verificando se há pedidos associados a este cliente
+                    if ($client['id_pedido']) {
+                        // Imprimindo o ID do pedido
+                        echo $client['id_pedido']; 
+                    } else {
+                        // Caso não haja pedido, exibe uma mensagem indicando isso
+                        echo 'Nenhum pedido';
+                    }
+                    ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+
 
 <?=template_footer()?>

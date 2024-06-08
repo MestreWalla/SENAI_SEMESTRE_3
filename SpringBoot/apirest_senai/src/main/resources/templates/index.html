@@ -111,10 +111,11 @@
                 <td th:text="${responsavel.id}"></td>
                 <td th:text="${responsavel.nome}"></td>
                 <td>
-                    <form th:action="@{'/responsavel/' + ${id}}" method="delete">
-                        <input type="hidden" name="_method" value="DELETE">
+                    <form th:action="@{'/responsavel/' + ${id}}" method="post">
+                        <input type="hidden" name="_method" value="delete">
                         <button type="submit" class="delete-btn">Excluir</button>
                     </form>
+                    
                     
                 </td>
             </tr>

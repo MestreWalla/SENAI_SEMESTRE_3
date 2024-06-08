@@ -20,7 +20,7 @@ INNER JOIN status_pizzas sp ON p.id_contato = sp.id_contato
 INNER JOIN funcionarios f ON p.id_funcionario = f.id_funcionario;
 
 -- Listar todos os clientes com seus pedidos realizados:
-SELECT c.nome AS nome_cliente, p.id_pedido, pi.nome AS nome_pizza, b.nome AS nome_bebida
+SELECT c.nome AS nome_cliente, c.email, c.cell, p.id_pedido
 FROM contatos c
 INNER JOIN pedido p ON c.id_contato = p.id_contato
 LEFT JOIN pizzas pi ON p.id_pizza = pi.id_pizza
