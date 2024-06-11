@@ -112,12 +112,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Future<User?> _registrarUser() async {
+  Future<void> _registrarUser() async {
     if (_formKey.currentState!.validate()) {
       if (_passwordController.text == _confirmedPasswordController.text) {
-        return await _service.registerUsuario(
+        await _service.registerUsuario(
             _emailController.text, _confirmedPasswordController.text);
-        // Navegação para pagina /login
+        Navigator.pushNamed(context, '/login');
       } else {
         _passwordController.clear();
         _confirmedPasswordController.clear();
@@ -130,6 +130,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
     _passwordController.clear();
     _confirmedPasswordController.clear();
-    return null;
   }
 }

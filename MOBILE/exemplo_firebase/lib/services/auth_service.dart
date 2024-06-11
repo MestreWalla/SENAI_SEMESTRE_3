@@ -21,14 +21,13 @@ class AuthService {
   }
 
   // Método registrar usuario
-  Future<User?> registerUsuario(String email, String password) async {
+  Future<void> registerUsuario(String email, String password) async {
     try {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return userCredential.user;
     } on FirebaseAuthException catch (e) {
       // Verifique o código de erro e trate-o adequadamente
       switch (e.code) {
@@ -47,12 +46,10 @@ class AuthService {
             print('Erro desconhecido: $e.code');
           }
       }
-      return null;
     } catch (e) {
       if (kDebugMode) {
         print('Erro desconhecido: $e');
       }
-      return null;
     }
   }
 
