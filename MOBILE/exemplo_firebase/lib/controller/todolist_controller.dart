@@ -21,11 +21,12 @@ class TodolistController {
 
   // Metodo para dar fetch list
   Future<List<Todolist>> fetchList(String userId) async {
-    final result = await _firestore
+    final QuerySnapshot result = await _firestore
         .collection('todolist')
-        .where('userId', isEqualTo: userId)
+        .where('userid', isEqualTo: userId)
         .get();
-    _list = result.docs.map((doc) => Todolist.fromMap(doc.data())).toList();
+    List<dynamic> convert = result.docs as List;
+    _list = convert.map((doc) => Todolist.fromMap(doc.data(),doc.id)).toList();
     return _list;
   }
 

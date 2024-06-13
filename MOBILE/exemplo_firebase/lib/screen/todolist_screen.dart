@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exemplo_firebase/controller/todolist_controller.dart';
 import 'package:exemplo_firebase/models/todolist.dart';
 import 'package:exemplo_firebase/services/auth_service.dart';
@@ -22,7 +21,6 @@ class _TodolistScreenState extends State<TodolistScreen> {
   Future<void> _getList() async {
     try {
       await _controller.fetchList(widget.user.uid);
-      setState(() {});
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -45,36 +43,44 @@ class _TodolistScreenState extends State<TodolistScreen> {
         body: Padding(
           padding: const EdgeInsets.all(8),
           child: Center(
-            child: Expanded(
-              child: FutureBuilder(
-                  future: _getList(),
-                  builder: (context, snapshot) {
-                    if (_controller.list.isNotEmpty) {
-                      return ListView.builder(
-                        itemCount: _controller.list.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(_controller.list[index].titulo),
-                            // subtitle: Text(_controller.list[index].description),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                _controller.delete(_controller.list[index].id);
-                              },
-                            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: FutureBuilder(
+                      future: _getList(),
+                      builder: (context, snapshot) {
+                        if (_controller.list.isNotEmpty) {
+                          return ListView.builder(
+                            itemCount: _controller.list.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(_controller.list[index].titulo),
+                                // subtitle: Text(_controller.list[index].description),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () async {
+                                    await _controller
+                                        .delete(_controller.list[index].id);
+                                    _getList();
+                                    setState(() {});
+                                  },
+                                ),
+                              );
+                            },
                           );
-                        },
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  }),
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }),
+                ),
+              ],
             ),
           ),
         ),
         floatingActionButton: FloatingActionButton(onPressed: () {
+
           showDialog(
               context: context,
               builder: (context) {
@@ -96,12 +102,13 @@ class _TodolistScreenState extends State<TodolistScreen> {
                         onPressed: () {
                           Navigator.of(context).pop();
                           Todolist add = Todolist(
-                              id: (_controller.list.length + 1).toString(),
+                              id: "",
                               titulo: _tituloController.text,
                               userId: widget.user.uid,
                               timestamp: DateTime.now());
                           _controller.add(add);
                           _getList();
+                          setState(() {});
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.green,
@@ -111,7 +118,6 @@ class _TodolistScreenState extends State<TodolistScreen> {
                       ),
                     ]);
               });
-        })
-        );
+        }));
   }
 }
