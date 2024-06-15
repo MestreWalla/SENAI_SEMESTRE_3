@@ -43,7 +43,7 @@ if ($search) {
 
 <div class="content read">
     <h2>Visualizar Funcionários</h2>
-    <a href="create.php" class="create-contact"><i class="fas fa-plus"></i> Adicionar Funcionário</a>
+    <a href="workersCreate.php" class="create-contact"><i class="fas fa-plus"></i> Adicionar Funcionário</a>
     <form action="workers.php" method="get">
         <input type="text" name="search" placeholder="Pesquisar Funcionários" value="<?=htmlspecialchars($search)?>">
         <button type="submit"><i class="fas fa-search"></i></button>
@@ -68,7 +68,7 @@ if ($search) {
                 <td class="actions">
                     <a href="workersEdit.php?id=<?=$funcionario['id_funcionario']?>" class="edit"><i
                             class="fas fa-edit fa-xs"></i></a>
-                    <a href="delete.php?id=<?=$funcionario['id_funcionario']?>" class="trash"><i
+                    <a href="workerDelete.php?id=<?=$funcionario['id_funcionario']?>" class="trash"><i
                             class="fas fa-trash fa-xs"></i></a>
                 </td>
             </tr>

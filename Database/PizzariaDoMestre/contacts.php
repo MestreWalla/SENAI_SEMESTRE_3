@@ -48,7 +48,7 @@ $num_contacts = $count_stmt->fetchColumn();
 
 <div class="content read">
     <h2>Visualizar Pedidos</h2>
-    <a href="create.php" class="create-contact"><i class="fas fa-cart-plus"></i> Realizar Pedido</a>
+    <a href="orderCreate.php" class="create-contact"><i class="fas fa-cart-plus"></i> Realizar Pedido</a>
     <form action="contacts.php" method="get">
         <input type="text" name="search" placeholder="Pesquisar contatos" value="<?=htmlspecialchars($search)?>">
         <button type="submit"><i class="fas fa-search"></i></button>

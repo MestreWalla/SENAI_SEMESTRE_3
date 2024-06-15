@@ -55,6 +55,8 @@ CREATE TABLE IF NOT EXISTS funcionarios (
     status VARCHAR(50) NOT NULL
 );
 
+ALTER TABLE funcionarios ALTER COLUMN id_funcionario TYPE SERIAL;
+
 CREATE TABLE IF NOT EXISTS bebidas (
     id_bebidas SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -75,6 +77,8 @@ CREATE TABLE IF NOT EXISTS pedido (
     CONSTRAINT fk_id_bebidas FOREIGN KEY (id_bebidas) REFERENCES bebidas (id_bebidas),
     CONSTRAINT fk_id_funcionario FOREIGN KEY (id_funcionario) REFERENCES funcionarios (id_funcionario)
 );
+ALTER TABLE pedido ADD COLUMN observacao TEXT;
+
 
 CREATE TABLE IF NOT EXISTS horario_funcionamento (
     id_horario SERIAL PRIMARY KEY,

@@ -11,11 +11,16 @@
 
 <body>
 
-    <?php
+<?php
 include 'functions.php';
 $pdo = pdo_connect_pgsql();
 $msg = '';
 $error = '';
+
+// Verifica se o PDO está configurado corretamente
+if (!$pdo) {
+    die("Erro ao conectar ao banco de dados");
+}
 
 // Obter dados das tabelas relacionadas
 $pizzas = $pdo->query('SELECT id_pizza, nome FROM pizzas')->fetchAll(PDO::FETCH_ASSOC);
@@ -25,24 +30,31 @@ $entregas = $pdo->query('SELECT id_entregas, nome FROM entregas')->fetchAll(PDO:
 
 // Verifica se os dados POST não estão vazios
 if (!empty($_POST)) {
-    $id_contato = isset($_POST['id_contato']) && !empty($_POST['id_contato']) && $_POST['id_contato'] != 'auto' ? $_POST['id_contato'] : NULL;
+    $id_contato = isset($_POST['id_contato']) ? $_POST['id_contato'] : NULL;
     $id_entregas = isset($_POST['id_entregas']) ? $_POST['id_entregas'] : NULL;
     $id_pizza = isset($_POST['id_pizza']) ? $_POST['id_pizza'] : NULL;
     $id_bebidas = isset($_POST['id_bebidas']) ? $_POST['id_bebidas'] : NULL;
     $id_funcionario = isset($_POST['id_funcionario']) ? $_POST['id_funcionario'] : NULL;
-    $cadastro = isset($_POST['cadastro']) ? $_POST['cadastro'] : date('Y-m-d H:i:s');
+    $observacao = isset($_POST['observacao']) ? $_POST['observacao'] : '';
+    $cadastro = date('Y-m-d H:i:s');
 
     // Verifica se todos os campos obrigatórios foram preenchidos
     if ($id_contato && $id_entregas && $id_pizza && $id_bebidas && $id_funcionario) {
-        $stmt = $pdo->prepare('INSERT INTO pedido (id_contato, id_entregas, id_pizza, id_bebidas, id_funcionario, data_pedido) VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt->execute([$id_contato, $id_entregas, $id_pizza, $id_bebidas, $id_funcionario, $cadastro]);
-        $msg = 'Pedido Realizado com Sucesso!';
+        try {
+            $stmt = $pdo->prepare('INSERT INTO pedido (id_contato, id_entregas, id_pizza, id_bebidas, id_funcionario, observacao, data_pedido) VALUES (?, ?, ?, ?, ?, ?, ?)');
+            $stmt->execute([$id_contato, $id_entregas, $id_pizza, $id_bebidas, $id_funcionario, $observacao, $cadastro]);
+            $msg = 'Pedido Realizado com Sucesso!';
+            // Redirecionamento após sucesso
+            header('Location: index.php?mensagem=sucesso');
+            exit;
+        } catch (PDOException $e) {
+            $error = 'Erro ao registrar o pedido: ' . $e->getMessage();
+        }
     } else {
         $error = 'Por favor, preencha todos os campos obrigatórios!';
     }
 }
 ?>
-
     <style>
     body {
         font-family: Arial, sans-serif;
@@ -129,65 +141,64 @@ if (!empty($_POST)) {
     }
     </style>
 
-    <?=template_header('Cadastro de Pedidos')?>
+<?=template_header('Cadastro de Pedidos')?>
 
-
-    <div class="content update">
-        <h2>Registrar Pedido</h2>
-        <form action="create.php" method="post">
-            <label for="id_contato"><i class="fas fa-id-card"></i> Cliente</label>
-            <select name="id_entregas" id="id_entregas">
-                <option value="">Selecione o cliente</option>
-                <?php foreach ($entregas as $entrega): ?>
+<div class="content update">
+    <h2>Registrar Pedido</h2>
+    <form action="" method="post">
+        <label for="id_contato"><i class="fas fa-id-card"></i> Cliente</label>
+        <select name="id_contato" id="id_contato">
+            <option value="">Selecione o cliente</option>
+            <?php foreach ($entregas as $entrega): ?>
                 <option value="<?=$entrega['id_entregas']?>"><?=$entrega['nome']?></option>
-                <?php endforeach; ?>
-            </select>
+            <?php endforeach; ?>
+        </select>
 
-            <label for="id_entregas"><i class="fas fa-truck"></i> Entrega</label>
-            <select name="id_funcionario" id="id_funcionario">
-                <option value="">Selecione o Funcionário</option>
-                <?php foreach ($funcionarios as $funcionario): ?>
+        <label for="id_entregas"><i class="fas fa-truck"></i> Entrega</label>
+        <select name="id_entregas" id="id_entregas">
+            <option value="">Selecione o tipo de entrega</option>
+            <?php foreach ($funcionarios as $funcionario): ?>
                 <option value="<?=$funcionario['id_funcionario']?>"><?=$funcionario['nome']?></option>
-                <?php endforeach; ?>
-            </select>
+            <?php endforeach; ?>
+        </select>
 
-            <label for="id_pizza"><i class="fas fa-pizza-slice"></i> Pizza</label>
-            <select name="id_pizza" id="id_pizza">
-                <option value="">Selecione a Pizza</option>
-                <?php foreach ($pizzas as $pizza): ?>
+        <label for="id_pizza"><i class="fas fa-pizza-slice"></i> Pizza</label>
+        <select name="id_pizza" id="id_pizza">
+            <option value="">Selecione a Pizza</option>
+            <?php foreach ($pizzas as $pizza): ?>
                 <option value="<?=$pizza['id_pizza']?>"><?=$pizza['nome']?></option>
-                <?php endforeach; ?>
-            </select>
+            <?php endforeach; ?>
+        </select>
 
-            <label for="id_bebidas"><i class="fas fa-glass-martini-alt"></i> Bebida</label>
-            <select name="id_bebidas" id="id_bebidas">
-                <option value="">Selecione a Bebida</option>
-                <?php foreach ($bebidas as $bebida): ?>
+        <label for="id_bebidas"><i class="fas fa-glass-martini-alt"></i> Bebida</label>
+        <select name="id_bebidas" id="id_bebidas">
+            <option value="">Selecione a Bebida</option>
+            <?php foreach ($bebidas as $bebida): ?>
                 <option value="<?=$bebida['id_bebidas']?>"><?=$bebida['nome']?></option>
-                <?php endforeach; ?>
-            </select>
+            <?php endforeach; ?>
+        </select>
 
-            <label for="id_funcionario"><i class="fas fa-user-tie"></i> Funcionário</label>
-            <select name="id_funcionario" id="id_funcionario">
-                <option value="">Selecione o Funcionário</option>
-                <?php foreach ($funcionarios as $funcionario): ?>
+        <label for="id_funcionario"><i class="fas fa-user-tie"></i> Funcionário que está atendendo</label>
+        <select name="id_funcionario" id="id_funcionario">
+            <option value="">Selecione o Funcionário</option>
+            <?php foreach ($funcionarios as $funcionario): ?>
                 <option value="<?=$funcionario['id_funcionario']?>"><?=$funcionario['nome']?></option>
-                <?php endforeach; ?>
-            </select>
+            <?php endforeach; ?>
+        </select>
 
-            <label for="observacao"><i class="fas fa-sticky-note"></i> Observação</label>
-            <textarea name="observacao" id="observacao" rows="5" placeholder="Observações sobre o pedido"></textarea>
+        <label for="observacao"><i class="fas fa-sticky-note"></i> Observação</label>
+        <textarea name="observacao" id="observacao" rows="5" placeholder="Observações sobre o pedido"></textarea>
 
-            <input type="submit" name="cadastrar" value="Cadastrar">
-        </form>
+        <input type="submit" name="cadastrar" value="Cadastrar">
+    </form>
 
-        <?php if(isset($_GET['mensagem'])): ?>
-        <div class="msg">
-            <?php if($_GET['mensagem'] == 'sucesso'): ?>
-            <i class="fas fa-check"></i> Pedido registrado com sucesso!
-            <?php elseif($_GET['mensagem'] == 'erro'): ?>
-            <i class="fas fa-times"></i> Erro ao registrar o pedido. Tente novamente.
-            <?php endif; ?>
-        </div>
-        <?php endif; ?>
-    </div>
+    <?php if (!empty($msg)): ?>
+        <div class="msg"><i class="fas fa-check"></i> <?=$msg?></div>
+    <?php endif; ?>
+    <?php if (!empty($error)): ?>
+        <div class="error"><i class="fas fa-times"></i> <?=$error?></div>
+    <?php endif; ?>
+</div>
+
+</body>
+</html>

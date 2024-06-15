@@ -39,7 +39,6 @@ if (isset($_GET['id'])) {
         <label for="id_pedido">ID do Pedido</label>
         <input type="text" name="id" placeholder="" value="<?=$pedido['id_pedido']?>" id="id_pedido" readonly>
         <label for="sabor">Sabor</label>
-        <label for="sabor">Sabor</label>
         <input type="text" name="sabor" placeholder="Sabor da Pizza"
             value="<?=isset($pedido['sabor']) ? $pedido['sabor'] : ''?>" id="sabor">
         <label for="tamanho">Tamanho</label>

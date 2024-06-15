@@ -245,6 +245,14 @@ body {
     border: 1px solid #cccccc;
 }
 
+.update form select {
+    padding: 10px;
+    width: 400px;
+    margin-right: 25px;
+    margin-bottom: 15px;
+    border: 1px solid #cccccc;
+}
+
 .update form input[type="submit"] {
     display: block;
     background-color: #376ab7;

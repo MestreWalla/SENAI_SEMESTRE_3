@@ -4,11 +4,16 @@ include 'functions.php';
 // Conectar ao banco de dados PostgreSQL
 $pdo = pdo_connect_pgsql();
 
-// Obter a página via solicitação GET (parâmetro URL: page), se não existir, defina a página como 1 por padrão
-$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+// Verificar conexão PDO
+if (!$pdo) {
+    die("Erro ao conectar ao banco de dados");
+}
 
 // Número de registros para mostrar em cada página
 $records_per_page = 5;
+
+// Obter a página via solicitação GET (parâmetro URL: page), se não existir, defina a página como 1 por padrão
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 
 // Inicializar a variável de pesquisa
 $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -17,45 +22,63 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : null;
 $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : null;
 
-// Preparar a instrução SQL para obter os registros de pedidos com todos os detalhes
+// Preparar a instrução SQL base para obter os registros de pedidos com todos os detalhes
 $sql = '
     SELECT p.id_pedido, c.nome AS nome_contato, c.email, c.cell, pi.nome AS nome_pizza, pi.tamanho, pi.preco, 
-           e.nome AS nome_entrega, e.entrega, p.data_pedido
+           e.nome AS nome_entrega, e.entrega, p.data_pedido, p.observacao
     FROM pedido p
     JOIN contatos c ON p.id_contato = c.id_contato
     JOIN pizzas pi ON p.id_pizza = pi.id_pizza
     JOIN entregas e ON p.id_entregas = e.id_entregas
 ';
 
+
+// Array para armazenar as cláusulas WHERE opcionais
+$whereClauses = [];
+
 // Adicionar a cláusula WHERE se a pesquisa estiver presente
 if (!empty($search)) {
-    // Adicionar a condição de pesquisa
-    $sql .= ' WHERE lower(c.nome) LIKE lower(:search)
-              OR lower(c.email) LIKE lower(:search)
-              OR lower(c.cell) LIKE lower(:search)
-              OR lower(pi.nome) LIKE lower(:search)
-              OR lower(pi.tamanho) LIKE lower(:search)
-              OR lower(e.nome) LIKE lower(:search)
-    ';
+    $whereClauses[] = ' (lower(c.nome) LIKE lower(:search)
+                        OR lower(c.email) LIKE lower(:search)
+                        OR lower(c.cell) LIKE lower(:search)
+                        OR lower(pi.nome) LIKE lower(:search)
+                        OR lower(pi.tamanho) LIKE lower(:search)
+                        OR lower(e.nome) LIKE lower(:search)) ';
 }
 
 // Adicionar a cláusula WHERE para o intervalo de datas, se necessário
-// Executar a consulta SQL
-if (!empty($search) || (!empty($start_date) && !empty($end_date))) {
-    $stmt_count->execute();
-    $num_pedidos = $stmt_count->fetchColumn();
-} else {
-    // Contar o número total de registros
-    $num_pedidos = $pdo->query('SELECT COUNT(*) FROM pedido')->fetchColumn();
+if (!empty($start_date) && !empty($end_date)) {
+    $whereClauses[] = ' p.data_pedido BETWEEN :start_date AND :end_date ';
 }
 
+// Combinar todas as cláusulas WHERE, se houver
+if (!empty($whereClauses)) {
+    $sql .= ' WHERE ' . implode(' AND ', $whereClauses);
+}
+
+// Contagem total de registros
+$countSql = 'SELECT COUNT(*) AS total FROM (' . $sql . ') AS count_query';
+$countStmt = $pdo->prepare($countSql);
+
+// Adicionar o parâmetro de pesquisa, se necessário
+if (!empty($search)) {
+    $countStmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+}
+
+// Adicionar os parâmetros de data, se necessário
+if (!empty($start_date) && !empty($end_date)) {
+    $countStmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+    $countStmt->bindValue(':end_date', $end_date, PDO::PARAM_STR);
+}
+
+$countStmt->execute();
+$row = $countStmt->fetch(PDO::FETCH_ASSOC);
+$num_pedidos = $row['total'];
 
 // Adicionar a cláusula ORDER BY, OFFSET e LIMIT
-$sql .= ' ORDER BY p.id_pedido
-          OFFSET :offset 
-          LIMIT :limit';
+$sql .= ' ORDER BY p.id_pedido OFFSET :offset LIMIT :limit';
 
-// Preparar e executar a consulta SQL
+// Preparar e executar a consulta SQL principal para obter os registros de pedidos
 $stmt = $pdo->prepare($sql);
 
 // Adicionar o parâmetro de pesquisa, se necessário
@@ -75,44 +98,6 @@ $stmt->execute();
 
 // Buscar os registros para exibi-los em nosso modelo.
 $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Obter o número total de pedidos para a paginação
-if (!empty($search) || (!empty($start_date) && !empty($end_date))) {
-    // Contar o número de registros filtrados pela pesquisa ou intervalo de datas
-    $stmt_count = $pdo->prepare('
-        SELECT COUNT(*) 
-        FROM pedido p
-        JOIN contatos c ON p.id_contato = c.id_contato
-        JOIN pizzas pi ON p.id_pizza = pi.id_pizza
-        JOIN entregas e ON p.id_entregas = e.id_entregas
-        WHERE lower(c.nome) LIKE lower(:search)
-              OR lower(c.email) LIKE lower(:search)
-              OR lower(c.cell) LIKE lower(:search)
-              OR lower(pi.nome) LIKE lower(:search)
-              OR lower(pi.tamanho) LIKE lower(:search)
-              OR lower(e.nome) LIKE lower(:search)
-        AND p.data_pedido BETWEEN :start_date AND :end_date
-    ');
-    if (!empty($search)) {
-        $stmt_count->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
-    }
-    if (!empty($start_date) && !empty($end_date)) {
-        $stmt_count->bindValue(':start_date', $start_date, PDO::PARAM_STR);
-        $stmt_count->bindValue(':end_date', $end_date, PDO::PARAM_STR);
-    }
-    // Verificação para debug
-    var_dump($search);
-    var_dump($start_date);
-    var_dump($end_date);
-
-    // Executar a consulta SQL
-    $stmt_count->execute();
-
-    $num_pedidos = $stmt_count->fetchColumn();
-} else {
-    // Contar o número total de registros
-    $num_pedidos = $pdo->query('SELECT COUNT(*) FROM pedido')->fetchColumn();
-}
 ?>
 
 <?=template_header('Detalhes dos Pedidos')?>
@@ -135,7 +120,6 @@ if (!empty($search) || (!empty($start_date) && !empty($end_date))) {
         <button type="submit"><i class="fas fa-search"></i> Buscar</button>
     </form>
 
-
     <a href="orderCreate.php" class="create-contact"><i class="fas fa-cart-plus"></i> Realizar Pedido</a>
     <table>
         <thead>
@@ -149,6 +133,7 @@ if (!empty($search) || (!empty($start_date) && !empty($end_date))) {
                 <td><i class="fas fa-dollar-sign"></i> Preço</td>
                 <td><i class="fas fa-truck"></i> Status Entrega</td>
                 <td><i class="far fa-calendar-alt"></i> Data do Pedido</td>
+                 <td><i class="fas fa-info-circle"></i> Observações</td>
                 <td><i class="fas fa-cogs"></i> Ações</td>
             </tr>
         </thead>
@@ -164,6 +149,7 @@ if (!empty($search) || (!empty($start_date) && !empty($end_date))) {
                 <td><?=$pedido['preco']?></td>
                 <td><?=$pedido['entrega']?></td>
                 <td><?=$pedido['data_pedido']?></td>
+                <td><?=$pedido['observacao']?></td>
                 <td class="actions">
                     <a href="orderUpdate.php?id=<?=$pedido['id_pedido']?>" class="edit"><i
                             class="fas fa-edit fa-xs"></i></a>
@@ -174,16 +160,23 @@ if (!empty($search) || (!empty($start_date) && !empty($end_date))) {
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <!-- Paginação -->
+    <?php if ($num_pedidos > $records_per_page): ?>
     <div class="pagination">
         <?php if ($page > 1): ?>
-        <a href="order.php?page=<?=$page-1?>&search=<?=$search?>&start_date=<?=$start_date?>&end_date=<?=$end_date?>"><i
-                class="fas fa-angle-double-left fa-sm"></i></a>
+        <a href="order.php?page=<?= $page - 1 ?>&search=<?= $search ?>&start_date=<?= $start_date ?>&end_date=<?= $end_date ?>">
+            <i class="fas fa-angle-double-left fa-sm"></i>
+        </a>
         <?php endif; ?>
+
         <?php if ($page * $records_per_page < $num_pedidos): ?>
-        <a href="order.php?page=<?=$page+1?>&search=<?=$search?>&start_date=<?=$start_date?>&end_date=<?=$end_date?>"><i
-                class="fas fa-angle-double-right fa-sm"></i></a>
+        <a href="order.php?page=<?= $page + 1 ?>&search=<?= $search ?>&start_date=<?= $start_date ?>&end_date=<?= $end_date ?>">
+            <i class="fas fa-angle-double-right fa-sm"></i>
+        </a>
         <?php endif; ?>
     </div>
-</div>
+    <?php endif; ?>
 
-<?=template_footer()?>
+    <div class="footer">
+        © 2024 Pizzaria do Mestre. Todos os direitos reservados
