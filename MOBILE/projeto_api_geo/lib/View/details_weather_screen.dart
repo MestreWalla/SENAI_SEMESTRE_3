@@ -7,7 +7,6 @@ class DetailsWeatherScreen extends StatefulWidget {
   final String city;
   const DetailsWeatherScreen({super.key, required this.city});
 
-
   @override
   State<DetailsWeatherScreen> createState() => _DetailsWeatherScreenState();
 }
@@ -15,6 +14,22 @@ class DetailsWeatherScreen extends StatefulWidget {
 class _DetailsWeatherScreenState extends State<DetailsWeatherScreen> {
   final WeatherController _controller = WeatherController();
   final CityDbService _dbService = CityDbService();
+
+  // Função para obter o caminho da imagem com base na previsão do tempo
+  String _getWeatherImage(String weatherMain) {
+    switch (weatherMain.toLowerCase()) {
+      case 'clear':
+        return 'assets/images/sunny.png';
+      case 'clouds':
+        return 'assets/images/cloudy.png';
+      case 'rain':
+        return 'assets/images/rainy.png';
+      case 'snow':
+        return 'assets/images/snowy.png';
+      default:
+        return 'assets/images/default.png';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +53,28 @@ class _DetailsWeatherScreenState extends State<DetailsWeatherScreen> {
               } else {
                 final weather = _controller.weatherList.last;
                 return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Container(
+                      width: double.infinity,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: AssetImage(_getWeatherImage(weather.main)),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      padding: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(10),
                       child: Row(
-                        // adicionar cor azul nessa row
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -73,7 +100,8 @@ class _DetailsWeatherScreenState extends State<DetailsWeatherScreen> {
                               color: Colors.red,
                             ),
                             onPressed: () {
-                              City cidade = City(cityName:widget.city,favoriteCities:1);
+                              City cidade = City(
+                                  cityName: widget.city, favoriteCities: 1);
                               _dbService.updateCity(cidade);
                             },
                           ),
@@ -81,84 +109,223 @@ class _DetailsWeatherScreenState extends State<DetailsWeatherScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      weather.main,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // color: Colors.white,
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.wb_sunny, color: Colors.yellow),
+                          const SizedBox(width: 5),
+                          Text(
+                            weather.main,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      weather.description,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // color: Colors.white,
+                    const SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.description, color: Colors.white),
+                          const SizedBox(width: 5),
+                          Text(
+                            weather.description,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      '${(weather.temp - 273).toStringAsFixed(2)}°C',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // color: Colors.white,
+                    const SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.thermostat, color: Colors.white),
+                          const SizedBox(width: 5),
+                          Text(
+                            '${(weather.temp - 273).toStringAsFixed(2)}°C',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      '${(weather.tempMax - 273).toStringAsFixed(2)}°C',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // color: Colors.white,
+                    const SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.arrow_upward, color: Colors.white),
+                          const SizedBox(width: 5),
+                          Text(
+                            'Máx: ${(weather.tempMax - 273).toStringAsFixed(2)}°C',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      '${(weather.tempMin - 273).toStringAsFixed(2)}°C',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // color: Colors.white,
+                    const SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.arrow_downward, color: Colors.white),
+                          const SizedBox(width: 5),
+                          Text(
+                            'Min: ${(weather.tempMin - 273).toStringAsFixed(2)}°C',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      weather.preassure.toString(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // color: Colors.white,
+                    const SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.speed, color: Colors.white),
+                          const SizedBox(width: 5),
+                          Text(
+                            'Pressão: ${weather.preassure.toString()} hPa',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      weather.humidity.toString(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        //  color: Colors.white,
+                    const SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.water_drop, color: Colors.white),
+                          const SizedBox(width: 5),
+                          Text(
+                            'Humidade: ${weather.humidity.toString()}%',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      weather.seaLevel.toString(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // color: Colors.white,
+                    const SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.waves, color: Colors.white),
+                          const SizedBox(width: 5),
+                          Text(
+                            'Nível do Mar: ${weather.seaLevel.toString()} m',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      weather.grndLevel.toString(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // color: Colors.white,
+                    const SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.landscape, color: Colors.white),
+                          const SizedBox(width: 5),
+                          Text(
+                            'Nível do Solo: ${weather.grndLevel.toString()} m',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      weather.feelsLike.toString(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // color: Colors.white,
+                    const SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.thermostat, color: Colors.white),
+                          const SizedBox(width: 5),
+                          Text(
+                            'Sensação Térmica: ${(weather.feelsLike - 273).toStringAsFixed(2)}°C',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
