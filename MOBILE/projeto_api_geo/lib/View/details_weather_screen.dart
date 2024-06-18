@@ -19,15 +19,15 @@ class _DetailsWeatherScreenState extends State<DetailsWeatherScreen> {
   String _getWeatherImage(String weatherMain) {
     switch (weatherMain.toLowerCase()) {
       case 'clear':
-        return 'assets/images/sunny.png';
+        return 'assets/images/sunny.jpg';
       case 'clouds':
-        return 'assets/images/cloudy.png';
+        return 'assets/images/cloudy.jpg';
       case 'rain':
-        return 'assets/images/rainy.png';
+        return 'assets/images/rainy.jpg';
       case 'snow':
-        return 'assets/images/snowy.png';
+        return 'assets/images/snowy.jpg';
       default:
-        return 'assets/images/default.png';
+        return 'assets/images/default.jpg';
     }
   }
 
@@ -63,7 +63,7 @@ class _DetailsWeatherScreenState extends State<DetailsWeatherScreen> {
                         borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
                           image: AssetImage(_getWeatherImage(weather.main)),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fitHeight,
                         ),
                       ),
                     ),
