@@ -4,13 +4,22 @@
             "id": "1",
             "title": "Abandonei voces",
             "artist": "Denner",
-            "url": "http://www.dominiopublico.gov.br/download/som/me003087.mp3"
+            "url": "http://www.dominiopublico.gov.br/download/som/me003087.mp3",
+            "albumarturl": "http://www.img2go.com/assets/dist/sample-files/img/convert_to_image.png"
         },
         {
             "id": "2",
             "title": "Nunca e tarde para estudar",
             "artist": "Christopher",
-            "url": "http://www.dominiopublico.gov.br/download/som/me004262.mp3"
+            "url": "http://www.dominiopublico.gov.br/download/som/me004262.mp3",
+            "albumarturl": "http://www.img2go.com/assets/dist/sample-files/img/convert_to_image.png"
+        },
+        {
+            "id": "3",
+            "title": "Batuque (Série Alma brasileira)",
+            "artist": "Luciano Gallet",
+            "url": "http://www.dominiopublico.gov.br/download/som/on000011.mp3",
+            "albumarturl": "http://www.img2go.com/assets/dist/sample-files/img/convert_to_image.png"
         }
     ]
 }

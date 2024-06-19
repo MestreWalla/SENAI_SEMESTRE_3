@@ -1,4 +1,4 @@
-import 'package:exemplo_audio_player/view/home_screen.dart';
+import 'package:exemplo_audio_player/view/audio_player_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
-        body: HomeScreen()
+        body: AudioPlayerScreen()
       ),
     );
   }

@@ -8,7 +8,7 @@ class AudioService {
   List<AudioModel> get list => _list;
 
   //url da api
-  final String url = 'http://172.18.112.1:3000/audio';
+  final String url = 'http://172.27.48.1:3000/audio';
 
   //fetch da lista de audio
   Future<void> fetchAudio() async {
