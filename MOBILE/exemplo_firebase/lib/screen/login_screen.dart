@@ -4,12 +4,12 @@ import 'package:exemplo_firebase/screen/todolist_screen.dart';
 import 'package:exemplo_firebase/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState?.save();
-                      _acessarTodoList();
+                      await _acessarTodoList();
                     }
                   },
                   child: const Text('Entrar'),
@@ -109,11 +109,34 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    await _auth.logoutUsuario();
+                    bool isLoggedIn = await _auth.checkLoginStatus();
+                    if (isLoggedIn) {
+                      bool authenticated = await authenticateWithBiometrics();
+                      if (authenticated) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TodolistScreen(user: FirebaseAuth.instance.currentUser!),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Falha na autenticação biométrica'),
+                          ),
+                        );
+                      }
+                    } else {
+                      // Caso o login por email/senha falhe, exibe erro
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Usuário não encontrado. Tente novamente.'),
+                        ),
+                      );
+                    }
                   },
-                  child: const Text('Sair'),
+                  child: const Text('Entrar com Biometria'),
                 ),
-                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -122,31 +145,41 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<User?> _loginUser() async {
-    if (_formKey.currentState!.validate()) {
-      return await _auth.loginUsuario(
-        _emailController.text,
-        _passwordController.text,
-      );
-    } else {
-      return null;
-    }
-  }
-
   Future<void> _acessarTodoList() async {
-    User? user = await _loginUser();
-    if (user != null && user.email != null) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => TodolistScreen(user: user)));
+    User? user = await _auth.loginUsuario(
+      _emailController.text,
+      _passwordController.text,
+    );
+    if (user != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TodolistScreen(user: user),
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Usuário ou senha inválidos'),
+          content: Text('Erro no login. Verifique seu email e senha.'),
           duration: Duration(seconds: 2),
         ),
       );
-      _emailController.clear();
-      _passwordController.clear();
     }
+  }
+
+  // Verifica a autenticação biométrica
+  Future<bool> authenticateWithBiometrics() async {
+    final LocalAuthentication auth = LocalAuthentication();
+    bool isBiometricSupported = await auth.isDeviceSupported();
+    bool canAuthenticate = await auth.canCheckBiometrics;
+
+    if (isBiometricSupported && canAuthenticate) {
+      bool authenticated = await auth.authenticate(
+        localizedReason: 'Por favor, autentique-se para acessar sua conta',
+        options: const AuthenticationOptions(biometricOnly: true),
+      );
+      return authenticated;
+    }
+    return false;
   }
 }

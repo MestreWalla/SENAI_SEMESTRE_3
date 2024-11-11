@@ -1,9 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   // Atributo
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final LocalAuthentication _localAuth = LocalAuthentication();
+
+  Future<void> saveLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedIn', true);
+  }
+
+  Future<bool> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isLoggedIn') ?? false;
+  }
+
   // Método login usuario
   Future<User?> loginUsuario(String email, String password) async {
     try {
@@ -20,10 +34,36 @@ class AuthService {
     }
   }
 
+  // Método para autenticação biométrica
+  Future<bool> loginComBiometria() async {
+    try {
+      // Verifica se o dispositivo suporta biometria e se há biometria configurada
+      bool canCheckBiometrics = await _localAuth.canCheckBiometrics;
+      bool isBiometricSupported = await _localAuth.isDeviceSupported();
+
+      if (canCheckBiometrics && isBiometricSupported) {
+        // Exibe o prompt de autenticação biométrica
+        bool didAuthenticate = await _localAuth.authenticate(
+          localizedReason: 'Use sua biometria para entrar no aplicativo',
+          options: const AuthenticationOptions(
+            stickyAuth: true,
+            biometricOnly: true,
+          ),
+        );
+        return didAuthenticate;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Erro de autenticação biométrica: $e");
+      return false;
+    }
+  }
+
   // Método registrar usuario
   Future<void> registerUsuario(String email, String password) async {
     try {
-        await _auth.createUserWithEmailAndPassword(
+      await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
