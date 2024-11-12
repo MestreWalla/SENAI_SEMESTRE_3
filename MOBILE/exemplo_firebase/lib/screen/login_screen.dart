@@ -116,7 +116,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => TodolistScreen(user: FirebaseAuth.instance.currentUser!),
+                            builder: (context) => TodolistScreen(
+                                user: FirebaseAuth.instance.currentUser!),
                           ),
                         );
                       } else {
@@ -130,7 +131,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Caso o login por email/senha falhe, exibe erro
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Usuário não encontrado. Tente novamente.'),
+                          content:
+                              Text('Usuário não encontrado. Tente novamente.'),
                         ),
                       );
                     }
@@ -170,16 +172,17 @@ class _LoginScreenState extends State<LoginScreen> {
   // Verifica a autenticação biométrica
   Future<bool> authenticateWithBiometrics() async {
     final LocalAuthentication auth = LocalAuthentication();
-    bool isBiometricSupported = await auth.isDeviceSupported();
-    bool canAuthenticate = await auth.canCheckBiometrics;
+    bool canAuthenticate =
+        await auth.canCheckBiometrics || await auth.isDeviceSupported();
 
-    if (isBiometricSupported && canAuthenticate) {
+    if (canAuthenticate) {
       bool authenticated = await auth.authenticate(
         localizedReason: 'Por favor, autentique-se para acessar sua conta',
         options: const AuthenticationOptions(biometricOnly: true),
       );
       return authenticated;
+    } else {
+      return false;
     }
-    return false;
   }
 }
